@@ -1,0 +1,249 @@
+package com.foora.perevozkadev.ui.add_order.cargo_info;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.CustomSpinner;
+import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Created by Alexandr.
+ */
+public class CargoInfoFragment extends BaseFragment implements DateRangePickerDialog.Callback {
+
+    public static final String TAG = CargoInfoFragment.class.getSimpleName();
+
+//    @BindView(R.id.date_range_container)
+//    View dateRangeContainer;
+
+    private DateRangePickerDialog dateRangePickerDialog;
+    private Callback listener;
+
+    @BindView(R.id.txtv_dates)
+    TextView datesTxtv;
+    @BindView(R.id.spinner_mass_from)
+    EditText massFrom;
+    @BindView(R.id.spinner_mass_to)
+    EditText massTo;
+    @BindView(R.id.spinner_volume_from)
+    EditText volumeFrom;
+    @BindView(R.id.spinner_volume_to)
+    EditText volumeTo;
+    @BindView(R.id.spinner_container)
+    LinearLayout spinnerContainer;
+    @BindView(R.id.transport_spinner)
+    CustomSpinner transportSpinner;
+    @BindView(R.id.add_transport)
+    View addTransport;
+    @BindView(R.id.edtxt_cost)
+    EditText costEdtxt;
+    @BindView(R.id.spinner_currency)
+    CustomSpinner currencySpinner;
+    @BindView(R.id.edtxt_car_quantity)
+    EditText carQuantEdtxt;
+    @BindView(R.id.edtxt_width)
+    EditText widthEdtxt;
+    @BindView(R.id.edtxt_height)
+    EditText heightEdtxt;
+    @BindView(R.id.edtxt_depth)
+    EditText depthEdtxt;
+
+
+    private SpinnerArrayAdapter transportArrayAdapter;
+    private SpinnerArrayAdapter costArrayAdapter;
+    private ArrayList<String> transports;
+
+    public static CargoInfoFragment newInstance() {
+        Bundle args = new Bundle();
+        CargoInfoFragment fragment = new CargoInfoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private String dateStart;
+    private String dateEnd;
+    private float massFromNum;
+    private float massToNum;
+    private float volumeFromNum;
+    private float volumeToNum;
+    private List<String> transportType;
+    private float cost;
+    private String currency;
+    private int carQuant;
+    private float width;
+    private float height;
+    private float depth;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_cargo_info, container, false);
+        setUnBinder(ButterKnife.bind(this, rootView));
+
+        return rootView;
+    }
+
+    @OnClick(R.id.date_range_container)
+    void onDateRangeClick() {
+        showDateRangePicker();
+    }
+
+    @OnClick(R.id.add_transport)
+    void addTransport() {
+        CustomSpinner spinner = new CustomSpinner(getContext());
+        Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
+        spinner.setBackground(transparentDrawable);
+        spinner.setDropDownVerticalOffset(ViewUtils.dpToPx(60));
+        spinner.setLayoutParams(new ViewGroup.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewUtils.dpToPx(60)));
+
+        SpinnerArrayAdapter spinnerArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
+        spinner.setAdapter(spinnerArrayAdapter);
+
+        spinnerContainer.addView(spinner);
+    }
+
+    void showDateRangePicker() {
+        dateRangePickerDialog.show(getFragmentManager(), DateRangePickerDialog.TAG);
+    }
+
+    @OnClick(R.id.btn_main)
+    void onClick() {
+        if (listener != null) {
+
+            String[] dates = datesTxtv.getText().toString().split("-");
+
+            //read dates
+            dateStart = dates[0].replaceAll("\\.", "-");
+            dateEnd = dates[1].replaceAll("\\.", "-");
+
+            dateStart = dateStart.replaceAll("\\s","");
+            dateEnd = dateEnd.replaceAll("\\s", "");
+
+            Log.d(TAG, "onClick: " + dateStart);
+            Log.d(TAG, "onClick: " + dateEnd);
+
+            // read mass
+            massFromNum = Float.parseFloat(massFrom.getText().toString());
+            massToNum = Float.parseFloat(massTo.getText().toString());
+
+            // read volume
+            volumeFromNum = Float.parseFloat(volumeFrom.getText().toString());
+            volumeToNum = Float.parseFloat(volumeTo.getText().toString());
+
+            // read transport types
+            for (int i = 0; i < spinnerContainer.getChildCount(); i++) {
+                CustomSpinner spinner = (CustomSpinner) spinnerContainer.getChildAt(i);
+                transportType.add((String) spinner.getSelectedItem());
+            }
+
+            // read cost and currency
+            cost = Float.parseFloat(costEdtxt.getText().toString());
+            currency = (String) currencySpinner.getSelectedItem();
+
+            carQuant = Integer.parseInt(carQuantEdtxt.getText().toString());
+            width = Float.parseFloat(widthEdtxt.getText().toString());
+            height = Float.parseFloat(heightEdtxt.getText().toString());
+            depth = Float.parseFloat(depthEdtxt.getText().toString());
+
+            listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
+                    massToNum, volumeFromNum, volumeToNum,
+                    transportType, cost, currency,
+                    carQuant, width, height, depth);
+
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (Callback) context;
+    }
+
+    public Callback getListener() {
+        return listener;
+    }
+
+    public void setListener(Callback listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+
+    @Override
+    protected void setUp(View view) {
+        dateRangePickerDialog = new DateRangePickerDialog();
+        dateRangePickerDialog.setListener(this);
+
+        transportType = new ArrayList<>();
+        Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
+
+        transports = new ArrayList<String>();
+        transports.add("Рефрижератор");
+        transports.add("Тент");
+        transports.add("Открытый");
+
+        ArrayList<String> cost = new ArrayList<String>();
+        cost.add("USD");
+        cost.add("RUB");
+        cost.add("EUR");
+
+        transportArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
+        costArrayAdapter = new SpinnerArrayAdapter(getContext(), cost, false);
+
+        transportSpinner.setBackground(transparentDrawable);
+        currencySpinner.setBackground(transparentDrawable);
+
+        transportSpinner.setAdapter(transportArrayAdapter);
+        currencySpinner.setAdapter(costArrayAdapter);
+
+    }
+
+    @Override
+    public void onRangeSelected(Calendar startDate, Calendar endDate) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+        datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
+    }
+
+    public interface Callback {
+        void onReceiveCargoInfo(String dateStart, String dateEnd,
+                                float massFrom, float massTo,
+                                float volumeFrom, float volumeTo,
+                                List<String> transportTypes,
+                                float cost, String currency,
+                                int carQuant, float width,
+                                float height, float depth);
+    }
+
+}

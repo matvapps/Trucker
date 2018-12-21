@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PerevozkaDev</string>
+    <string name="api_default_error" />
+    <string name="connection_error" />
+    <string name="api_retry_error" />
+    <string name="empty_email" />
+    <string name="invalid_email" />
+    <string name="empty_password" />
+</resources>

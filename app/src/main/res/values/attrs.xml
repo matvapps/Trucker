@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditTextWithTitle">
+        <attr name="cetwt_hint" format="string"/>
+        <attr name="cetwt_title" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="ExpandableTextView">
+        <attr name="etw_maxLines" format="integer"/>
+    </declare-styleable>
+</resources>

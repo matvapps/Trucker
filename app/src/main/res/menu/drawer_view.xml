@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/create_order"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Создать объявление" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/search_orders"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Поиск заказов" />
+
+        <item
+            android:id="@+id/my_orders"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Мои заказы"/>
+
+        <item
+            android:id="@+id/search_transport"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Поиск транспорта"/>
+
+        <item
+            android:id="@+id/my_transport"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Мой транспорт"/>
+
+        <item
+            android:id="@+id/staff"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Сотрудники"/>
+
+        <item
+            android:id="@+id/messages"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Сообщения"/>
+
+
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/track_cargo"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Отследить груз"/>
+
+        <item
+            android:id="@+id/calculate_distance"
+            android:icon="@android:drawable/star_big_off"
+            android:title="Рассчитать"/>
+    </group>
+</menu>

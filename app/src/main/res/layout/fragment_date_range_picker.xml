@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+        android:id="@+id/calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="384dp"
+        android:background="@android:color/white"
+        app:disable_date_color="#b6b4b4b4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        custom:header_bg="@android:color/darker_gray"
+        custom:range_color="@android:color/darker_gray"
+        custom:selected_date_circle_color="#616161" />
+
+    <Button
+        android:id="@+id/btn_choose"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@android:color/darker_gray"
+        android:text="Выбрать"
+        android:textColor="@android:color/white"
+        custom:layout_constraintEnd_toEndOf="@+id/calendar"
+        custom:layout_constraintStart_toStartOf="@+id/calendar"
+        custom:layout_constraintTop_toBottomOf="@+id/calendar" />
+
+</android.support.constraint.ConstraintLayout>
