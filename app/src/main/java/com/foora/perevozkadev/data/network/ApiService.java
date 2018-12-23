@@ -70,26 +70,29 @@ public interface ApiService {
 
 
     @GET("user/")
-    Call<ProfileResponse> getProfile(@Header("token") String token);
+    Call<ProfileResponse> getProfile(@Header("Authorization") String token);
+
+    @GET("user/order/")
+    Call<GetOrderResponse> getUserOrders(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("user/photo/{photo_type}")
     Call<BaseResponse> uploadPhoto(@Path(value = "photo_type", encoded = true) String photoType,
-                                   @Header("token") String token,
+                                   @Header("Authorization") String token,
                                    @Part MultipartBody.Part image);
 
     @Headers({"Accept: application/json"})
     @POST("transport/")
-    Call<BaseResponse> addTransport(@Header("token") String token,
+    Call<BaseResponse> addTransport(@Header("Authorization") String token,
                                     @Body Transport transport);
 
     @GET("transport/")
-    Call<List<Transport>> getTransport(@Header("token") String token);
+    Call<List<Transport>> getTransport(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("transport/{transport_id}/photo/")
     Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
-                                         @Header("token") String token,
+                                         @Header("Authorization") String token,
                                          @Part MultipartBody.Part image);
 
 

@@ -6,10 +6,12 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
 import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import java.util.List;
 
@@ -62,6 +64,21 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<GetOrderResponse> getOrders() {
         return remoteRepo.getOrders();
+    }
+
+    @Override
+    public Call<ProfileResponse> getProfile(String token) {
+        return remoteRepo.getProfile(token);
+    }
+
+    @Override
+    public Call<GetOrderResponse> getUserOrders(String token) {
+        return remoteRepo.getUserOrders(token);
+    }
+
+    @Override
+    public Call<List<Transport>> getUserTransport(String token) {
+        return remoteRepo.getUserTransport(token);
     }
 
     @Override

@@ -1,9 +1,20 @@
 package com.foora.perevozkadev.ui.profile;
 
+import android.util.Log;
+
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.GetOrderResponse;
+import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
+
+import java.io.IOException;
+import java.util.List;
 
 import io.reactivex.Scheduler;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Alexandr.
@@ -18,16 +29,119 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
 
     @Override
     public void getProfile() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getProfile: View isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().getProfile(getDataManager().getUserToken())
+                .enqueue(new Callback<ProfileResponse>() {
+                    @Override
+                    public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: getProfile end with code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetProfile(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Cannot get profile");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
 
     }
 
     @Override
     public void getMyOrders() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getMyOrders: view isn't attach");
+            return;
+        }
 
+        getMvpView().showLoading();
+
+        getDataManager()
+                .getUserOrders(getDataManager().getUserToken())
+                .enqueue(new Callback<GetOrderResponse>() {
+                    @Override
+                    public void onResponse(Call<GetOrderResponse> call, Response<GetOrderResponse> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: getUserOrders end with code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().getOrders().toString());
+                            getMvpView().onGetUserOrders(response.body().getOrders());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetOrderResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Cannot get user orders");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
     }
 
     @Override
     public void getMyTransport() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getMyTransport: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager()
+                .getUserTransport(getDataManager().getUserToken())
+                .enqueue(new Callback<List<Transport>>() {
+                    @Override
+                    public void onResponse(Call<List<Transport>> call, Response<List<Transport>> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: getUserTransport end with code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetUserTransport(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string() );
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Transport>> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Cannot get user transports");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
 
     }
 }

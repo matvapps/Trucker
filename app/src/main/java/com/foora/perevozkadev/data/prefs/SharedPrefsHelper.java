@@ -27,7 +27,7 @@ public class SharedPrefsHelper implements PreferencesHelper {
 
     @Override
     public String getUserToken() {
-        return prefs.getString(PREF_USER_TOKEN, "");
+        return "token " + prefs.getString(PREF_USER_TOKEN, "");
     }
 
     @Override

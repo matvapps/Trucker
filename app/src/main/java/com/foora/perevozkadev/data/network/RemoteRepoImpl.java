@@ -5,8 +5,10 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import java.util.List;
 
@@ -48,5 +50,20 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     @Override
     public Call<GetOrderResponse> getOrders() {
         return getApi().getOrders();
+    }
+
+    @Override
+    public Call<ProfileResponse> getProfile(String token) {
+        return getApi().getProfile(token);
+    }
+
+    @Override
+    public Call<GetOrderResponse> getUserOrders(String token) {
+        return getApi().getUserOrders(token);
+    }
+
+    @Override
+    public Call<List<Transport>> getUserTransport(String token) {
+        return getApi().getTransport(token);
     }
 }

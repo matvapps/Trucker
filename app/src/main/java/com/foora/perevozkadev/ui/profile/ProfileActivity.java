@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.network.RemoteRepo;
+import com.foora.perevozkadev.data.network.RemoteRepoImpl;
+import com.foora.perevozkadev.data.network.model.ProfileResponse;
+import com.foora.perevozkadev.data.prefs.PreferencesHelper;
+import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
@@ -22,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresenter> implements ProfileMvpView, View.OnClickListener {
+public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresenter>
+        implements ProfileMvpView, View.OnClickListener {
 
     public static final String TAG = ProfileActivity.class.getSimpleName();
 
@@ -124,12 +133,24 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
         transportAdapter.setItems(transports);
         ordersAdapter.setItems(orders);
 
+        getPresenter().getMyOrders();
+        getPresenter().getMyTransport();
+        getPresenter().getProfile();
+
     }
 
 
     @Override
     protected ProfileMvpPresenter createPresenter() {
-        return null;
+        RemoteRepo remoteRepo = new RemoteRepoImpl();
+        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
+
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+
+        ProfilePresenter profilePresenter = new ProfilePresenter(dataManager, AndroidSchedulers.mainThread());
+        profilePresenter.onAttach(this);
+
+        return profilePresenter;
     }
 
 
@@ -165,5 +186,20 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onGetProfile(ProfileResponse profile) {
+
+    }
+
+    @Override
+    public void onGetUserOrders(List<Order> orderList) {
+
+    }
+
+    @Override
+    public void onGetUserTransport(List<Transport> transports) {
+
     }
 }
