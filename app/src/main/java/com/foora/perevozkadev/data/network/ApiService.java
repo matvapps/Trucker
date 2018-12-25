@@ -8,10 +8,9 @@ import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
-
-import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
@@ -25,7 +24,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -87,7 +85,7 @@ public interface ApiService {
                                     @Body Transport transport);
 
     @GET("transport/")
-    Call<List<Transport>> getTransport(@Header("Authorization") String token);
+    Call<TransportResponse> getTransport(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("transport/{transport_id}/photo/")

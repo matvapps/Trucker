@@ -30,17 +30,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tablayout" />
 
-
-    <!--<Button-->
-        <!--android:id="@+id/btn_main"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@android:color/darker_gray"-->
-        <!--android:text="Продолжить"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent" />-->
-
 </android.support.constraint.ConstraintLayout>

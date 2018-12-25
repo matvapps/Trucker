@@ -1,6 +1,7 @@
 package com.foora.perevozkadev.ui.entry;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.foora.foora.perevozkadev.R;
@@ -10,7 +11,6 @@ import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
-import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.entry.confirm.ConfirmFragment;
 import com.foora.perevozkadev.ui.entry.login.LoginFragment;
@@ -44,6 +44,8 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
         setContentView(R.layout.activity_register);
 
         preferencesHelper = new SharedPrefsHelper(this);
+
+        Log.d(TAG, "onCreate: isLogged" + preferencesHelper.getUserLogged());
         if (preferencesHelper.getUserLogged()) {
             openMainActivity();
             finish();

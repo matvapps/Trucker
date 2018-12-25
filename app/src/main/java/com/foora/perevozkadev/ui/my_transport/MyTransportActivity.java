@@ -3,9 +3,10 @@ package com.foora.perevozkadev.ui.my_transport;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 
 import com.foora.foora.perevozkadev.R;
-import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
 
 import butterknife.ButterKnife;
@@ -13,6 +14,11 @@ import butterknife.ButterKnife;
 public class MyTransportActivity extends BasePresenterNavActivity<MyTransportMvpPresenter> implements MyTransportMvpView {
 
     public static final String TAG = MyTransportActivity.class.getSimpleName();
+
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+
+    private MyTransportPagerAdapter pagerAdapter;
 
 
     public static void start(Activity activity) {
@@ -40,6 +46,15 @@ public class MyTransportActivity extends BasePresenterNavActivity<MyTransportMvp
 
     @Override
     protected void setUp() {
+        super.setUp();
+        viewPager = findViewById(R.id.pager);
+        tabLayout = findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        pagerAdapter = new MyTransportPagerAdapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(pagerAdapter);
+
 
 
     }

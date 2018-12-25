@@ -7,10 +7,8 @@ import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.my_transport.model.Transport;
-
-import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import retrofit2.Call;
@@ -63,7 +61,7 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
-    public Call<List<Transport>> getUserTransport(String token) {
+    public Call<TransportResponse> getUserTransport(String token) {
         return getApi().getTransport(token);
     }
 }

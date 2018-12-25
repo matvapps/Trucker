@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
+import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
 import com.foora.perevozkadev.ui.profile.ProfileActivity;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
 
@@ -95,6 +96,11 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
                 case R.id.search_orders:
                     drawerLayout.closeDrawer(GravityCompat.START);
                     SearchOrderActivity.start(BasePresenterNavActivity.this);
+                    finish();
+                    break;
+                case R.id.my_transport:
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    MyTransportActivity.start(BasePresenterNavActivity.this);
                     finish();
                     break;
             }

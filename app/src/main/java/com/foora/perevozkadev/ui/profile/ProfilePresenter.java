@@ -5,11 +5,10 @@ import android.util.Log;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.ProfileResponse;
+import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
-import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import java.io.IOException;
-import java.util.List;
 
 import io.reactivex.Scheduler;
 import retrofit2.Call;
@@ -114,18 +113,20 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
 
         getMvpView().showLoading();
 
+        Log.d(TAG, "getMyTransport: " + getDataManager().getUserToken());
+
         getDataManager()
                 .getUserTransport(getDataManager().getUserToken())
-                .enqueue(new Callback<List<Transport>>() {
+                .enqueue(new Callback<TransportResponse>() {
                     @Override
-                    public void onResponse(Call<List<Transport>> call, Response<List<Transport>> response) {
+                    public void onResponse(Call<TransportResponse> call, Response<TransportResponse> response) {
                         getMvpView().hideLoading();
 
                         Log.d(TAG, "onResponse: getUserTransport end with code: " + response.code());
 
                         if (response.isSuccessful()) {
                             Log.d(TAG, "onResponse: " + response.body().toString());
-                            getMvpView().onGetUserTransport(response.body());
+                            getMvpView().onGetUserTransport(response.body().getTransports());
                         } else {
                             try {
                                 Log.e(TAG, "onResponse: " + response.errorBody().string() );
@@ -136,7 +137,7 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                     }
 
                     @Override
-                    public void onFailure(Call<List<Transport>> call, Throwable t) {
+                    public void onFailure(Call<TransportResponse> call, Throwable t) {
                         getMvpView().hideLoading();
                         getMvpView().onError("Cannot get user transports");
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);

@@ -9,8 +9,27 @@
 
         <item name="cardViewStyle">@style/CardView</item>
         <item name="tabStyle">@style/Widget.Design.TabLayout</item>
+        <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
+        <item name="floatingActionButtonStyle">@style/Widget.Design.FloatingActionButton</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
 
+    </style>
+    
+    <style name="EditTextStyle" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/rounded_rect_gray</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+
+    <style name="MultiLineEditTextStyle" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/rounded_rect_gray</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:minHeight">140dp</item>
     </style>
 
     <style name="TextViewStyle">

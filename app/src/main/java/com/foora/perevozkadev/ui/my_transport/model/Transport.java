@@ -59,6 +59,28 @@ public class Transport implements Serializable {
     @Expose
     private String createdAt;
 
+    public Transport() {
+    }
+
+    public Transport(String registrationNum, String vin, String model, String category,
+                     String type, String passportNum, Integer allowedWeight,
+                     Integer noLoadMass, String registrationPlace, String registrationDate,
+                     String location, String vehicleCondition) {
+        this.registrationNum = registrationNum;
+        this.vin = vin;
+        this.model = model;
+        this.category = category;
+        this.type = type;
+        this.passportNum = passportNum;
+        this.allowedWeight = allowedWeight;
+        this.noLoadMass = noLoadMass;
+        this.registrationPlace = registrationPlace;
+        this.registrationDate = registrationDate;
+        this.location = location;
+        this.vehicleCondition = vehicleCondition;
+    }
+
+
     public int getId() {
         return id;
     }
@@ -187,4 +209,25 @@ public class Transport implements Serializable {
         this.createdAt = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return "Transport{" +
+                "id=" + id +
+                ", user=" + user +
+                ", photos=" + photos +
+                ", registrationNum='" + registrationNum + '\'' +
+                ", vin='" + vin + '\'' +
+                ", model='" + model + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", passportNum='" + passportNum + '\'' +
+                ", allowedWeight=" + allowedWeight +
+                ", noLoadMass=" + noLoadMass +
+                ", registrationPlace='" + registrationPlace + '\'' +
+                ", registrationDate='" + registrationDate + '\'' +
+                ", location='" + location + '\'' +
+                ", vehicleCondition='" + vehicleCondition + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
 }
