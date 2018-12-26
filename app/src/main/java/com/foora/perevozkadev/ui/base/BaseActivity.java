@@ -34,10 +34,10 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     private Unbinder mUnBinder;
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.foora.perevozkadev.ui.add_order;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -93,16 +94,6 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         addOrderPagerAdapter = new AddOrderPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(addOrderPagerAdapter);
         viewPager.setPagingEnabled(false);
-
-        try {
-            Field mScroller;
-            mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(viewPager.getContext(), new LinearInterpolator());
-            mScroller.set(viewPager, scroller);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-        }
-
     }
 
     @Override

@@ -1,77 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:id="@+id/root_view"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/transport_register_number"
-        style="@style/EditTextStyle"
+    <ScrollView
         android:layout_width="match_parent"
-        android:hint="Регистрационный номер" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_transport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/transport_vin"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:hint="VIN" />
 
-    <EditText
-        android:id="@+id/transport_passport_num"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:hint="Номер транспорта ТС" />
-
-    <EditText
-        android:id="@+id/transport_register_place"
-        style="@style/MultiLineEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:gravity="top|start"
-        android:hint="Место регистрации"
-        android:layout_height="wrap_content" />
-
-    <FrameLayout
-        android:id="@+id/date_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_rect_gray">
-
-        <EditText
-            android:id="@+id/date"
-            style="@style/EditTextStyle"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:hint="Дата регистрации"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <ImageView
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_today"
-            android:layout_gravity="center_vertical|end"/>
+            <EditText
+                android:id="@+id/transport_register_number"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:hint="Регистрационный номер" />
 
-    </FrameLayout>
+            <EditText
+                android:id="@+id/transport_vin"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:hint="VIN" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Выберите фото техпаспорта"
-        android:textAllCaps="true"
-        android:textColor="@color/color_app_blue" />
+            <EditText
+                android:id="@+id/transport_passport_num"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:hint="Номер транспорта ТС" />
+
+            <EditText
+                android:id="@+id/transport_register_place"
+                style="@style/MultiLineEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="top|start"
+                android:hint="Место регистрации" />
+
+            <FrameLayout
+                android:id="@+id/date_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_rect_gray">
+
+                <EditText
+                    android:id="@+id/date"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:hint="Дата регистрации" />
+
+                <ImageView
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_today" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Выберите фото техпаспорта"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_rect_gray"
+                android:text="Нажмите чтобы выбрать"
+                android:textColor="@color/color_app_blue"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <Button
+        android:id="@+id/btn_add_transport"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_rect_gray"
-        android:text="Нажмите чтобы выбрать"
-        android:textColor="@color/color_app_blue"
-        android:textSize="16sp" />
+        android:layout_height="60dp"
+        android:background="@color/colorOrange"
+        android:text="Добавить транспорт"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

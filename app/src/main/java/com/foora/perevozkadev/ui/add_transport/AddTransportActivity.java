@@ -2,6 +2,7 @@ package com.foora.perevozkadev.ui.add_transport;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 
@@ -38,28 +39,18 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         setContentView(R.layout.activity_add_transport);
 
         setUnBinder(ButterKnife.bind(this));
-    }
 
-    @Override
-    protected void setUp() {
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
-
         addTransportPagerAdapter = new AddTransportPagerAdapter(getSupportFragmentManager());
-
         viewPager.setAdapter(addTransportPagerAdapter);
         viewPager.setPagingEnabled(false);
+    }
 
-//        try {
-//            Field mScroller;
-//            mScroller = ViewPager.class.getDeclaredField("mScroller");
-//            mScroller.setAccessible(true);
-//            FixedSpeedScroller scroller = new FixedSpeedScroller(viewPager.getContext(), new LinearInterpolator());
-//            mScroller.set(viewPager, scroller);
-//        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-//        }
+    @Override
+    protected void setUp() {
 
     }
 

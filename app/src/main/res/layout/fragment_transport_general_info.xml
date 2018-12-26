@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,12 +30,12 @@
 
             <com.foora.perevozkadev.utils.custom.CustomSpinner
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="8dp" />
 
             <com.foora.perevozkadev.utils.custom.CustomSpinner
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="8dp" />
 
             <EditText
@@ -62,7 +62,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_rect_gray"
                 android:text="Нажмите чтобы выбрать"
@@ -75,9 +75,9 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_next"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="@color/color_app_blue"
         android:text="Продолжить"
         android:textColor="@android:color/white"
