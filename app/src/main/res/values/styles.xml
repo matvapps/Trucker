@@ -20,6 +20,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:padding">16dp</item>
         <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:layout_height">60dp</item>
     </style>

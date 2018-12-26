@@ -5,14 +5,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="false"
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name="com.foora.perevozkadev.service.SyncService" />
 
@@ -34,16 +36,25 @@
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
-        <activity android:name="com.foora.perevozkadev.ui.search_order.SearchOrderActivity"
+        <activity
+            android:name="com.foora.perevozkadev.ui.search_order.SearchOrderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
 
 
-
         </activity>
-        <activity android:name="com.foora.perevozkadev.ui.profile.ProfileActivity" />
-        <activity android:name="com.foora.perevozkadev.ui.my_transport.MyTransportActivity" />
-        <activity android:name="com.foora.perevozkadev.ui.add_transport.AddTransportActivity" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.my_transport.MyTransportActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.add_transport.AddTransportActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

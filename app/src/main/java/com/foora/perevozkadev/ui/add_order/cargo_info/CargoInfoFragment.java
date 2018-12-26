@@ -212,7 +212,18 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         transports = new ArrayList<String>();
         transports.add("Рефрижератор");
         transports.add("Тент");
-        transports.add("Открытый");
+        transports.add("Изотерм");
+        transports.add("Автосцепка");
+        transports.add("Jumbo");
+        transports.add("Контейнеровоз");
+        transports.add("Открытая бортовая платформа");
+        transports.add("Открытая платформа");
+        transports.add("Автоцистерна");
+        transports.add("Микроавтобус");
+        transports.add("Автовоз");
+        transports.add("Зерновоз");
+        transports.add("Самосвал");
+        transports.add("Лесовоз");
 
         ArrayList<String> cost = new ArrayList<String>();
         cost.add("USD");

@@ -21,6 +21,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -81,17 +82,24 @@ public interface ApiService {
 
     @Headers({"Accept: application/json"})
     @POST("transport/")
-    Call<BaseResponse> addTransport(@Header("Authorization") String token,
+    Call<Transport> addTransport(@Header("Authorization") String token,
                                     @Body Transport transport);
+
+//    @FormUrlEncoded
+    @Multipart
+    @POST("transport/{transport_id}/photo/")
+    Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
+                                   @Header("Authorization") String token,
+                                   @Part MultipartBody.Part image);
 
     @GET("transport/")
     Call<TransportResponse> getTransport(@Header("Authorization") String token);
 
-    @FormUrlEncoded
-    @POST("transport/{transport_id}/photo/")
-    Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
-                                         @Header("Authorization") String token,
-                                         @Part MultipartBody.Part image);
+//    @FormUrlEncoded
+//    @POST("transport/{transport_id}/photo/")
+//    Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
+//                                         @Header("Authorization") String token,
+//                                         @Part MultipartBody.Part image);
 
 
 

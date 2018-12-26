@@ -11,8 +11,10 @@ import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import io.reactivex.annotations.NonNull;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 
 /**
@@ -56,6 +58,16 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<BaseResponse> addOrder(@NonNull String token, Order order) {
         return remoteRepo.addOrder(token, order);
+    }
+
+    @Override
+    public Call<Transport> addTransport(String token, Transport transport) {
+        return remoteRepo.addTransport(token, transport);
+    }
+
+    @Override
+    public Call<BaseResponse> addTransportPhoto(int transportId, String token, MultipartBody.Part image) {
+        return remoteRepo.addTransportPhoto(transportId, token, image);
     }
 
     @Override

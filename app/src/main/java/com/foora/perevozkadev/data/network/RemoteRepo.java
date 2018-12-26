@@ -10,8 +10,10 @@ import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import io.reactivex.annotations.NonNull;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 
 public interface RemoteRepo {
@@ -36,6 +38,13 @@ public interface RemoteRepo {
 
     Call<BaseResponse> addOrder(@NonNull String token,
                                 @NonNull Order order);
+
+    Call<Transport> addTransport(@NonNull String token,
+                                 @NonNull Transport transport);
+
+    Call<BaseResponse> addTransportPhoto(@NonNull int transportId,
+                                         @NonNull String token,
+                                         @NonNull MultipartBody.Part image);
 
     Call<GetOrderResponse> getOrders();
 

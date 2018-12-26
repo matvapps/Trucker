@@ -9,8 +9,10 @@ import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 
 import io.reactivex.annotations.NonNull;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 
 public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
@@ -43,6 +45,16 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     @Override
     public Call<BaseResponse> addOrder(@NonNull String token, Order order) {
         return getApi().addOrder(token, order);
+    }
+
+    @Override
+    public Call<Transport> addTransport(String token, Transport transport) {
+        return getApi().addTransport(token, transport);
+    }
+
+    @Override
+    public Call<BaseResponse> addTransportPhoto(int transportId, String token, MultipartBody.Part image) {
+        return getApi().addTransportPhoto(transportId, token, image);
     }
 
     @Override

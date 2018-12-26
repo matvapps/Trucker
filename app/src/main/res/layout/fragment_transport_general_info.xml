@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
@@ -29,12 +29,16 @@
                 android:hint="Модель ТС" />
 
             <com.foora.perevozkadev.utils.custom.CustomSpinner
+                android:id="@+id/transport_category"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:background="@null"
                 android:layout_marginTop="8dp" />
 
             <com.foora.perevozkadev.utils.custom.CustomSpinner
+                android:id="@+id/transport_type"
                 android:layout_width="match_parent"
+                android:background="@null"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp" />
 
@@ -42,6 +46,7 @@
                 android:id="@+id/transport_mass_placed"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_marginTop="8dp"
                 android:hint="Размещаемая масса, т" />
 
@@ -49,18 +54,21 @@
                 android:id="@+id/transport_no_load_mass"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_marginTop="8dp"
+                android:imeOptions="actionDone"
                 android:hint="Масса без нагрузки, т" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Выберите фото техпаспорта"
+                android:text="Выберите фото автомобиля"
                 android:textAllCaps="true"
                 android:textColor="@color/color_app_blue" />
 
             <Button
+                android:id="@+id/btn_choose_photo"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
@@ -69,9 +77,17 @@
                 android:textColor="@color/color_app_blue"
                 android:textSize="16sp" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/photo_list"
+                android:layout_marginTop="16dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
     <Button
