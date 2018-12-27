@@ -8,6 +8,9 @@ import android.support.v4.view.ViewPager;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -66,4 +69,8 @@ public class MyTransportActivity extends BasePresenterNavActivity<MyTransportMvp
     }
 
 
+    @Override
+    public void onGetTransports(List<Transport> transports) {
+
+    }
 }

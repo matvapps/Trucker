@@ -23,6 +23,7 @@ import com.foora.perevozkadev.ui.profile.adapter.PartnersAdapter;
 import com.foora.perevozkadev.ui.profile.adapter.TransportAdapter;
 import com.foora.perevozkadev.ui.profile.model.Partner;
 import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
+import com.foora.perevozkadev.ui.transport.TransportActivity;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
@@ -119,19 +120,9 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
         partners.add(new Partner());
         partners.add(new Partner());
 
-        List<Transport> transports = new ArrayList<>();
-        transports.add(new Transport());
-        transports.add(new Transport());
-        transports.add(new Transport());
-
-        List<Order> orders = new ArrayList<>();
-
-        orders.add(new Order());
-        orders.add(new Order());
-
         partnersAdapter.setItems(partners);
-        transportAdapter.setItems(transports);
-        ordersAdapter.setItems(orders);
+
+        transportAdapter.setListener((pos, transport) -> TransportActivity.start(ProfileActivity.this, transport.getId()));
 
         getPresenter().getMyOrders();
         getPresenter().getMyTransport();
@@ -195,11 +186,11 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
 
     @Override
     public void onGetUserOrders(List<Order> orderList) {
-
+        ordersAdapter.setItems(orderList);
     }
 
     @Override
     public void onGetUserTransport(List<Transport> transports) {
-
+        transportAdapter.setItems(transports);
     }
 }

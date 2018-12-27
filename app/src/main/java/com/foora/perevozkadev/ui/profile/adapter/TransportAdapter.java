@@ -26,6 +26,8 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private int visibleCount = -1;
 
+    private Callback listener;
+
     public TransportAdapter() {
         items = new ArrayList<>();
         visibleItems = new ArrayList<>();
@@ -118,7 +120,25 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void onBind(int position) {
             super.onBind(position);
+
+            Transport transport = getItem(position);
+
+            if (listener != null)
+                itemView.setOnClickListener(v -> listener.onClick(position, transport));
+
         }
+    }
+
+    public Callback getListener() {
+        return listener;
+    }
+
+    public void setListener(Callback listener) {
+        this.listener = listener;
+    }
+
+    public interface Callback {
+        void onClick(int pos, Transport transport);
     }
 
 }

@@ -76,4 +76,9 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     public Call<TransportResponse> getUserTransport(String token) {
         return getApi().getTransport(token);
     }
+
+    @Override
+    public Call<Transport> getUserTransport(int transportId, String token) {
+        return getApi().getTransport(transportId, token);
+    }
 }

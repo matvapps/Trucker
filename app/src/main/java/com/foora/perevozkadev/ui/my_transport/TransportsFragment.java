@@ -21,6 +21,7 @@ import com.foora.perevozkadev.ui.add_transport.AddTransportActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.adapter.TransportAdapter;
+import com.foora.perevozkadev.ui.transport.TransportActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,13 +83,19 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(transportAdapter);
 
-        List<Transport> transports = new ArrayList<>();
+        transportAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 
-        transports.add(new Transport());
-        transports.add(new Transport());
-        transports.add(new Transport());
+        getPresenter().getUserTransport();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPresenter().getUserTransport();
+    }
+
+    @Override
+    public void onGetTransports(List<Transport> transports) {
         transportAdapter.setItems(transports);
-
     }
 }

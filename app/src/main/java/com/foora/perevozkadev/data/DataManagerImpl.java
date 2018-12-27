@@ -91,6 +91,11 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<Transport> getUserTransport(int transportId, String token) {
+        return remoteRepo.getUserTransport(transportId, token);
+    }
+
+    @Override
     public boolean getUserLogged() {
         return sharedPrefs.getUserLogged();
     }

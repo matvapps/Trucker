@@ -20,7 +20,7 @@ public class TransportResponse {
     @SerializedName("previous")
     @Expose
     private Object previous;
-    @SerializedName("transports")
+    @SerializedName("results")
     @Expose
     private List<Transport> transports = null;
 

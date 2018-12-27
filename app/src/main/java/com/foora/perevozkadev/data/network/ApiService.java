@@ -95,18 +95,10 @@ public interface ApiService {
     @GET("transport/")
     Call<TransportResponse> getTransport(@Header("Authorization") String token);
 
-//    @FormUrlEncoded
-//    @POST("transport/{transport_id}/photo/")
-//    Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
-//                                         @Header("Authorization") String token,
-//                                         @Part MultipartBody.Part image);
+    @GET("transport/{transport_id}/")
+    Call<Transport> getTransport(@Path(value = "transport_id", encoded = true) int transportId,
+                                 @Header("Authorization") String token);
 
-
-
-//    @POST("user/sms/send")
-//    Call<BaseResponse> resendSms(@Header("token") String token,
-//                                 @NonNull @Query("login") String login,
-//                                 @NonNull @Query("phone") String phone);
 
 
 }

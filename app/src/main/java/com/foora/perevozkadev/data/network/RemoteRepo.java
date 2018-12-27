@@ -53,4 +53,7 @@ public interface RemoteRepo {
     Call<GetOrderResponse> getUserOrders(@NonNull String token);
 
     Call<TransportResponse> getUserTransport(@NonNull String token);
+
+    Call<Transport> getUserTransport(@NonNull int transportId,
+                                     @NonNull String token);
 }

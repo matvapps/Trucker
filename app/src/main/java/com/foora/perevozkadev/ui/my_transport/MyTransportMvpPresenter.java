@@ -6,4 +6,7 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
  * Created by Alexandr.
  */
 public interface MyTransportMvpPresenter<V extends MyTransportMvpView> extends MvpPresenter<V> {
+
+    void getUserTransport();
+
 }

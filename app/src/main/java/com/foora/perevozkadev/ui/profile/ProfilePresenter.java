@@ -58,7 +58,7 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                     @Override
                     public void onFailure(Call<ProfileResponse> call, Throwable t) {
                         getMvpView().hideLoading();
-                        getMvpView().onError("Cannot get profile");
+                        getMvpView().onError("Не удалось получить ваш профиль");
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
                 });
@@ -98,7 +98,7 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                     @Override
                     public void onFailure(Call<GetOrderResponse> call, Throwable t) {
                         getMvpView().hideLoading();
-                        getMvpView().onError("Cannot get user orders");
+                        getMvpView().onError("Не удалось получить ваши заказы");
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
                 });
@@ -139,7 +139,7 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                     @Override
                     public void onFailure(Call<TransportResponse> call, Throwable t) {
                         getMvpView().hideLoading();
-                        getMvpView().onError("Cannot get user transports");
+                        getMvpView().onError("Не удалось получить ваш транспорт");
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
                 });
