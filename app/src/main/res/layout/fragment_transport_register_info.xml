@@ -10,7 +10,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_add_transport"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -108,7 +108,7 @@
 
 
     <Button
-        android:id="@+id/btn_add_transport"
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorOrange"

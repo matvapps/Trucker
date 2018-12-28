@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
-import com.foora.perevozkadev.data.network.model.ProfileResponse;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 
@@ -36,9 +36,9 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
         getMvpView().showLoading();
 
         getDataManager().getProfile(getDataManager().getUserToken())
-                .enqueue(new Callback<ProfileResponse>() {
+                .enqueue(new Callback<Profile>() {
                     @Override
-                    public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                    public void onResponse(Call<Profile> call, Response<Profile> response) {
                         getMvpView().hideLoading();
 
                         Log.d(TAG, "onResponse: getProfile end with code: " + response.code());
@@ -56,7 +56,7 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                     }
 
                     @Override
-                    public void onFailure(Call<ProfileResponse> call, Throwable t) {
+                    public void onFailure(Call<Profile> call, Throwable t) {
                         getMvpView().hideLoading();
                         getMvpView().onError("Не удалось получить ваш профиль");
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);

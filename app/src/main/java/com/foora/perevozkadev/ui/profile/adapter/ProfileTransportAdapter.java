@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Created by Alexandr.
  */
-public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final String TAG = TransportAdapter.class.getSimpleName();
+public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String TAG = ProfileTransportAdapter.class.getSimpleName();
 
     private List<Transport> items;
     private List<Transport> visibleItems;
@@ -28,7 +28,7 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Callback listener;
 
-    public TransportAdapter() {
+    public ProfileTransportAdapter() {
         items = new ArrayList<>();
         visibleItems = new ArrayList<>();
     }

@@ -5,7 +5,6 @@ import android.util.Log;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
-import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
@@ -256,9 +255,9 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
 
         Log.d(TAG, "sendSms: ");
         
-        getDataManager().sendSms(login, phone).enqueue(new Callback<BaseResponse>() {
+        getDataManager().sendSms(login, phone).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()) {
                     getMvpView().onError("Ошибка отправки СМС");
                     try {
@@ -270,7 +269,7 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
 //                getMvpView().onError("Ошибка отправки СМС 2");
                 // TODO: ERROR
                 getMvpView().onSmsSend();

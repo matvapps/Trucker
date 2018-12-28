@@ -141,7 +141,7 @@ public class FragmentRegisterInfo extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.btn_add_transport)
+    @OnClick(R.id.btn_add)
     void onAddTransport() {
         String registerNum = registerNumberEdtxt.getText().toString();
         String vin = vinEdtxt.getText().toString();

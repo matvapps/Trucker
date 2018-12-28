@@ -1,14 +1,15 @@
-package com.foora.perevozkadev.data.network.model;
+package com.foora.perevozkadev.ui.profile.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Alexander Matvienko on 21.12.2018.
  */
-public class ProfileResponse {
+public class Profile implements Serializable {
 
     @SerializedName("user_id")
     @Expose
@@ -33,52 +34,55 @@ public class ProfileResponse {
     private String userType;
     @SerializedName("country")
     @Expose
-    private Object country;
+    private String country;
     @SerializedName("passport_num")
     @Expose
-    private Object passportNum;
+    private String passportNum;
     @SerializedName("passport_expiration_date")
     @Expose
-    private Object passportExpirationDate;
+    private String passportExpirationDate;
     @SerializedName("reg_certificate_num")
     @Expose
-    private Object regCertificateNum;
+    private String regCertificateNum;
     @SerializedName("license_num")
     @Expose
-    private Object licenseNum;
+    private String licenseNum;
     @SerializedName("license_expiration_date")
     @Expose
-    private Object licenseExpirationDate;
+    private String licenseExpirationDate;
     @SerializedName("register_country")
     @Expose
-    private Object registerCountry;
+    private String registerCountry;
     @SerializedName("international_passport_photos")
     @Expose
-    private List<Object> internationalPassportPhotos = null;
+    private List<String> internationalPassportPhotos = null;
     @SerializedName("registration_certificate_photos")
     @Expose
-    private List<Object> registrationCertificatePhotos = null;
+    private List<String> registrationCertificatePhotos = null;
     @SerializedName("transportation_license_photos")
     @Expose
-    private List<Object> transportationLicensePhotos = null;
+    private List<String> transportationLicensePhotos = null;
     @SerializedName("lang")
     @Expose
-    private Object lang;
+    private String lang;
     @SerializedName("currency")
     @Expose
-    private Object currency;
+    private String currency;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("rating")
     @Expose
     private Integer rating;
     @SerializedName("use_notification")
     @Expose
-    private Object useNotification;
+    private String useNotification;
     @SerializedName("is_2fa_enabled")
     @Expose
     private Boolean is2faEnabled;
+    @SerializedName("group")
+    @Expose
+    private String userGroup;
 
     public Integer getUserId() {
         return userId;
@@ -136,107 +140,107 @@ public class ProfileResponse {
         this.userType = userType;
     }
 
-    public Object getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Object country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
-    public Object getPassportNum() {
+    public String getPassportNum() {
         return passportNum;
     }
 
-    public void setPassportNum(Object passportNum) {
+    public void setPassportNum(String passportNum) {
         this.passportNum = passportNum;
     }
 
-    public Object getPassportExpirationDate() {
+    public String getPassportExpirationDate() {
         return passportExpirationDate;
     }
 
-    public void setPassportExpirationDate(Object passportExpirationDate) {
+    public void setPassportExpirationDate(String passportExpirationDate) {
         this.passportExpirationDate = passportExpirationDate;
     }
 
-    public Object getRegCertificateNum() {
+    public String getRegCertificateNum() {
         return regCertificateNum;
     }
 
-    public void setRegCertificateNum(Object regCertificateNum) {
+    public void setRegCertificateNum(String regCertificateNum) {
         this.regCertificateNum = regCertificateNum;
     }
 
-    public Object getLicenseNum() {
+    public String getLicenseNum() {
         return licenseNum;
     }
 
-    public void setLicenseNum(Object licenseNum) {
+    public void setLicenseNum(String licenseNum) {
         this.licenseNum = licenseNum;
     }
 
-    public Object getLicenseExpirationDate() {
+    public String getLicenseExpirationDate() {
         return licenseExpirationDate;
     }
 
-    public void setLicenseExpirationDate(Object licenseExpirationDate) {
+    public void setLicenseExpirationDate(String licenseExpirationDate) {
         this.licenseExpirationDate = licenseExpirationDate;
     }
 
-    public Object getRegisterCountry() {
+    public String getRegisterCountry() {
         return registerCountry;
     }
 
-    public void setRegisterCountry(Object registerCountry) {
+    public void setRegisterCountry(String registerCountry) {
         this.registerCountry = registerCountry;
     }
 
-    public List<Object> getInternationalPassportPhotos() {
+    public List<String> getInternationalPassportPhotos() {
         return internationalPassportPhotos;
     }
 
-    public void setInternationalPassportPhotos(List<Object> internationalPassportPhotos) {
+    public void setInternationalPassportPhotos(List<String> internationalPassportPhotos) {
         this.internationalPassportPhotos = internationalPassportPhotos;
     }
 
-    public List<Object> getRegistrationCertificatePhotos() {
+    public List<String> getRegistrationCertificatePhotos() {
         return registrationCertificatePhotos;
     }
 
-    public void setRegistrationCertificatePhotos(List<Object> registrationCertificatePhotos) {
+    public void setRegistrationCertificatePhotos(List<String> registrationCertificatePhotos) {
         this.registrationCertificatePhotos = registrationCertificatePhotos;
     }
 
-    public List<Object> getTransportationLicensePhotos() {
+    public List<String> getTransportationLicensePhotos() {
         return transportationLicensePhotos;
     }
 
-    public void setTransportationLicensePhotos(List<Object> transportationLicensePhotos) {
+    public void setTransportationLicensePhotos(List<String> transportationLicensePhotos) {
         this.transportationLicensePhotos = transportationLicensePhotos;
     }
 
-    public Object getLang() {
+    public String getLang() {
         return lang;
     }
 
-    public void setLang(Object lang) {
+    public void setLang(String lang) {
         this.lang = lang;
     }
 
-    public Object getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Object currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -252,7 +256,7 @@ public class ProfileResponse {
         return useNotification;
     }
 
-    public void setUseNotification(Object useNotification) {
+    public void setUseNotification(String useNotification) {
         this.useNotification = useNotification;
     }
 
@@ -264,9 +268,17 @@ public class ProfileResponse {
         this.is2faEnabled = is2faEnabled;
     }
 
+    public String getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(String userGroup) {
+        this.userGroup = userGroup;
+    }
+
     @Override
     public String toString() {
-        return "ProfileResponse{" +
+        return "Profile{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
@@ -274,22 +286,23 @@ public class ProfileResponse {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userType='" + userType + '\'' +
-                ", country=" + country +
-                ", passportNum=" + passportNum +
-                ", passportExpirationDate=" + passportExpirationDate +
-                ", regCertificateNum=" + regCertificateNum +
-                ", licenseNum=" + licenseNum +
-                ", licenseExpirationDate=" + licenseExpirationDate +
-                ", registerCountry=" + registerCountry +
+                ", country='" + country + '\'' +
+                ", passportNum='" + passportNum + '\'' +
+                ", passportExpirationDate='" + passportExpirationDate + '\'' +
+                ", regCertificateNum='" + regCertificateNum + '\'' +
+                ", licenseNum='" + licenseNum + '\'' +
+                ", licenseExpirationDate='" + licenseExpirationDate + '\'' +
+                ", registerCountry='" + registerCountry + '\'' +
                 ", internationalPassportPhotos=" + internationalPassportPhotos +
                 ", registrationCertificatePhotos=" + registrationCertificatePhotos +
                 ", transportationLicensePhotos=" + transportationLicensePhotos +
-                ", lang=" + lang +
-                ", currency=" + currency +
-                ", description=" + description +
+                ", lang='" + lang + '\'' +
+                ", currency='" + currency + '\'' +
+                ", description='" + description + '\'' +
                 ", rating=" + rating +
-                ", useNotification=" + useNotification +
+                ", useNotification='" + useNotification + '\'' +
                 ", is2faEnabled=" + is2faEnabled +
+                ", userGroup='" + userGroup + '\'' +
                 '}';
     }
 }

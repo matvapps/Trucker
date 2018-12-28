@@ -6,12 +6,14 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.ProfileResponse;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
@@ -41,7 +43,7 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<BaseResponse> sendSms(String login, String phone) {
+    public Call<String> sendSms(String login, String phone) {
         return remoteRepo.sendSms(login, phone);
     }
 
@@ -76,8 +78,23 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<ProfileResponse> getProfile(String token) {
+    public Call<Profile> getProfile(String token) {
         return remoteRepo.getProfile(token);
+    }
+
+    @Override
+    public Call<Profile> changeProfile(String token, Profile profile) {
+        return remoteRepo.changeProfile(token, profile);
+    }
+
+    @Override
+    public Call<String> changePassword(String login, String password, String newPassword) {
+        return remoteRepo.changePassword(login, password, newPassword);
+    }
+
+    @Override
+    public Call<String> changePhone(String login, String password, String phone, String newPhone, String smsCode) {
+        return remoteRepo.changePhone(login, password, phone, newPhone, smsCode);
     }
 
     @Override
@@ -93,6 +110,25 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<Transport> getUserTransport(int transportId, String token) {
         return remoteRepo.getUserTransport(transportId, token);
+    }
+
+    @Override
+    public Call<List<Profile>> getStaff(String token) {
+        return remoteRepo.getStaff(token);
+    }
+
+    @Override
+    public Call<Profile> addUserToStaff(String token, String login, String password,
+                                        String email, String phone, String userType,
+                                        String firstName, String lastName, String group) {
+        return remoteRepo.addUserToStaff(token, login, password,
+                email, phone, userType,
+                firstName, lastName, group);
+    }
+
+    @Override
+    public Call<String> deleteUserFromStaff(int userId, String token) {
+        return remoteRepo.deleteUserFromStaff(userId, token);
     }
 
     @Override

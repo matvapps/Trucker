@@ -8,12 +8,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
+import com.foora.perevozkadev.ui.employees.EmployeesActivity;
 import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
 import com.foora.perevozkadev.ui.profile.ProfileActivity;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
@@ -101,6 +103,11 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
                 case R.id.my_transport:
                     drawerLayout.closeDrawer(GravityCompat.START);
                     MyTransportActivity.start(BasePresenterNavActivity.this);
+                    finish();
+                    break;
+                case R.id.staff:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    EmployeesActivity.start(BasePresenterNavActivity.this);
                     finish();
                     break;
             }

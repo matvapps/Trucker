@@ -6,11 +6,13 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.ProfileResponse;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.foora.perevozkadev.ui.profile.model.Profile;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
@@ -26,8 +28,8 @@ public interface RemoteRepo {
     Call<ActivateResponse> activate(@NonNull int userId,
                                     @NonNull String smsCode);
 
-    Call<BaseResponse> sendSms(@NonNull String login,
-                               @NonNull String phone);
+    Call<String> sendSms(@NonNull String login,
+                         @NonNull String phone);
 
     Call<LoginResponse> login(@NonNull String login,
                               @NonNull String password);
@@ -48,7 +50,19 @@ public interface RemoteRepo {
 
     Call<GetOrderResponse> getOrders();
 
-    Call<ProfileResponse> getProfile(@NonNull String token);
+    Call<Profile> getProfile(@NonNull String token);
+
+    Call<Profile> changeProfile(@NonNull String token, Profile profile);
+
+    Call<String> changePassword(@NonNull String login,
+                                @NonNull String password,
+                                @NonNull String newPassword);
+
+    Call<String> changePhone(@NonNull String login,
+                             @NonNull String password,
+                             @NonNull String phone,
+                             @NonNull String newPhone,
+                             @NonNull String smsCode);
 
     Call<GetOrderResponse> getUserOrders(@NonNull String token);
 
@@ -56,4 +70,20 @@ public interface RemoteRepo {
 
     Call<Transport> getUserTransport(@NonNull int transportId,
                                      @NonNull String token);
+
+    Call<List<Profile>> getStaff(@NonNull String token);
+
+    Call<Profile> addUserToStaff(@NonNull String token,
+                                 @NonNull String login,
+                                 @NonNull String password,
+                                 @NonNull String email,
+                                 @NonNull String phone,
+                                 @NonNull String userType,
+                                 @NonNull String firstName,
+                                 @NonNull String lastName,
+                                 @NonNull String group);
+
+    Call<String> deleteUserFromStaff(@NonNull int userId,
+                                     @NonNull String token);
+
 }

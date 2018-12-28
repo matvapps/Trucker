@@ -20,10 +20,9 @@ import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
 import com.foora.perevozkadev.ui.add_transport.AddTransportActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
-import com.foora.perevozkadev.ui.profile.adapter.TransportAdapter;
+import com.foora.perevozkadev.ui.transport.TransportAdapter;
 import com.foora.perevozkadev.ui.transport.TransportActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,7 +35,7 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    @BindView(R.id.btn_add_transport)
+    @BindView(R.id.btn_add)
     FloatingActionButton btnAddTransport;
 
     private TransportAdapter transportAdapter;
@@ -60,7 +59,7 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
         return presenter;
     }
 
-    @OnClick(R.id.btn_add_transport)
+    @OnClick(R.id.btn_add)
     void onAddTransport() {
         AddTransportActivity.start(getActivity());
     }

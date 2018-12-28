@@ -5,11 +5,13 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.ProfileResponse;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
@@ -19,7 +21,7 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
 
     @Override
     public Call<RegisterResponse> register(String login, String password, String phone, String userType, String group) {
-        return  getApi().register(login, password, phone, userType, group);
+        return getApi().register(login, password, phone, userType, group);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
-    public Call<BaseResponse> sendSms(String login, String phone) {
+    public Call<String> sendSms(String login, String phone) {
         return getApi().sendSms(login, phone);
     }
 
@@ -63,8 +65,24 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
-    public Call<ProfileResponse> getProfile(String token) {
+    public Call<Profile> getProfile(String token) {
         return getApi().getProfile(token);
+    }
+
+    @Override
+    public Call<Profile> changeProfile(String token, Profile profile) {
+        return getApi().changeProfile(token, profile);
+    }
+
+    @Override
+    public Call<String> changePassword(String login, String password, String newPassword) {
+        return getApi().changePassword(login, password, newPassword);
+    }
+
+    @Override
+    public Call<String> changePhone(String login, String password,
+                                    String phone, String newPhone, String smsCode) {
+        return getApi().changePhone(login, password, phone, newPhone, smsCode);
     }
 
     @Override
@@ -80,5 +98,24 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     @Override
     public Call<Transport> getUserTransport(int transportId, String token) {
         return getApi().getTransport(transportId, token);
+    }
+
+    @Override
+    public Call<List<Profile>> getStaff(String token) {
+        return getApi().getStaff(token);
+    }
+
+    @Override
+    public Call<Profile> addUserToStaff(String token, String login, String password,
+                                        String email, String phone, String userType,
+                                        String firstName, String lastName, String group) {
+        return getApi().addUserToStaff(token, login, password,
+                email, phone, userType,
+                firstName, lastName, group);
+    }
+
+    @Override
+    public Call<String> deleteUserFromStaff(int userId, String token) {
+        return getApi().deleteUserFromStaff(userId, token);
     }
 }
