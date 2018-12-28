@@ -59,9 +59,14 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
         return getApi().addTransportPhoto(transportId, token, image);
     }
 
+//    @Override
+//    public Call<GetOrderResponse> getOrders() {
+//        return getApi().getOrders();
+//    }
+
     @Override
-    public Call<GetOrderResponse> getOrders() {
-        return getApi().getOrders();
+    public Call<GetOrderResponse> getOrders(String token, float weightFrom, float weightTo, float volumeFrom, float volumeTo) {
+        return getApi().getOrders(token, weightFrom, weightTo, volumeFrom, volumeTo);
     }
 
     @Override

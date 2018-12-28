@@ -23,20 +23,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/routes_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:reverseLayout="true"
-            app:stackFromEnd="true" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+
+
+        <include
+            android:id="@+id/add_route"
+            layout="@layout/item_routes_footer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/routes_list"
+            app:layout_constraintStart_toStartOf="@+id/routes_list"
+            app:layout_constraintTop_toBottomOf="@+id/routes_list" />
+
+
+
+        <LinearLayout
+            android:id="@+id/routes_list_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_route"/>
+
+
+        <include
+            android:id="@+id/add_route_2"
+            layout="@layout/item_routes_footer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/routes_list_2"
+            app:layout_constraintStart_toStartOf="@+id/routes_list_2"
+            app:layout_constraintTop_toBottomOf="@+id/routes_list_2" />
 
 
         <android.support.constraint.ConstraintLayout
@@ -44,8 +79,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/routes_list">
+            app:layout_constraintTop_toBottomOf="@+id/add_route_2">
 
             <TextView
                 android:id="@+id/text"
@@ -136,6 +172,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Масса от"
+                        android:inputType="number"
                         app:layout_constraintStart_toStartOf="@+id/txtv_dates"
                         app:layout_constraintTop_toBottomOf="@+id/view"
                         app:layout_constraintWidth_default="percent"
@@ -150,6 +187,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Масса до"
+                        android:inputType="number"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_mass_from"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/spinner_mass_from"
@@ -176,6 +214,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Объем от"
+                        android:inputType="number"
                         app:layout_constraintStart_toStartOf="@+id/txtv_dates"
                         app:layout_constraintTop_toBottomOf="@+id/divider"
                         app:layout_constraintWidth_default="percent"
@@ -190,6 +229,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Объем до"
+                        android:inputType="number"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_volume_from"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/spinner_volume_from"
@@ -302,9 +342,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Стоимость"
-                android:visibility="gone"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/add_transport"
                 app:layout_constraintTop_toBottomOf="@+id/add_transport" />
 

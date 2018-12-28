@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import com.foora.perevozkadev.ui.search_order.SearchOrderMvpView;
 import com.foora.perevozkadev.ui.search_order.SearchOrderPresenter;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,8 +59,8 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
         View rootView = inflater.inflate(R.layout.fragment_orders, container, false);
         setUnBinder(ButterKnife.bind(this, rootView));
 
-        if (savedInstanceState != null)
-            filter = (Filter) savedInstanceState.getSerializable(FILTER_KEY);
+        if (getArguments() != null)
+            filter = (Filter) getArguments().getSerializable(FILTER_KEY);
 
         return rootView;
     }
@@ -84,7 +84,9 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
         orderListView.setLayoutManager(new LinearLayoutManager(getContext()));
         orderListView.setAdapter(ordersAdapter);
 
-        getPresenter().getOrders();
+        Log.d(TAG, "setUp: " + filter);
+
+        getPresenter().getOrders(filter.getWeightFrom(), filter.getWeightTo(), filter.getVolumeFrom(), filter.getVolumeTo());
 
 
 //        List<Order> orders = new ArrayList<>();

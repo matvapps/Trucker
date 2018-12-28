@@ -73,9 +73,14 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<GetOrderResponse> getOrders() {
-        return remoteRepo.getOrders();
+    public Call<GetOrderResponse> getOrders(String token, float weightFrom, float weightTo, float volumeFrom, float volumeTo) {
+        return remoteRepo.getOrders(token, weightFrom, weightTo, volumeFrom, volumeTo);
     }
+
+//    @Override
+//    public Call<GetOrderResponse> getOrders() {
+//        return remoteRepo.getOrders();
+//    }
 
     @Override
     public Call<Profile> getProfile(String token) {

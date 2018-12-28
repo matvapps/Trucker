@@ -126,6 +126,10 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (listener != null)
                 itemView.setOnClickListener(v -> listener.onClick(position, transport));
 
+            transportName.setText(transport.getModel());
+            transportNum.setText(transport.getPassportNum());
+            transportType.setText(transport.getType());
+
         }
     }
 

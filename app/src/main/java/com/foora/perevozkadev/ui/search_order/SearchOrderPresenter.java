@@ -4,11 +4,9 @@ import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
-import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 
 import java.io.IOException;
-import java.util.List;
 
 import io.reactivex.Scheduler;
 import retrofit2.Call;
@@ -27,7 +25,7 @@ public class SearchOrderPresenter<V extends SearchOrderMvpView> extends BasePres
     }
 
     @Override
-    public void getOrders() {
+    public void getOrders(float weightFrom, float weightTo, float volumeFrom, float volumeTo) {
         if (!isViewAttached()) {
             Log.e(TAG, "getOrders: view isn't attach");
             return;
@@ -36,7 +34,7 @@ public class SearchOrderPresenter<V extends SearchOrderMvpView> extends BasePres
         getMvpView().showLoading();
 
         getDataManager()
-                .getOrders()
+                .getOrders(getDataManager().getUserToken(), weightFrom, weightTo, volumeFrom, volumeTo)
                 .enqueue(new Callback<GetOrderResponse>() {
                     @Override
                     public void onResponse(Call<GetOrderResponse> call, Response<GetOrderResponse> response) {

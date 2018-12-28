@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,9 +16,9 @@ import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
-import com.foora.perevozkadev.ui.add_order.AddOrderPresenter;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.search_order.filter.FilterFragment;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.ui.search_order.filter_dialog.FilterDialogFragment;
 
@@ -30,7 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvpPresenter> implements SearchOrderMvpView {
+public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvpPresenter>
+        implements SearchOrderMvpView, FilterFragment.Callback {
 
     public static final String TAG = SearchOrderActivity.class.getSimpleName();
 
@@ -65,14 +65,12 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
 
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter());
-        filters.add(new Filter());
+//        filters.add(new Filter());
 
         searchOrderPagerAdapter = new SearchOrderPagerAdapter(getSupportFragmentManager(), filters);
         viewPager.setAdapter(searchOrderPagerAdapter);
 
         viewPager.setCurrentItem(1, true);
-
-        getPresenter().getOrders();
 
         //        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
 //
@@ -113,7 +111,8 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cancel:
-
+                if (viewPager.getCurrentItem() != 0)
+                    searchOrderPagerAdapter.remove(viewPager.getCurrentItem());
                 break;
             case R.id.map:
 
@@ -130,8 +129,13 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
 
     @Override
     public void onGetOrders(List<Order> orders) {
-        Log.d(TAG, "onGetOrders: " + orders.toString());
 
 
+    }
+
+    @Override
+    public void onCreateNewFilter(Filter filter) {
+        searchOrderPagerAdapter.add(filter);
+        viewPager.setCurrentItem(searchOrderPagerAdapter.getCount() - 1, true);
     }
 }

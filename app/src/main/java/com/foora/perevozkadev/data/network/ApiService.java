@@ -29,6 +29,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -104,12 +105,16 @@ public interface ApiService {
     Call<GetOrderResponse> getUserOrders(@Header("Authorization") String token);
 
     @Headers({"Accept: application/json"})
-    @POST("order/")
+    @POST("user/order/")
     Call<BaseResponse> addOrder(@Header("Authorization") String token,
                                 @Body Order order);
 
     @GET("orders/")
-    Call<GetOrderResponse> getOrders();
+    Call<GetOrderResponse> getOrders(@Header("Authorization") String token,
+                                     @Query("weight_from") float weightFrom,
+                                     @Query("weight_to") float weightTo,
+                                     @Query("volume_from") float volumeFrom,
+                                     @Query("volume_to") float volumeTo);
     // ----------------------------------------------------------------------------------------
 
     // Employees

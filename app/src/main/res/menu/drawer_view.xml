@@ -23,6 +23,7 @@
         <item
             android:id="@+id/search_transport"
             android:icon="@android:drawable/star_big_off"
+            android:enabled="false"
             android:title="Поиск транспорта"/>
 
         <item
@@ -38,6 +39,7 @@
         <item
             android:id="@+id/messages"
             android:icon="@android:drawable/star_big_off"
+            android:enabled="false"
             android:title="Сообщения"/>
 
 
@@ -46,11 +48,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/track_cargo"
+            android:enabled="false"
             android:icon="@android:drawable/star_big_off"
             android:title="Отследить груз"/>
 
         <item
             android:id="@+id/calculate_distance"
+            android:enabled="false"
             android:icon="@android:drawable/star_big_off"
             android:title="Рассчитать"/>
     </group>

@@ -26,14 +26,17 @@ import foora.perevozka.com.choosecityview.ChooseCityView;
 /**
  * Created by Alexandr.
  */
-public class RouteFragment extends BaseFragment  {
+public class RouteFragment extends BaseFragment {
 
     public static final String TAG = RouteFragment.class.getSimpleName();
 
     @BindView(R.id.btn_main)
     Button btnMain;
+
     @BindView(R.id.routes_list)
-    LinearLayout routesList;
+    LinearLayout loadList;
+    @BindView(R.id.routes_list_2)
+    LinearLayout unloadList;
 
     private Callback listener;
 
@@ -60,23 +63,46 @@ public class RouteFragment extends BaseFragment  {
     void onClick() {
         if (listener != null) {
 
-            for (int i = 0; i < routesList.getChildCount(); i++) {
-                ChooseCityView view = (ChooseCityView) routesList.getChildAt(i);
+            for (int i = 0; i < loadList.getChildCount(); i++) {
+                ChooseCityView view = (ChooseCityView) loadList.getChildAt(i);
                 String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
-                if (view.getTitle().equals("Место погрузки")) {
+                if (view.getTitle().equals("Место погрузки") &&
+                        view.getCity() != null) {
                     loadingPlaces.add(new Place(i, name));
-                } else {
+                }
+            }
+
+            for (int i = 0; i < unloadList.getChildCount(); i++) {
+                ChooseCityView view = (ChooseCityView) unloadList.getChildAt(i);
+                String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
+                if (view.getTitle().equals("Место выгрузки") &&
+                        view.getCity() != null) {
                     unloadingPlaces.add(new Place(i, name));
                 }
+            }
 
+            if (loadingPlaces.size() == 0) {
+                onError("Заполните место погрузки");
+                return;
+            }
+
+            if (unloadingPlaces.size() == 0) {
+                onError("Заполните место выгрузки");
+                return;
             }
 
             listener.onReceiveRoutes(loadingPlaces, unloadingPlaces);
         }
     }
-    @OnClick(R.id.add_transport)
-    void onAddTransportClick() {
-        routesList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
+
+    @OnClick(R.id.add_route)
+    void onAddLoadRoute() {
+        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
+    }
+
+    @OnClick(R.id.add_route_2)
+    void onAddUnLoadRoute() {
+        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
     }
 
 
@@ -100,8 +126,8 @@ public class RouteFragment extends BaseFragment  {
         loadingPlaces = new ArrayList<>();
         unloadingPlaces = new ArrayList<>();
 
-        routesList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
-        routesList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
+        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
+        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
 
     }
 

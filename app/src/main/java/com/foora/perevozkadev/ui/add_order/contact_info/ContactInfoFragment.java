@@ -9,14 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
-import com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +60,20 @@ public class ContactInfoFragment extends BaseFragment {
     @OnClick(R.id.btn_main)
     void onClick() {
         if (listener != null) {
+
+            if (companyContactEdtxt.getText().toString().isEmpty() ||
+                    personContactEdtxt.getText().toString().isEmpty() ||
+                    emailContactEdtxt.getText().toString().isEmpty() ||
+                    phoneContactEdtxt.getText().toString().isEmpty() ||
+                    skypeContactEdtxt.getText().toString().isEmpty() ||
+                    telegramContactEdtxt.getText().toString().isEmpty() ||
+                    whatsappContactEdtxt.getText().toString().isEmpty()) {
+
+                onError("Заполните все поля");
+                return;
+            }
+
+
             listener.onReceiveContactInfo(
                     companyContactEdtxt.getText().toString(),
                     personContactEdtxt.getText().toString(),

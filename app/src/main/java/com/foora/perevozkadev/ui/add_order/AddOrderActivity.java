@@ -2,15 +2,12 @@ package com.foora.perevozkadev.ui.add_order;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.animation.LinearInterpolator;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -22,20 +19,15 @@ import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
 import com.foora.perevozkadev.ui.add_order.cargo_info.CargoInfoFragment;
 import com.foora.perevozkadev.ui.add_order.contact_info.ContactInfoFragment;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.add_order.route.RouteFragment;
 import com.foora.perevozkadev.ui.add_order.model.Place;
+import com.foora.perevozkadev.ui.add_order.route.RouteFragment;
 import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
-import com.foora.perevozkadev.utils.custom.FixedSpeedScroller;
 import com.foora.perevozkadev.utils.custom.ViewPagerNoScroll;
-import com.google.gson.Gson;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import foora.perevozka.com.choosecityview.data.db.LocalRepo;
-import foora.perevozka.com.choosecityview.data.db.LocalRepoImpl;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresenter> implements AddOrderMvpView,
@@ -123,7 +115,7 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         order.setUnloadingPlaces(unloadingPlaces);
 
 //        Gson gson = new Gson();
-
+//
 //        String jsonStr = "{\n" +
 //                "    \"loading_places\": [\n" +
 //                "        {\n" +
@@ -238,11 +230,14 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         order.setDistance(0d);
         order.setCargo("Cargo");
 
+
     }
 
 
     @Override
     public void onOrderAdd() {
-        showMessage("Order add");
+        showMessage("Заказ успешно добавлен");
+        SearchOrderActivity.start(this);
+        finish();
     }
 }

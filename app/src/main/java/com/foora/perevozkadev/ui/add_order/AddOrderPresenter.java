@@ -43,8 +43,9 @@ public class AddOrderPresenter <V extends AddOrderMvpView> extends BasePresenter
 
                         if (response.isSuccessful()) {
                             getMvpView().showMessage("Adding order success");
+                            getMvpView().onOrderAdd();
                         } else {
-                            getMvpView().onError("Adding order error");
+                            getMvpView().onError("Ошибка добавления заказа");
                             try {
                                 Log.d(TAG, "onResponse: " + response.errorBody().string());
                             } catch (IOException e) {
@@ -56,7 +57,7 @@ public class AddOrderPresenter <V extends AddOrderMvpView> extends BasePresenter
                     @Override
                     public void onFailure(Call<BaseResponse> call, Throwable t) {
                         getMvpView().hideLoading();
-                        getMvpView().onError("Adding order error");
+                        getMvpView().onError("Ошибка добавления заказа");
                         Log.d(TAG, "onFailure: " + t.getMessage());
                     }
                 });

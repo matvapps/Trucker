@@ -24,16 +24,16 @@ public class Filter implements Serializable {
     private String unloadingDate;
     @SerializedName("weight_from")
     @Expose
-    private Double weightFrom;
+    private float weightFrom;
     @SerializedName("weight_to")
     @Expose
-    private Double weightTo;
+    private float weightTo;
     @SerializedName("volume_from")
     @Expose
-    private Double volumeFrom;
+    private float volumeFrom;
     @SerializedName("volume_to")
     @Expose
-    private Double volumeTo;
+    private float volumeTo;
     @SerializedName("transport_type")
     @Expose
     private String transportType;
@@ -42,8 +42,8 @@ public class Filter implements Serializable {
     }
 
     public Filter(List<Place> loadingPlaces, List<Place> unloadingPlaces, String loadingDate,
-                  String unloadingDate, Double weightFrom, Double weightTo,
-                  Double volumeFrom, Double volumeTo, String transportType) {
+                  String unloadingDate, float weightFrom, float weightTo,
+                  float volumeFrom, float volumeTo, String transportType) {
         this.loadingPlaces = loadingPlaces;
         this.unloadingPlaces = unloadingPlaces;
         this.loadingDate = loadingDate;
@@ -52,6 +52,78 @@ public class Filter implements Serializable {
         this.weightTo = weightTo;
         this.volumeFrom = volumeFrom;
         this.volumeTo = volumeTo;
+        this.transportType = transportType;
+    }
+
+    public List<Place> getLoadingPlaces() {
+        return loadingPlaces;
+    }
+
+    public void setLoadingPlaces(List<Place> loadingPlaces) {
+        this.loadingPlaces = loadingPlaces;
+    }
+
+    public List<Place> getUnloadingPlaces() {
+        return unloadingPlaces;
+    }
+
+    public void setUnloadingPlaces(List<Place> unloadingPlaces) {
+        this.unloadingPlaces = unloadingPlaces;
+    }
+
+    public String getLoadingDate() {
+        return loadingDate;
+    }
+
+    public void setLoadingDate(String loadingDate) {
+        this.loadingDate = loadingDate;
+    }
+
+    public String getUnloadingDate() {
+        return unloadingDate;
+    }
+
+    public void setUnloadingDate(String unloadingDate) {
+        this.unloadingDate = unloadingDate;
+    }
+
+    public float getWeightFrom() {
+        return weightFrom;
+    }
+
+    public void setWeightFrom(float weightFrom) {
+        this.weightFrom = weightFrom;
+    }
+
+    public float getWeightTo() {
+        return weightTo;
+    }
+
+    public void setWeightTo(float weightTo) {
+        this.weightTo = weightTo;
+    }
+
+    public float getVolumeFrom() {
+        return volumeFrom;
+    }
+
+    public void setVolumeFrom(float volumeFrom) {
+        this.volumeFrom = volumeFrom;
+    }
+
+    public float getVolumeTo() {
+        return volumeTo;
+    }
+
+    public void setVolumeTo(float volumeTo) {
+        this.volumeTo = volumeTo;
+    }
+
+    public String getTransportType() {
+        return transportType;
+    }
+
+    public void setTransportType(String transportType) {
         this.transportType = transportType;
     }
 
@@ -69,4 +141,6 @@ public class Filter implements Serializable {
                 ", transportType='" + transportType + '\'' +
                 '}';
     }
+
+
 }

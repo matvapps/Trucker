@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
 import com.foora.perevozkadev.ui.employees.EmployeesActivity;
+import com.foora.perevozkadev.ui.my_orders.MyOrdersActivity;
 import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
 import com.foora.perevozkadev.ui.profile.ProfileActivity;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
@@ -108,6 +109,11 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
                 case R.id.staff:
                     drawerLayout.closeDrawer(Gravity.START);
                     EmployeesActivity.start(BasePresenterNavActivity.this);
+                    finish();
+                    break;
+                case R.id.my_orders:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    MyOrdersActivity.start(BasePresenterNavActivity.this);
                     finish();
                     break;
             }

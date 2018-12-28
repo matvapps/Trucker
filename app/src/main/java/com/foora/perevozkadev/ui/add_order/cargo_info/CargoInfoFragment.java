@@ -137,17 +137,36 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     void onClick() {
         if (listener != null) {
 
+            if (datesTxtv.getText().toString().isEmpty()) {
+                onError("Выберите даты");
+                return;
+            }
             String[] dates = datesTxtv.getText().toString().split("-");
 
             //read dates
             dateStart = dates[0].replaceAll("\\.", "-");
             dateEnd = dates[1].replaceAll("\\.", "-");
 
-            dateStart = dateStart.replaceAll("\\s","");
+            dateStart = dateStart.replaceAll("\\s", "");
             dateEnd = dateEnd.replaceAll("\\s", "");
 
             Log.d(TAG, "onClick: " + dateStart);
             Log.d(TAG, "onClick: " + dateEnd);
+
+
+            if (massFrom.getText().toString().isEmpty() ||
+                    massTo.getText().toString().isEmpty() ||
+                    volumeFrom.getText().toString().isEmpty() ||
+                    volumeTo.getText().toString().isEmpty() ||
+                    costEdtxt.getText().toString().isEmpty() ||
+                    carQuantEdtxt.getText().toString().isEmpty() ||
+                    widthEdtxt.getText().toString().isEmpty() ||
+                    heightEdtxt.getText().toString().isEmpty() ||
+                    depthEdtxt.getText().toString().isEmpty()) {
+
+                onError("Заполните все поля");
+                return;
+            }
 
             // read mass
             massFromNum = Float.parseFloat(massFrom.getText().toString());

@@ -17,6 +17,8 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.Header;
 
 public interface RemoteRepo {
     Call<RegisterResponse> register(@NonNull String login,
@@ -48,7 +50,14 @@ public interface RemoteRepo {
                                          @NonNull String token,
                                          @NonNull MultipartBody.Part image);
 
-    Call<GetOrderResponse> getOrders();
+//    Call<GetOrderResponse> getOrders();
+
+    Call<GetOrderResponse> getOrders(@Header("Authorization") String token,
+                                     @Field("weight_from") float weightFrom,
+                                     @Field("weight_to") float weightTo,
+                                     @Field("volume_from") float volumeFrom,
+                                     @Field("volume_to") float volumeTo);
+
 
     Call<Profile> getProfile(@NonNull String token);
 
