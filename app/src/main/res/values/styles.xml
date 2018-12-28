@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
+
         <item name="cardViewStyle">@style/CardView</item>
         <item name="tabStyle">@style/Widget.Design.TabLayout</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
@@ -14,9 +17,17 @@
         <item name="android:textViewStyle">@style/TextViewStyle</item>
 
     </style>
+
+    <style name="AppTheme.White" parent="AppTheme">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/darker_gray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
     
     <style name="EditTextStyle" parent="Base.Widget.AppCompat.EditText">
-        <item name="android:background">@drawable/rounded_rect_gray</item>
+        <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:textSize">17sp</item>
         <item name="android:padding">16dp</item>
         <item name="android:maxLines">1</item>
@@ -26,7 +37,7 @@
     </style>
 
     <style name="MultiLineEditTextStyle" parent="Base.Widget.AppCompat.EditText">
-        <item name="android:background">@drawable/rounded_rect_gray</item>
+        <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:textSize">17sp</item>
         <item name="android:padding">16dp</item>
         <item name="android:imeOptions">actionNext</item>
@@ -40,6 +51,10 @@
     <style name="dialog_animation_slide">
         <item name="android:windowEnterAnimation">@anim/slide_left</item>
         <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
+
+    <style name="MenuTextAppearance">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

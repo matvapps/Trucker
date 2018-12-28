@@ -6,6 +6,7 @@
         android:id="@+id/map"
         android:icon="@drawable/ic_action_map"
         android:title=""
+        android:visible="false"
         app:showAsAction="always" />
 
     <item

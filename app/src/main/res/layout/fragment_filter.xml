@@ -396,7 +396,7 @@
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="8dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorOrange"
                 android:text="Применить"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"

@@ -6,11 +6,15 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Alexandr.
  */
-public class ActivateResponse {
+public class ActivateResponse extends TokenResponse{
 
     @SerializedName("sms_code")
     @Expose
     private String smsCode;
+
+    public ActivateResponse(String token) {
+        super(token);
+    }
 
     public String getSmsCode() {
         return smsCode;

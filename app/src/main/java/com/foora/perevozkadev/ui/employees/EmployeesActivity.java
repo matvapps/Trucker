@@ -38,6 +38,12 @@ public class EmployeesActivity extends BasePresenterNavActivity<EmployeesMvpPres
     }
 
     @Override
+    protected int getMenuResource() {
+        return R.drawable.ic_menu;
+    }
+
+
+    @Override
     protected int getContentViewLayoutId() {
         return R.layout.activity_employees;
     }

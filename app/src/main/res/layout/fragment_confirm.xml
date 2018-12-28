@@ -18,6 +18,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:text="Отправить"
+            android:background="@color/colorOrange"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="@+id/edtxt_phone_container"
             app:layout_constraintStart_toStartOf="@+id/edtxt_country_code"

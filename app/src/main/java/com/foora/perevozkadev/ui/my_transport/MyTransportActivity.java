@@ -38,6 +38,12 @@ public class MyTransportActivity extends BasePresenterNavActivity<MyTransportMvp
     }
 
     @Override
+    protected int getMenuResource() {
+        return R.drawable.ic_menu;
+    }
+
+
+    @Override
     protected int getContentViewLayoutId() {
         return R.layout.activity_my_transport;
     }

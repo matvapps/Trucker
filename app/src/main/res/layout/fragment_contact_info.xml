@@ -30,42 +30,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Whatsapp"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_whatsapp"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Whatsapp"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:imeOptions="actionNext" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -79,42 +57,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Telegram"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_telegram"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Telegram"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:imeOptions="actionNext" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -128,42 +84,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Skype"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_skype"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Skype"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:imeOptions="actionNext" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -177,43 +111,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Телефон"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_phone"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Телефон"
                         android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:inputType="phone" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -227,43 +139,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Email"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_email"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:hint="Email"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:inputType="textEmailAddress" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -277,43 +167,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Контактное лицо"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
                         android:id="@+id/contact_person"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Имя"
+                        android:hint="Контактное лицо"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:inputType="text" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
@@ -326,115 +194,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Компания"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_margin="4dp"
-                    android:padding="8dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="1.5dp">
 
                     <EditText
-                        android:maxLines="1"
-                        android:imeOptions="actionNext"
-                        android:singleLine="true"
                         android:id="@+id/contact_company"
+                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Имя компании"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:hint="Компания"
+                        android:imeOptions="actionNext" />
 
 
-                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
 
         </android.support.constraint.ConstraintLayout>
 
-        <!--<LinearLayout-->
-        <!--android:id="@+id/contact_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical"-->
-        <!--android:paddingLeft="16dp"-->
-        <!--android:paddingRight="16dp">-->
-        <!---->
-        <!---->
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_company"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Имя компании"-->
-        <!--app:cetwt_title="Компания" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_person"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Имя компании"-->
-        <!--app:cetwt_title="Контактное лицо" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_email"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Email"-->
-        <!--app:cetwt_title="Email" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_phone"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Телефон"-->
-        <!--app:cetwt_title="Телефон" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_skype"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Skype"-->
-        <!--app:cetwt_title="Skype" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_telegram"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Telegram"-->
-        <!--app:cetwt_title="Telegram" />-->
-
-        <!--<com.foora.perevozkadev.utils.custom.CustomEditTextWithTitle-->
-        <!--android:id="@+id/contact_whatsapp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--app:cetwt_hint="Whatsapp"-->
-        <!--app:cetwt_title="Whatsapp" />-->
-
-
-        <!--</LinearLayout>-->
 
     </ScrollView>
 
@@ -443,8 +222,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="@android:color/darker_gray"
-        android:text="Продолжить"
+        android:background="@color/colorOrange"
+        android:text="Подтвердить заявку"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

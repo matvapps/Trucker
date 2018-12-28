@@ -233,6 +233,7 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
                             }
                         } else {
                             getDataManager().setUserLogged(true);
+                            getDataManager().setUserToken(response.body().getToken());
                             getMvpView().openMainActivity();
 
                         }

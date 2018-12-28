@@ -5,40 +5,40 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/create_order"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Создать объявление" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/search_orders"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Поиск заказов" />
 
         <item
             android:id="@+id/my_orders"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Мои заказы"/>
 
         <item
             android:id="@+id/search_transport"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:enabled="false"
             android:title="Поиск транспорта"/>
 
         <item
             android:id="@+id/my_transport"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Мой транспорт"/>
 
         <item
             android:id="@+id/staff"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Сотрудники"/>
 
         <item
             android:id="@+id/messages"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:enabled="false"
             android:title="Сообщения"/>
 
@@ -49,13 +49,13 @@
         <item
             android:id="@+id/track_cargo"
             android:enabled="false"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Отследить груз"/>
 
         <item
             android:id="@+id/calculate_distance"
             android:enabled="false"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/circle_white"
             android:title="Рассчитать"/>
     </group>
 </menu>

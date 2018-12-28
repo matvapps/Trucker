@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.transport;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -34,6 +35,7 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
     TextView transportVin;
     TextView transportPassportNum;
     TextView transportRegisterPlace;
+    TextView transportName;
 
     public static void start(Activity activity, int transportId) {
         Intent intent = new Intent(activity, TransportActivity.class);
@@ -58,7 +60,10 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
         transportVin = findViewById(R.id.transport_vin);
         transportPassportNum = findViewById(R.id.transport_passport_num);
         transportRegisterPlace = findViewById(R.id.transport_register_place);
+        transportName = findViewById(R.id.name);
 
+        View btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> finish());
 
         getPresenter().getTransport(transportId);
 
@@ -94,5 +99,6 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
         transportVin.setText(transport.getVin());
         transportPassportNum.setText(transport.getPassportNum());
         transportRegisterPlace.setText(transport.getRegistrationPlace());
+        transportName.setText(transport.getModel());
     }
 }

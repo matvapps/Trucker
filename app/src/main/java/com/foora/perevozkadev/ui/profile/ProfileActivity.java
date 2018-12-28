@@ -88,11 +88,13 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
         return "";
     }
 
+
+
     @Override
     protected void setUp() {
         super.setUp();
         expandableTextView = findViewById(R.id.expand_text_view);
-        expandableTextView.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        expandableTextView.setText("Описание");
 
         seeAllOrders = findViewById(R.id.btn_see_all_orders);
         seeAllPartners = findViewById(R.id.btn_see_all_partners);

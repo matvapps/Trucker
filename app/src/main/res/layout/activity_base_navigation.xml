@@ -5,8 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context=".ui.main.BaseNavigationActivity">
+    android:fitsSystemWindows="false">
 
     <LinearLayout
         android:id="@+id/content_frame"
@@ -19,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:titleTextColor="@android:color/white"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
         <FrameLayout
@@ -35,6 +35,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"
+        app:itemTextColor="@android:color/white"
+        android:background="@color/color_app_blue"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view" />
 

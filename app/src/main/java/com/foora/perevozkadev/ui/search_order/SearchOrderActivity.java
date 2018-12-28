@@ -55,6 +55,11 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     }
 
     @Override
+    protected int getMenuResource() {
+        return R.drawable.ic_menu;
+    }
+
+    @Override
     protected void setUp() {
         super.setUp();
 

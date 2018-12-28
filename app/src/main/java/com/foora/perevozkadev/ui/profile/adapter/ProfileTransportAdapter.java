@@ -126,6 +126,9 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
             if (listener != null)
                 itemView.setOnClickListener(v -> listener.onClick(position, transport));
 
+            transportName.setText(transport.getModel());
+            transportType.setText(transport.getType());
+
         }
     }
 

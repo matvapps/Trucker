@@ -31,7 +31,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.add_order.AddOrderActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.White"/>
         <activity
             android:name="com.foora.perevozkadev.ui.search_order.SearchOrderActivity"
             android:screenOrientation="portrait"
@@ -39,7 +40,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.White"/>
         <activity
             android:name="com.foora.perevozkadev.ui.my_transport.MyTransportActivity"
             android:screenOrientation="portrait"
@@ -47,7 +49,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.add_transport.AddTransportActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.White"/>
         <activity android:name="com.foora.perevozkadev.ui.transport.TransportActivity" />
 
         <meta-data
@@ -85,9 +88,16 @@
         <activity
             android:name="com.foora.perevozkadev.ui.add_employee.AddEmployeeActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.White" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.employee.EmployeeActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name="com.foora.perevozkadev.ui.employee.EmployeeActivity" />
-        <activity android:name="com.foora.perevozkadev.ui.my_orders.MyOrdersActivity" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.my_orders.MyOrdersActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
 package com.foora.perevozkadev.ui.base;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -58,6 +60,10 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
         return super.onOptionsItemSelected(item);
     }
 
+    protected int getMenuResource() {
+        return R.drawable.ic_action_menu;
+    }
+
     @Override
     protected void setUp() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -74,8 +80,18 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_action_menu);
+        actionbar.setHomeAsUpIndicator(getMenuResource());
         actionbar.setTitle(getTitleStr());
+
+        switch (getMenuResource()) {
+            case R.drawable.ic_action_menu: {
+                toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.color_app_blue));
+                break;
+            }
+            default:
+                toolbar.setTitleTextColor(Color.WHITE);
+
+    }
 
         setContentFrame();
 

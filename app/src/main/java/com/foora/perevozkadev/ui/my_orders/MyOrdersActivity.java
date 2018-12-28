@@ -30,6 +30,12 @@ public class MyOrdersActivity extends BasePresenterNavActivity<MyOrdersMvpPresen
     }
 
     @Override
+    protected int getMenuResource() {
+        return R.drawable.ic_menu;
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

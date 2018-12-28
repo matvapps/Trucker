@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,6 +62,8 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         return "Новый заказ";
     }
 
+
+
     @Override
     protected AddOrderMvpPresenter createPresenter() {
 //        LocalRepo localRepo = new LocalRepoImpl(this);
@@ -70,6 +73,8 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
 
         AddOrderPresenter addOrderPresenter = new AddOrderPresenter(dataManager, AndroidSchedulers.mainThread());
         addOrderPresenter.onAttach(this);
+
+        getToolbar().setTitleTextColor(ContextCompat.getColor(this, R.color.color_app_blue));
 
         return addOrderPresenter;
     }

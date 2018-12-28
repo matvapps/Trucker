@@ -39,6 +39,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:text="Зарегистрироваться"
+        android:background="@color/colorOrange"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/password_input"
         app:layout_constraintStart_toStartOf="@+id/password_input"
@@ -60,7 +61,7 @@
             android:id="@+id/edtxt_email"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Почта"
+            android:hint="Логин"
             android:inputType="textEmailAddress" />
 
     </android.support.design.widget.TextInputLayout>

@@ -500,7 +500,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="@android:color/darker_gray"
+        android:background="@color/color_app_blue"
         android:text="Продолжить"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
