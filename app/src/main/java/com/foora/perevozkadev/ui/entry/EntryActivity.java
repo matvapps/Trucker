@@ -1,7 +1,6 @@
 package com.foora.perevozkadev.ui.entry;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.foora.foora.perevozkadev.R;
@@ -45,8 +44,7 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
 
         preferencesHelper = new SharedPrefsHelper(this);
 
-        Log.d(TAG, "onCreate: isLogged" + preferencesHelper.getUserLogged());
-        if (preferencesHelper.getUserLogged()) {
+        if (!preferencesHelper.getUserToken().equals("token ")) {
             openMainActivity();
             finish();
         }

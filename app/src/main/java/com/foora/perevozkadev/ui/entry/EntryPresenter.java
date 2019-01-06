@@ -60,7 +60,19 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
 
                         Log.d(TAG, "onResponse: register end with code : " + response.code());
 
-                        if (!response.isSuccessful()) {
+                        if (!response.isSuccessful() && response.body() != null) {
+
+                            if (response.body().getPassword() != null) {
+                                getMvpView().onError("Слишком слабый пароль");
+                                return;
+                            }
+
+                            if (response.body().getUsername() != null) {
+                                getMvpView().onError("Используйте другой логин");
+                                return;
+                            }
+
+
                             try {
                                 getMvpView().onError("Ошибка регистрации");
 
