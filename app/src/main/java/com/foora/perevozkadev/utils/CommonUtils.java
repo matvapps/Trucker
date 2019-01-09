@@ -72,7 +72,9 @@ public final class CommonUtils {
         return new String(buffer, "UTF-8");
     }
 
-    public static String getTimeStamp() {
-        return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.getDefault()).format(new Date());
-    }
+
+
+//    public static String getTimeStamp() {
+//        return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.getDefault()).format(new Date());
+//    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -29,11 +30,11 @@ public class LoginFragment extends BaseFragment {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
 
-    @BindView(R.id.edtxt_email)
-    EditText edtxtLogin;
+    @BindView(R.id.edtxt_login)
+    TextInputEditText edtxtLogin;
 
     @BindView(R.id.edtxt_password)
-    EditText edtxtPassword;
+    TextInputEditText edtxtPassword;
 
     @BindView(R.id.register_txtv)
     TextView registerTxtv;

@@ -52,7 +52,7 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
         setUnBinder(ButterKnife.bind(this));
 
         // by default open register fragment
-        showRegisterFragment();
+        showLoginFragment();
     }
 
     @Override

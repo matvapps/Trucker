@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <EditText
-            android:id="@+id/edtxt_email"
+            android:id="@+id/edtxt_login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:hint="Логин" />

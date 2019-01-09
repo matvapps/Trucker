@@ -29,7 +29,7 @@ public class RegisterFragment extends BaseFragment {
 
     public static final String TAG = RegisterFragment.class.getSimpleName();
 
-    @BindView(R.id.edtxt_email)
+    @BindView(R.id.edtxt_login)
     EditText edtxtLogin;
 
     @BindView(R.id.edtxt_password)
