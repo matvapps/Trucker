@@ -50,7 +50,7 @@
         app:tabMaxWidth="0dp"
         app:tabIndicatorColor="@android:color/transparent"
         app:tabTextColor="@color/colorOrangeLight"
-        app:tabSelectedTextColor="@color/colorOrange"
+        app:tabSelectedTextColor="@color/orange_yellow"
         app:tabMode="scrollable"
         app:tabPaddingStart="32dp" />
 

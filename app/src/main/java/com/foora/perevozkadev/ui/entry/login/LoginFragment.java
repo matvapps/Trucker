@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
@@ -30,8 +31,8 @@ public class LoginFragment extends BaseFragment {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
 
-    @BindView(R.id.login)
-    TextInputEditText edtxtLogin;
+    @BindView(R.id.login_input)
+    AppEditText edtxtLogin;
 
     @BindView(R.id.password_input)
     AppEditText edtxtPassword;
@@ -62,8 +63,8 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void initSpannableTextView() {
-        String spanString = "Если у вас еще нет учетной записи создайте ее тут или свяжитесь с тех. поддержкой";
-        String createHereStr = "создайте ее тут";
+        String spanString = "Создайте учетную запись если у Вас её ещё нет или же свяжитесь с тех. поддержкой";
+        String createHereStr = "Создайте учетную запись";
         String callManagerStr = "свяжитесь с тех. поддержкой";
 
         SpannableString registerSpannable = new SpannableString(spanString);
@@ -73,13 +74,24 @@ public class LoginFragment extends BaseFragment {
             public void onClick(@NonNull View view) {
                 listener.onCallRegister();
             }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(ds.linkColor);
+                ds.setUnderlineText(false);
+            }
         };
 
         ClickableSpan callManagerSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View view) {
-                showMessage("call manager");
                 listener.onCallManager();
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(ds.linkColor);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -92,6 +104,7 @@ public class LoginFragment extends BaseFragment {
         int callManagerEnd = callManagerStart + callManagerStr.length();
 
         registerSpannable.setSpan(callManagerSpan, callManagerStart, callManagerEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 
         registerTxtv.setText(registerSpannable);
         registerTxtv.setMovementMethod(LinkMovementMethod.getInstance());
@@ -116,6 +129,7 @@ public class LoginFragment extends BaseFragment {
     // EntryActivity must implement this interface
     public interface Callback extends FragmentCallback {
         void onTryLogin(String login, String password);
+
         void onCallRegister();
     }
 

@@ -123,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="28 299руб"
-                        android:textColor="@color/colorOrange"
+                        android:textColor="@color/orange_yellow"
                         android:textSize="16sp"/>
 
                     <TextView
@@ -157,7 +157,7 @@
                 android:text="CMR"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/orange_yellow"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +29,7 @@ public class AppEditText extends FrameLayout {
     private int lines;
 
     private TextInputEditText editText;
+    private TextInputLayout textInputLayout;
 
     public AppEditText(@NonNull Context context) {
         super(context);
@@ -60,9 +63,10 @@ public class AppEditText extends FrameLayout {
     }
 
     public void init() {
-        View view = inflate(getContext(), R.layout.layout, this);
+        View view = inflate(getContext(), R.layout.app_edit_text, this);
 
         editText = view.findViewById(R.id.edtxt);
+        textInputLayout = view.findViewById(R.id.edtxt_input);
 
         setSingleLine(singleLine);
         setInputType(inputType);
@@ -99,7 +103,8 @@ public class AppEditText extends FrameLayout {
 
     public void setHint(String hint) {
         this.hint = hint;
-        editText.setHint(hint);
+        textInputLayout.setHint(hint);
+//        editText.setHint(hint);
     }
 
     public void setText(String text) {
@@ -133,13 +138,14 @@ public class AppEditText extends FrameLayout {
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
                 return;
             case EMAIL:
-                editText.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 break;
             case PASSWORD:
-                editText.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                editText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
                 break;
             case PHONE:
-                editText.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+                editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_CLASS_PHONE);
                 break;
             case TEXT_MULTILINE:
                 editText.setInputType(android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);

@@ -2,9 +2,13 @@
 <resources>
     <color name="colorPrimary">@color/color_app_blue</color>
     <color name="colorPrimaryDark">@color/color_app_blue_dark</color>
-    <color name="colorAccent">@color/colorOrange</color>
+    <color name="colorAccent">@color/orange_yellow</color>
 
-    <color name="colorOrange">#FF6F00</color>
+    <color name="orange_yellow">#ffa000</color>
+    <color name="white">#ffffff</color>
+    <color name="mango">#fdb628</color>
+
+
     <color name="colorOrangeLight">#2dff6f00</color>
     <color name="colorVioletLight">#9EA7D9</color>
     <color name="color_background">#f5f5f5</color>
@@ -12,5 +16,8 @@
     <color name="color_app_blue">#4859A2</color>
     <color name="color_app_blue_middle">#364586</color>
     <color name="color_app_blue_dark">#263074</color>
+
+    <color name="colorTextHint">#84000000</color>
+    <color name="colorText">#000000</color>
 
 </resources>

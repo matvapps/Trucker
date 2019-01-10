@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.ui.entry.FragmentCallback;
+import com.github.matvapps.AppEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,11 +31,11 @@ public class RegisterFragment extends BaseFragment {
 
     public static final String TAG = RegisterFragment.class.getSimpleName();
 
-    @BindView(R.id.edtxt_login)
-    EditText edtxtLogin;
+    @BindView(R.id.login_input)
+    AppEditText edtxtLogin;
 
-    @BindView(R.id.edtxt_password)
-    EditText edtxtPassword;
+    @BindView(R.id.password_input)
+    AppEditText edtxtPassword;
 
     @BindView(R.id.call_manager_txtv)
     TextView callManagerTxtv;
@@ -76,12 +78,24 @@ public class RegisterFragment extends BaseFragment {
             public void onClick(@NonNull View view) {
                 listener.onCallManager();
             }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(ds.linkColor);
+                ds.setUnderlineText(false);
+            }
         };
 
         ClickableSpan loginSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View view) {
                 listener.onCallLogin();
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(ds.linkColor);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -123,6 +137,7 @@ public class RegisterFragment extends BaseFragment {
     // EntryActivity must implement this interface
     public interface Callback extends FragmentCallback {
         void onTryRegister(String login, String password, String group, String user_type);
+
         void onCallLogin();
     }
 

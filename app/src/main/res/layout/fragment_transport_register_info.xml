@@ -111,7 +111,7 @@
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/colorOrange"
+        android:background="@color/orange_yellow"
         android:text="Добавить транспорт"
         android:textColor="@android:color/white"
         android:textSize="15sp"

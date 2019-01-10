@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="colorAccent">@color/orange_yellow</item>
+        <item name="colorControlNormal">@color/orange_yellow</item>
+        <item name="colorControlActivated">@color/orange_yellow</item>
+    </style>
+
+</resources>

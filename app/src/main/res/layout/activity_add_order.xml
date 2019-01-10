@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
         app:tabTextColor="@color/colorOrangeLight"
-        app:tabSelectedTextColor="@color/colorOrange"
+        app:tabSelectedTextColor="@color/orange_yellow"
         app:tabIndicatorColor="@android:color/transparent"
         app:tabMode="scrollable"
         app:tabPaddingStart="32dp" />
