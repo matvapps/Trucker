@@ -3,5 +3,6 @@
 
     <color name="colorOrange">#FF6F00</color>
     <color name="color_background_gray">#eeeeee</color>
-
+    <color name="colorTextHint">#84000000</color>
+    <color name="colorText">#000000</color>
 </resources>

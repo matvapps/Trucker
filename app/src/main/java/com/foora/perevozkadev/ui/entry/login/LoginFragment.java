@@ -12,12 +12,12 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.ui.entry.FragmentCallback;
+import com.github.matvapps.AppEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,11 +30,11 @@ public class LoginFragment extends BaseFragment {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
 
-    @BindView(R.id.edtxt_login)
+    @BindView(R.id.login)
     TextInputEditText edtxtLogin;
 
-    @BindView(R.id.edtxt_password)
-    TextInputEditText edtxtPassword;
+    @BindView(R.id.password_input)
+    AppEditText edtxtPassword;
 
     @BindView(R.id.register_txtv)
     TextView registerTxtv;

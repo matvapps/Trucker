@@ -41,10 +41,7 @@ public class RouteDrawable extends FrameLayout {
     void getStyleableAttrs(AttributeSet attrs, Context context) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RouteDrawable);
 
-
         type = Type.fromId(a.getInt(R.styleable.RouteDrawable_rd_type, 23));
-
-        Log.d(TAG, "getStyleableAttrs: " + type.id);
 
         a.recycle();
     }
