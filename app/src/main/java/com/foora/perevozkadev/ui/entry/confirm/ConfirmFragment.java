@@ -7,11 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.github.matvapps.AppEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +27,9 @@ public class ConfirmFragment extends BaseFragment {
 
     private Callback listener;
 
-    @BindView(R.id.edtxt_phone)
-    EditText phoneEdtxt;
-    @BindView(R.id.edtxt_country_code)
-    EditText countryCodeEdtxt;
+    @BindView(R.id.phone)
+    AppEditText phoneEdtxt;
+
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
 
@@ -47,6 +47,14 @@ public class ConfirmFragment extends BaseFragment {
 
         setUnBinder(ButterKnife.bind(this, view));
 
+        phoneEdtxt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                onClick();
+                return true;
+            }
+            return false;
+        });
+
         return view;
     }
 
@@ -57,14 +65,13 @@ public class ConfirmFragment extends BaseFragment {
 
     @OnClick(R.id.btn_confirm)
     void onClick() {
-        String phone = phoneEdtxt.getText().toString();
-        String phoneCode = countryCodeEdtxt.getText().toString();
+        String phone = phoneEdtxt.getText();
 
-        if (phone.isEmpty() || phoneCode.isEmpty()) {
-            onError("Заполните все поля");
+        if (phone.isEmpty()) {
+            onError("Нужно ввести номер телефона");
         } else {
             if (listener != null)
-                listener.onReceivePhone(phoneCode + phone);
+                listener.onReceivePhone(phone);
         }
     }
 

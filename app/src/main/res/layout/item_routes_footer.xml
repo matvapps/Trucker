@@ -9,19 +9,21 @@
     android:padding="8dp">
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/ic_add_circle_outline" />
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/components_icons_add_box"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Добавить пункт"
+        android:fontFamily="sans-serif-medium"
         android:layout_gravity="center_vertical"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="12sp"
-        android:textStyle="bold"/>
+        android:textAllCaps="true"
+        android:textColor="@color/color_app_blue"
+        android:textSize="16sp"/>
 
 
 </LinearLayout>

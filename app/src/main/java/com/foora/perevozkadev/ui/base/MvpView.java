@@ -14,6 +14,8 @@ public interface MvpView {
 
     void onError(@StringRes int resId);
 
+    void showErrorMessage(String message);
+
     void onError(String message);
 
     void showMessage(String message);

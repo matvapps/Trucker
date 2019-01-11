@@ -113,6 +113,7 @@ public class ChooseCityView extends FrameLayout implements ChooseCityMvpView {
             country = countryAdapter.getItem(i).getName();
             if (listener != null)
                 listener.onCountryChanged(countryAdapter.getItem(i).getName());
+            countryPicker.setActivated(true);
             regionPicker.setEnabled(true);
             presenter.getRegionsInCountry(countryAdapter.getItem(i).getId());
         });
@@ -123,6 +124,7 @@ public class ChooseCityView extends FrameLayout implements ChooseCityMvpView {
             regionPicker.setText(regionAdapter.getItem(i).getName());
             if (listener != null)
                 listener.onRegionChanged(regionAdapter.getItem(i).getName());
+            regionPicker.setActivated(true);
             cityPicker.setEnabled(true);
             presenter.getCitiesInRegions(regionAdapter.getItem(i).getId());
 
@@ -132,6 +134,7 @@ public class ChooseCityView extends FrameLayout implements ChooseCityMvpView {
 //            citySelectedIndex = i;
             city = cityAdapter.getItem(i).getName();
             cityPicker.setText(cityAdapter.getItem(i).getName());
+            cityPicker.setActivated(true);
             if (listener != null)
                 listener.onCityChanged(cityAdapter.getItem(i).getName());
 

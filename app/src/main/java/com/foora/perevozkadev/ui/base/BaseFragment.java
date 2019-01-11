@@ -67,6 +67,13 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     }
 
     @Override
+    public void showErrorMessage(String message) {
+        if (mActivity != null) {
+            mActivity.showErrorMessage(message);
+        }
+    }
+
+    @Override
     public void onError(String message) {
         if (mActivity != null) {
             mActivity.onError(message);

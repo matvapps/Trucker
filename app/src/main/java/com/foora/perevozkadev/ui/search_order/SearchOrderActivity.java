@@ -66,16 +66,33 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
 
-        tabLayout.setupWithViewPager(viewPager);
-
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter());
-//        filters.add(new Filter());
 
         searchOrderPagerAdapter = new SearchOrderPagerAdapter(getSupportFragmentManager(), filters);
         viewPager.setAdapter(searchOrderPagerAdapter);
 
         viewPager.setCurrentItem(1, true);
+        tabLayout.setupWithViewPager(viewPager);
+//        View v = LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabLayout.getTabAt(0).setCustomView(R.layout.custom_tab);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tabLayout.getTabAt(0).setCustomView(R.layout.custom_tab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
 //

@@ -2,86 +2,110 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
-        android:text="Перевозка"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="24sp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:id="@+id/scrollView"
+        app:layout_constraintBottom_toTopOf="@+id/call_manager_txtv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Создайте свой аккаунт"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/login_input"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Button
-        style="@style/OrangeGradientBtnStyle"
-        android:id="@+id/btn_register"
-        android:layout_width="0dp"
-        android:layout_marginTop="32dp"
-        android:text="Зарегистрироваться"
-        app:layout_constraintEnd_toEndOf="@+id/password_input"
-        app:layout_constraintStart_toStartOf="@+id/password_input"
-        app:layout_constraintTop_toBottomOf="@+id/password_input" />
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    <com.github.matvapps.AppEditText
-        android:id="@+id/login_input"
-        style="@style/AppEditTextStyle"
-        android:layout_width="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        app:aet_hint="Логин"
-        app:aet_imeOption="actionNext"
-        app:aet_inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    <com.github.matvapps.AppEditText
-        android:id="@+id/password_input"
-        style="@style/AppEditTextStyle"
-        android:layout_width="0dp"
-        android:layout_marginTop="16dp"
-        app:aet_hint="Пароль"
-        app:aet_imeOption="actionDone"
-        app:aet_inputType="password"
-        app:layout_constraintEnd_toEndOf="@+id/login_input"
-        app:layout_constraintStart_toStartOf="@+id/login_input"
-        app:layout_constraintTop_toBottomOf="@+id/login_input" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="8dp"
+                android:text="Перевозка"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Создайте свой аккаунт"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/login_input"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/OrangeGradientBtnStyle"
+                android:layout_width="0dp"
+                android:layout_marginTop="32dp"
+                android:text="Зарегистрироваться"
+                app:layout_constraintEnd_toEndOf="@+id/password_input"
+                app:layout_constraintStart_toStartOf="@+id/password_input"
+                app:layout_constraintTop_toBottomOf="@+id/password_input" />
+
+
+            <com.github.matvapps.AppEditText
+                android:id="@+id/login_input"
+                style="@style/AppEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:aet_hint="Логин"
+                app:aet_imeOption="actionNext"
+                app:aet_inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+            <com.github.matvapps.AppEditText
+                android:id="@+id/password_input"
+                style="@style/AppEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_marginTop="16dp"
+                app:aet_hint="Пароль"
+                app:aet_imeOption="actionDone"
+                app:aet_inputType="password"
+                app:layout_constraintEnd_toEndOf="@+id/login_input"
+                app:layout_constraintStart_toStartOf="@+id/login_input"
+                app:layout_constraintTop_toBottomOf="@+id/login_input" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
 
     <TextView
         android:id="@+id/call_manager_txtv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:lineSpacingExtra="14sp"
         android:text="Если вы работаете в команде для регистрации
         свяжитесь с нашим менеджером"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:lineSpacingExtra="14sp"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@+id/divider" />
@@ -90,8 +114,8 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="0.57dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:alpha="0.6"
         android:background="@android:color/darker_gray"
@@ -104,11 +128,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
+        android:lineSpacingExtra="14sp"
         android:text="Войдите если у вас уже есть учетная запись"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:lineSpacingExtra="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@+id/divider" />

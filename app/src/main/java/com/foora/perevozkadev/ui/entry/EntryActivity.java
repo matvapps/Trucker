@@ -148,8 +148,8 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
         this.password = password;
 
 //        getPresenter().sendSms(login, password);
-
-        showConfirmFragment();
+            getPresenter().onCheckUserData(login, password);
+//        showConfirmFragment();
     }
 
     @Override

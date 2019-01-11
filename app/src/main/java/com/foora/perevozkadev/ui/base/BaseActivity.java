@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foora.perevozkadev.ui.error.ErrorDialogFragment;
 import com.foora.perevozkadev.utils.CommonUtils;
 import com.foora.perevozkadev.utils.NetworkUtils;
 
@@ -90,11 +91,20 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     }
 
     @Override
+    public void showErrorMessage(String message) {
+        if (message != null) {
+            ErrorDialogFragment.newInstance(message).show(getSupportFragmentManager());
+        } else {
+            ErrorDialogFragment.newInstance("Неизвестная ошибка").show(getSupportFragmentManager());
+        }
+    }
+
+    @Override
     public void onError(String message) {
         if (message != null) {
             showSnackBar(message);
         } else {
-            showSnackBar("No message");
+            showSnackBar("Неизвестная ошибка");
         }
     }
 

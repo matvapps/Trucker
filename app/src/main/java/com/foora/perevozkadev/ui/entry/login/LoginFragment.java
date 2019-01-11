@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -13,6 +12,8 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -40,11 +41,22 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.register_txtv)
     TextView registerTxtv;
 
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
+
     private Callback listener;
 
     @Override
     protected void setUp(View view) {
         initSpannableTextView();
+        scrollView.setEnabled(false);
+        edtxtPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                loginUser();
+                return true;
+            }
+            return false;
+        });
     }
 
     public static LoginFragment newInstance() {
@@ -120,10 +132,19 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.btn_login)
     void loginUser() {
-        String login = edtxtLogin.getText().toString();
-        String password = edtxtPassword.getText().toString();
+        String login = edtxtLogin.getText();
+        String password = edtxtPassword.getText();
 
-        listener.onTryLogin(login, password);
+        if (!login.isEmpty() && !password.isEmpty()) {
+            if (password.length() >= 6) {
+                listener.onTryLogin(login, password);
+            } else {
+                onError("Пароль не может быть менее 6 символов");
+            }
+        } else {
+            onError("Все поля должны быть заполнены");
+        }
+
     }
 
     // EntryActivity must implement this interface

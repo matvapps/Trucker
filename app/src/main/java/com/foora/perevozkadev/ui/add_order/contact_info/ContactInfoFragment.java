@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.github.matvapps.AppEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,19 +27,19 @@ public class ContactInfoFragment extends BaseFragment {
     private Callback listener;
 
     @BindView(R.id.contact_company)
-    EditText companyContactEdtxt;
+    AppEditText companyContactEdtxt;
     @BindView(R.id.contact_person)
-    EditText personContactEdtxt;
+    AppEditText personContactEdtxt;
     @BindView(R.id.contact_email)
-    EditText emailContactEdtxt;
+    AppEditText emailContactEdtxt;
     @BindView(R.id.contact_phone)
-    EditText phoneContactEdtxt;
+    AppEditText phoneContactEdtxt;
     @BindView(R.id.contact_skype)
-    EditText skypeContactEdtxt;
+    AppEditText skypeContactEdtxt;
     @BindView(R.id.contact_telegram)
-    EditText telegramContactEdtxt;
+    AppEditText telegramContactEdtxt;
     @BindView(R.id.contact_whatsapp)
-    EditText whatsappContactEdtxt;
+    AppEditText whatsappContactEdtxt;
 
 
     public static ContactInfoFragment newInstance() {
@@ -61,13 +61,13 @@ public class ContactInfoFragment extends BaseFragment {
     void onClick() {
         if (listener != null) {
 
-            if (companyContactEdtxt.getText().toString().isEmpty() ||
-                    personContactEdtxt.getText().toString().isEmpty() ||
-                    emailContactEdtxt.getText().toString().isEmpty() ||
-                    phoneContactEdtxt.getText().toString().isEmpty() ||
-                    skypeContactEdtxt.getText().toString().isEmpty() ||
-                    telegramContactEdtxt.getText().toString().isEmpty() ||
-                    whatsappContactEdtxt.getText().toString().isEmpty()) {
+            if (companyContactEdtxt.getText().isEmpty() ||
+                    personContactEdtxt.getText().isEmpty() ||
+                    emailContactEdtxt.getText().isEmpty() ||
+                    phoneContactEdtxt.getText().isEmpty() ||
+                    skypeContactEdtxt.getText().isEmpty() ||
+                    telegramContactEdtxt.getText().isEmpty() ||
+                    whatsappContactEdtxt.getText().isEmpty()) {
 
                 onError("Заполните все поля");
                 return;
@@ -75,13 +75,13 @@ public class ContactInfoFragment extends BaseFragment {
 
 
             listener.onReceiveContactInfo(
-                    companyContactEdtxt.getText().toString(),
-                    personContactEdtxt.getText().toString(),
-                    emailContactEdtxt.getText().toString(),
-                    phoneContactEdtxt.getText().toString(),
-                    skypeContactEdtxt.getText().toString(),
-                    telegramContactEdtxt.getText().toString(),
-                    whatsappContactEdtxt.getText().toString()
+                    companyContactEdtxt.getText(),
+                    personContactEdtxt.getText(),
+                    emailContactEdtxt.getText(),
+                    phoneContactEdtxt.getText(),
+                    skypeContactEdtxt.getText(),
+                    telegramContactEdtxt.getText(),
+                    whatsappContactEdtxt.getText()
             );
         }
     }

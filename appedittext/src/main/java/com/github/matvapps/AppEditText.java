@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 /**
@@ -155,7 +155,11 @@ public class AppEditText extends FrameLayout {
     }
 
     public String getText() {
-        return text;
+        return editText.getText().toString();
+    }
+
+    public void setOnEditorActionListener(EditText.OnEditorActionListener listener) {
+        editText.setOnEditorActionListener(listener);
     }
 
     public enum ImeOption {

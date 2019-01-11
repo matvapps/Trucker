@@ -16,203 +16,93 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="16dp">
 
-            <LinearLayout
+
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_whatsapp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+                android:layout_gravity="center"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Whatsapp" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_whatsapp"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Whatsapp"
-                        android:imeOptions="actionNext" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout6"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_telegram"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Telegram" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_telegram"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Telegram"
-                        android:imeOptions="actionNext" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout5"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_skype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Skype" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_skype"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Skype"
-                        android:imeOptions="actionNext" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout4"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Телефон"
+                app:aet_inputType="phone" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_phone"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Телефон"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:inputType="textEmailAddress"
+                app:aet_hint="Email" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_email"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Email"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_person"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Контактное лицо" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_person"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Контактное лицо"
-                        android:imeOptions="actionNext"
-                        android:inputType="text" />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
+                android:id="@+id/contact_company"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Компания"
+                app:aet_imeOption="actionNext" />
 
 
-
-                    <EditText
-                        android:id="@+id/contact_company"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Компания"
-                        android:imeOptions="actionNext" />
-
-
-
-            </LinearLayout>
-
-
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
 
     </ScrollView>

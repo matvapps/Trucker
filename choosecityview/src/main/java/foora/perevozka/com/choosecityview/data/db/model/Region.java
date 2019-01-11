@@ -14,7 +14,7 @@ import android.arch.persistence.room.PrimaryKey;
                 @ForeignKey(entity = Country.class,
                         parentColumns = "id_country",
                         childColumns = "id_country")}
- )
+)
 public class Region {
 
     @PrimaryKey

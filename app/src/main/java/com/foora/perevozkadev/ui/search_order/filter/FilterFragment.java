@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +23,7 @@ import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,13 +51,13 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
     @BindView(R.id.txtv_dates)
     TextView datesTxtv;
     @BindView(R.id.spinner_mass_from)
-    EditText massFrom;
+    AppEditText massFrom;
     @BindView(R.id.spinner_mass_to)
-    EditText massTo;
+    AppEditText massTo;
     @BindView(R.id.spinner_volume_from)
-    EditText volumeFrom;
+    AppEditText volumeFrom;
     @BindView(R.id.spinner_volume_to)
-    EditText volumeTo;
+    AppEditText volumeTo;
     @BindView(R.id.spinner_container)
     LinearLayout spinnerContainer;
     @BindView(R.id.transport_spinner)

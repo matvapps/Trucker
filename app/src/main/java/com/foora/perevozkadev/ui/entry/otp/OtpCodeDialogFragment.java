@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -42,6 +43,9 @@ public class OtpCodeDialogFragment extends BaseDialog implements OtpDialogMvpVie
     @BindView(R.id.txtv_no_code)
     TextView textView;
 
+//    @BindView(R.id.scrollView)
+//    ScrollView scrollView;
+
     private String confirmType;
     private Callback listener;
 
@@ -69,9 +73,9 @@ public class OtpCodeDialogFragment extends BaseDialog implements OtpDialogMvpVie
     }
 
     private void initSpannableTextView() {
-        String managerTextStr = "Если код не приходит отправьте еще раз или свяжитесь с нашей тех. поддержкой";
+        String managerTextStr = "Если код не приходит свяжитесь с нашей тех. поддержкой";
 
-        String resendCode = "отправьте еще раз";
+//        String resendCode = "отправьте еще раз";
         String callManager = "нашей тех. поддержкой";
 
         SpannableString managerSpannable = new SpannableString(managerTextStr);
@@ -88,15 +92,21 @@ public class OtpCodeDialogFragment extends BaseDialog implements OtpDialogMvpVie
             public void onClick(@NonNull View view) {
 
             }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(ds.linkColor);
+                ds.setUnderlineText(false);
+            }
         };
 
         int callManagerStart = managerTextStr.indexOf(callManager);
         int callManagerEnd = callManagerStart + callManager.length();
         managerSpannable.setSpan(callManagerSpan, callManagerStart, callManagerEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        int resendCodeStart = managerTextStr.indexOf(resendCode);
-        int resendCodeEnd = resendCodeStart + resendCode.length();
-        managerSpannable.setSpan(resendCodeSpan, resendCodeStart, resendCodeEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        int resendCodeStart = managerTextStr.indexOf(resendCode);
+//        int resendCodeEnd = resendCodeStart + resendCode.length();
+//        managerSpannable.setSpan(resendCodeSpan, resendCodeStart, resendCodeEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textView.setText(managerSpannable);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -106,6 +116,7 @@ public class OtpCodeDialogFragment extends BaseDialog implements OtpDialogMvpVie
     @Override
     protected void setUp(View view) {
         initSpannableTextView();
+//        scrollView.setEnabled(false);
         pinView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int before, int count) {

@@ -14,6 +14,7 @@ import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.add_order.route.model.RouteItem;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.foora.perevozkadev.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +142,11 @@ public class RouteFragment extends BaseFragment {
                 chooseCityView.setTitle("Место выгрузки");
                 break;
         }
-        chooseCityView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,ViewUtils.dpToPx(8),0,0);
+
+        chooseCityView.setLayoutParams(layoutParams);
         return chooseCityView;
     }
 

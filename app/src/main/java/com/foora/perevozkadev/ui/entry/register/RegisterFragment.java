@@ -12,7 +12,7 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -59,6 +59,14 @@ public class RegisterFragment extends BaseFragment {
 
         setUnBinder(ButterKnife.bind(this, view));
         initSpannableTextView();
+
+        edtxtPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                registerUser();
+                return true;
+            }
+            return false;
+        });
 
         return view;
     }
@@ -116,10 +124,19 @@ public class RegisterFragment extends BaseFragment {
 
     @OnClick(R.id.btn_register)
     void registerUser() {
-        String login = edtxtLogin.getText().toString();
-        String password = edtxtPassword.getText().toString();
+        String login = edtxtLogin.getText();
+        String password = edtxtPassword.getText();
 
-        listener.onTryRegister(login, password, "owner", "1");
+        if (!login.isEmpty() && !password.isEmpty()) {
+            if (password.length() >= 6) {
+                listener.onTryRegister(login, password, "owner", "1");
+            } else {
+                onError("Пароль должен быть не менее 6 символов");
+            }
+        } else {
+            onError("Все поля должны быть заполнены");
+        }
+
     }
 
     @Override

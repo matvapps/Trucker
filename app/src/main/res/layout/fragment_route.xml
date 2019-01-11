@@ -37,7 +37,7 @@
             <include
                 android:id="@+id/add_route"
                 layout="@layout/item_routes_footer"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/routes_list"
@@ -60,7 +60,7 @@
             <include
                 android:id="@+id/add_route_2"
                 layout="@layout/item_routes_footer"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/routes_list_2"

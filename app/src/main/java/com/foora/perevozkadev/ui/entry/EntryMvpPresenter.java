@@ -8,6 +8,8 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
  */
 public interface EntryMvpPresenter<V extends EntryMvpView> extends MvpPresenter<V> {
 
+    void onCheckUserData(String login, String password);
+
     void onRegisterClick(String login, String password,
                          String phone, String userType, String group);
 

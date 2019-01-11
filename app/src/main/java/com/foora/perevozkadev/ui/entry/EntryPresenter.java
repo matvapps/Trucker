@@ -2,7 +2,6 @@ package com.foora.perevozkadev.ui.entry;
 
 import android.util.Log;
 
-import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
@@ -29,6 +28,62 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
         super(dataManager, scheduler);
     }
 
+
+    @Override
+    public void onCheckUserData(String login, String password) {
+        if (!isViewAttached())
+            return;
+
+        getMvpView().showLoading();
+
+        getDataManager().register(login, password, "", "", "")
+                .enqueue(new Callback<RegisterResponse>() {
+                    @Override
+                    public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                        if (!isViewAttached())
+                            return;
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: check user data end with code : " + response.code());
+
+                        if (!response.isSuccessful()) {
+
+                            try {
+                                Gson gson = new Gson();
+                                RegisterResponse errorResponse = gson.fromJson(response.errorBody().string(), RegisterResponse.class);
+
+                                String errorList = errorResponse.getListOfErrors().toString();
+                                Log.d(TAG, "onResponse: " + errorList);
+
+                                if (errorList.contains("username")) {
+                                    getMvpView().showErrorMessage("Пользователь с таким логином уже существует");
+                                    return;
+                                }
+
+                                if (errorList.contains("password")) {
+                                    getMvpView().showErrorMessage("Слишком слабый пароль");
+                                    return;
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            getMvpView().showConfirmFragment();
+
+                        } else {
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                    }
+                });
+
+    }
+
     @Override
     public void onRegisterClick(String login, String password,
                                 String phone, String userType, String group) {
@@ -36,18 +91,6 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
         if (!isViewAttached())
             return;
 
-/*        if (email == null || email.isEmpty()) {
-            getMvpView().onError(R.string.empty_email);
-            return;
-        }*/
-//        if (!CommonUtils.isEmailValid(email)) {
-//            getMvpView().onError(R.string.invalid_email);
-//            return;
-//        }
-        if (password == null || password.isEmpty()) {
-            getMvpView().onError(R.string.empty_password);
-            return;
-        }
         getMvpView().showLoading();
 
         getDataManager().register(login, password, phone, userType, group)
@@ -63,12 +106,12 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
                         if (!response.isSuccessful() && response.body() != null) {
 
                             if (response.body().getPassword() != null) {
-                                getMvpView().onError("Слишком слабый пароль");
+                                getMvpView().showErrorMessage("Слишком слабый пароль");
                                 return;
                             }
 
                             if (response.body().getUsername() != null) {
-                                getMvpView().onError("Используйте другой логин");
+                                getMvpView().showErrorMessage("Пользователь с таким логином уже существует");
                                 return;
                             }
 
@@ -97,13 +140,11 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                        if (!isViewAttached())
-                            return;
+                        getMvpView().hideLoading();
 
                         getMvpView().onError("Ошибка регистрации");
 
                         call.cancel();
-                        getMvpView().hideLoading();
                         Log.d(TAG, "onFailure: " + t.getMessage());
 
                     }
@@ -127,6 +168,11 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
                 Log.d(TAG, "onResponse: login end with code = " + response.code());
 
                 if (!response.isSuccessful()) {
+
+                    if (response.code() == 401) {
+                        getMvpView().showErrorMessage("Неверный логин или пароль");
+                    }
+
                     try {
 
                         Log.e(TAG, "onResponse: " + response.errorBody().string());
@@ -235,11 +281,17 @@ public class EntryPresenter<V extends EntryMvpView> extends BasePresenter<V> imp
                         if (!response.isSuccessful()) {
 
                             try {
-                                Log.d(TAG, "onResponse: " + response.errorBody().string());
+                                String error = response.errorBody().string();
+                                Log.d(TAG, "onResponse: " + error);
 //                                Gson gson = new Gson();
 ////                                ActivateResponse errorResponse = gson.fromJson(response.errorBody().string(), ActivateResponse.class);
 ////                                Log.d(TAG, gson.toJson(errorResponse));
 //
+
+                                if (error.contains("sms_code")) {
+                                    getMvpView().showErrorMessage("Неверный смс код");
+                                }
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

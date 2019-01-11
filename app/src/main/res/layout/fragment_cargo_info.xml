@@ -17,39 +17,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:id="@+id/cardView5"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_background"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/text3"
                 app:layout_constraintTop_toBottomOf="@+id/text4">
 
-                <android.support.constraint.ConstraintLayout
+                <EditText
+                    android:id="@+id/edtxt_car_quantity"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:inputType="number"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent" />
 
-                    <EditText
-                        android:id="@+id/edtxt_car_quantity"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@null"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:inputType="number"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_default="percent" />
-
-                </android.support.constraint.ConstraintLayout>
-
-            </android.support.v7.widget.CardView>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/text"
@@ -57,22 +52,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Характеристики груза"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#fff"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="3dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/text"
                 app:layout_constraintTop_toBottomOf="@+id/text">
@@ -81,33 +74,26 @@
                     android:id="@+id/date_range_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Даты"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
                         android:id="@+id/txtv_dates"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:hint="01.01.2000 - 05.01.2000"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/edit_text_background"
+                        android:gravity="center_vertical"
+                        android:hint="Даты загрузки/выгрузки"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="@+id/textView4"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -117,130 +103,69 @@
                         android:src="@drawable/ic_today"
                         app:layout_constraintBottom_toBottomOf="@+id/txtv_dates"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/txtv_dates" />
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtv_dates" />
-
-                    <EditText
+                    <com.github.matvapps.AppEditText
                         android:id="@+id/spinner_mass_from"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="60dp"
                         android:layout_marginTop="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Масса от"
-                        android:inputType="number"
-                        app:layout_constraintStart_toStartOf="@+id/txtv_dates"
-                        app:layout_constraintTop_toBottomOf="@+id/view"
+                        app:aet_hint="Масса от"
+                        app:aet_inputType="phone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtv_dates"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.43" />
+                        app:layout_constraintWidth_percent="0.49" />
 
-                    <EditText
+                    <com.github.matvapps.AppEditText
                         android:id="@+id/spinner_mass_to"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@null"
+                        android:layout_height="60dp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Масса до"
-                        android:inputType="number"
+                        app:aet_hint="Масса до"
+                        app:aet_inputType="phone"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_mass_from"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/spinner_mass_from"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.43" />
+                        app:layout_constraintWidth_percent="0.49" />
 
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintStart_toStartOf="@+id/view"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_mass_from"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.46" />
-
-                    <EditText
+                    <com.github.matvapps.AppEditText
                         android:id="@+id/spinner_volume_from"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="60dp"
                         android:layout_marginTop="8dp"
-                        android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Объем от"
-                        android:inputType="number"
+                        app:aet_hint="Объем от"
+                        app:aet_inputType="phone"
                         app:layout_constraintStart_toStartOf="@+id/txtv_dates"
-                        app:layout_constraintTop_toBottomOf="@+id/divider"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_mass_from"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.43" />
+                        app:layout_constraintWidth_percent="0.49" />
 
-                    <EditText
+                    <com.github.matvapps.AppEditText
                         android:id="@+id/spinner_volume_to"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@null"
+                        android:layout_height="60dp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="Объем до"
-                        android:inputType="number"
+                        app:aet_hint="Объем до"
+                        app:aet_inputType="phone"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_volume_from"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/spinner_volume_from"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.43" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintEnd_toEndOf="@+id/view3"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_volume_to"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.46" />
-
-                    <View
-                        android:id="@+id/view3"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintEnd_toEndOf="@+id/view"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_mass_to"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.46" />
-
-                    <View
-                        android:id="@+id/view4"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintStart_toStartOf="@+id/divider"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_volume_from"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.46" />
+                        app:layout_constraintWidth_percent="0.49" />
 
 
                 </android.support.constraint.ConstraintLayout>
 
 
-            </android.support.v7.widget.CardView>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/text2"
@@ -248,8 +173,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Транспорт"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
@@ -257,7 +183,6 @@
                 android:id="@+id/spinner_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@+id/cardView2"
                 app:layout_constraintStart_toStartOf="@+id/text2"
@@ -266,7 +191,8 @@
                 <com.foora.perevozkadev.utils.custom.CustomSpinner
                     android:id="@+id/transport_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp" />
 
             </LinearLayout>
 
@@ -277,29 +203,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintStart_toStartOf="@+id/spinner_container"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_container">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="4dp"
-                    android:src="@drawable/ic_add_circle_outline" />
+                    android:src="@drawable/components_icons_add_box" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
-                    android:text="Добавить тип транспорта"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:text="Добавить ТС"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_app_blue"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -310,9 +238,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Стоимость"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/add_transport"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/spinner_container"
                 app:layout_constraintTop_toBottomOf="@+id/add_transport" />
 
             <TextView
@@ -321,16 +250,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Количество автомобилей"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/cardView4"
                 app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:id="@+id/cardView4"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_background"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintStart_toStartOf="@+id/text3"
                 app:layout_constraintTop_toBottomOf="@+id/text3">
@@ -366,16 +297,7 @@
 
                 </android.support.constraint.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
-
-
-            <!--<android.support.constraint.ConstraintLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--app:layout_constraintEnd_toEndOf="@+id/cardView5"-->
-                <!--app:layout_constraintStart_toStartOf="@+id/cardView5"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/cardView5">-->
+            </FrameLayout>
 
 
             <TextView
@@ -384,8 +306,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Ширина"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/cardView5"
                 app:layout_constraintTop_toBottomOf="@+id/cardView5" />
 
@@ -399,10 +322,11 @@
                 app:layout_constraintWidth_percent="0.28">
 
                 <EditText
+
                     android:id="@+id/edtxt_width"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/edit_text_background"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:inputType="number"
@@ -417,8 +341,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Высота"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/cardView5" />
 
@@ -432,10 +357,11 @@
                 app:layout_constraintWidth_percent="0.28">
 
                 <EditText
+
                     android:id="@+id/edtxt_height"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/edit_text_background"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:inputType="number"
@@ -451,8 +377,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Глубина"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/cardView6"
                 app:layout_constraintTop_toBottomOf="@+id/cardView5" />
 
@@ -467,10 +394,11 @@
                 app:layout_constraintWidth_percent="0.28">
 
                 <EditText
+
                     android:id="@+id/edtxt_depth"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/edit_text_background"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:inputType="number"

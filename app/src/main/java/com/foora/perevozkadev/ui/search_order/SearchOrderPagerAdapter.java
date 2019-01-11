@@ -1,7 +1,6 @@
 package com.foora.perevozkadev.ui.search_order;
 
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -32,12 +31,11 @@ public class SearchOrderPagerAdapter extends ArrayFragmentPagerAdapter<Filter> {
         }
     }
 
-    @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "+";
+                return "";
             default:
                 return "RU - UA";
         }

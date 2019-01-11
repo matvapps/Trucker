@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,13 +49,13 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @BindView(R.id.txtv_dates)
     TextView datesTxtv;
     @BindView(R.id.spinner_mass_from)
-    EditText massFrom;
+    AppEditText massFrom;
     @BindView(R.id.spinner_mass_to)
-    EditText massTo;
+    AppEditText massTo;
     @BindView(R.id.spinner_volume_from)
-    EditText volumeFrom;
+    AppEditText volumeFrom;
     @BindView(R.id.spinner_volume_to)
-    EditText volumeTo;
+    AppEditText volumeTo;
     @BindView(R.id.spinner_container)
     LinearLayout spinnerContainer;
     @BindView(R.id.transport_spinner)
@@ -120,11 +122,28 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
         spinner.setBackground(transparentDrawable);
         spinner.setDropDownVerticalOffset(ViewUtils.dpToPx(60));
-        spinner.setLayoutParams(new ViewGroup.LayoutParams
-                (ViewGroup.LayoutParams.MATCH_PARENT, ViewUtils.dpToPx(60)));
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewUtils.dpToPx(60));
+        layoutParams.setMargins(0,ViewUtils.dpToPx(8),0,0);
+
+        spinner.setLayoutParams(layoutParams);
+
 
         SpinnerArrayAdapter spinnerArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
         spinner.setAdapter(spinnerArrayAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                view.setActivated(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinner.setActivated(false);
+            }
+        });
 
         spinnerContainer.addView(spinner);
     }
@@ -154,10 +173,10 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             Log.d(TAG, "onClick: " + dateEnd);
 
 
-            if (massFrom.getText().toString().isEmpty() ||
-                    massTo.getText().toString().isEmpty() ||
-                    volumeFrom.getText().toString().isEmpty() ||
-                    volumeTo.getText().toString().isEmpty() ||
+            if (massFrom.getText().isEmpty() ||
+                    massTo.getText().isEmpty() ||
+                    volumeFrom.getText().isEmpty() ||
+                    volumeTo.getText().isEmpty() ||
                     costEdtxt.getText().toString().isEmpty() ||
                     carQuantEdtxt.getText().toString().isEmpty() ||
                     widthEdtxt.getText().toString().isEmpty() ||
@@ -169,12 +188,12 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             }
 
             // read mass
-            massFromNum = Float.parseFloat(massFrom.getText().toString());
-            massToNum = Float.parseFloat(massTo.getText().toString());
+            massFromNum = Float.parseFloat(massFrom.getText());
+            massToNum = Float.parseFloat(massTo.getText());
 
             // read volume
-            volumeFromNum = Float.parseFloat(volumeFrom.getText().toString());
-            volumeToNum = Float.parseFloat(volumeTo.getText().toString());
+            volumeFromNum = Float.parseFloat(volumeFrom.getText());
+            volumeToNum = Float.parseFloat(volumeTo.getText());
 
             // read transport types
             for (int i = 0; i < spinnerContainer.getChildCount(); i++) {
@@ -252,6 +271,19 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         transportArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
         costArrayAdapter = new SpinnerArrayAdapter(getContext(), cost, false);
 
+//        transportSpinner.setOnItemClickListener((parent, view1, position, id) -> view1.setActivated(true));
+        transportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                view.setActivated(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                transportSpinner.setActivated(false);
+            }
+        });
+
         transportSpinner.setBackground(transparentDrawable);
         currencySpinner.setBackground(transparentDrawable);
 
@@ -264,6 +296,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     public void onRangeSelected(Calendar startDate, Calendar endDate) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
         datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
+        datesTxtv.setActivated(true);
     }
 
     public interface Callback {

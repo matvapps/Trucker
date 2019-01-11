@@ -18,8 +18,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content">
 
 
             <TextView
@@ -45,12 +44,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 app:itemCount="4"
+                app:itemHeight="60dp"
+                app:itemWidth="42dp"
+                app:itemSpacing="16dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
                 app:layout_constraintEnd_toEndOf="@+id/textView"
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:lineColor="@android:color/darker_gray"
-                app:lineWidth="2dp"
-                app:viewType="line" />
+                app:lineColor="@color/otp_code_line_color"
+                app:itemRadius="4dp"
+                app:lineWidth="1dp" />
 
             <TextView
                 android:id="@+id/txtv_no_code"
@@ -64,6 +68,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
+                android:lineSpacingExtra="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
