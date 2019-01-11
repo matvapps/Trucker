@@ -66,50 +66,56 @@
                     app:layout_constraintTop_toBottomOf="@+id/toolbar"
                     tools:layout_height="50dp" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/name"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Имя" />
+                    app:aet_hint="Имя"
+                    app:aet_imeOption="actionNext" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/surname"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Фамилия" />
+                    app:aet_hint="Фамилия"
+                    app:aet_imeOption="actionNext" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/phone"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Номер телефона"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    app:aet_hint="Номер телефона"
+                    app:aet_imeOption="actionNext" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/email"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    app:aet_hint="Email"
+                    app:aet_imeOption="actionNext" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/login"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Логин" />
+                    app:aet_hint="Логин"
+                    app:aet_imeOption="actionNext" />
 
-                <EditText
+                <com.github.matvapps.AppEditText
                     android:id="@+id/password"
-                    style="@style/EditTextStyle"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:hint="Пароль"
-                    android:inputType="textPassword" />
+                    app:aet_hint="Пароль"
+                    app:aet_imeOption="actionDone"
+                    app:aet_inputType="password" />
 
             </LinearLayout>
 
@@ -120,12 +126,9 @@
 
     <Button
         android:id="@+id/add_employee"
+        style="@style/BtnOrangeStyle"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/orange_yellow"
         android:text="Добавить сотрудника"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -25,7 +25,7 @@
 
     </style>
 
-    
+
     <style name="EditTextStyle" parent="Base.Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:textSize">17sp</item>
@@ -44,11 +44,28 @@
         <item name="android:minHeight">120dp</item>
     </style>
 
-    <style name="OrangeGradientBtnStyle" parent="Base.Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_gradient_background</item>
+    <style name="BtnRoundOrangeStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_round_gradient_bg</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_height">60dp</item>
+        <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="BtnOrangeStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_gradient_bg</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="BtnBlueStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@color/color_app_blue</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
     </style>
 
     <style name="AppEditTextStyle" parent="AppTheme">

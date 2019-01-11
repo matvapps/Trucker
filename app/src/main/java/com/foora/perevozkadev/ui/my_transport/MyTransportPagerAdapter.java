@@ -12,7 +12,11 @@ public class MyTransportPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return TransportsFragment.newInstance();
+        if (i == 0) {
+            return TransportsFragment.newInstance(TransportsFragment.GARAGE_TYPE);
+        } else {
+            return TransportsFragment.newInstance(TransportsFragment.ARCHIVE_TYPE);
+        }
     }
 
     @Override

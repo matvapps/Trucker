@@ -111,7 +111,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         return rootView;
     }
 
-    @OnClick(R.id.date_range_container)
+    @OnClick(R.id.txtv_dates)
     void onDateRangeClick() {
         showDateRangePicker();
     }
@@ -295,8 +295,12 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @Override
     public void onRangeSelected(Calendar startDate, Calendar endDate) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
-        datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
-        datesTxtv.setActivated(true);
+        if (startDate != null && endDate != null) {
+            datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
+            datesTxtv.setActivated(true);
+        } else {
+
+        }
     }
 
     public interface Callback {

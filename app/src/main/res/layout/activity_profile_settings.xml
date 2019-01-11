@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:text="Добавить транспорт"
+            android:text="Настройки"
             android:textColor="@color/color_app_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_back"

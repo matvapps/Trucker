@@ -72,8 +72,14 @@ public class DateRangePickerDialog extends BaseDialog {
 
     @OnClick(R.id.btn_choose)
     void onClick() {
-        listener.onRangeSelected(start, end);
-        dismiss();
+        if (start != null && end != null) {
+            listener.onRangeSelected(start, end);
+            dismiss();
+        } else {
+            showErrorMessage("Нужно выбрать две даты");
+        }
+
+        start = null; end = null;
     }
 
     public interface Callback {

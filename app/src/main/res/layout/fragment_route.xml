@@ -17,7 +17,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
@@ -85,11 +85,9 @@
     <Button
         android:id="@+id/btn_main"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="@color/color_app_blue"
         android:text="Продолжить"
-        android:textColor="@android:color/white"
+        style="@style/BtnBlueStyle"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

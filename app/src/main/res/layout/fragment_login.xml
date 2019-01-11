@@ -47,7 +47,7 @@
 
             <Button
                 android:id="@+id/btn_login"
-                style="@style/OrangeGradientBtnStyle"
+                style="@style/BtnRoundOrangeStyle"
                 android:layout_width="0dp"
                 android:layout_marginTop="32dp"
                 android:text="Войти"

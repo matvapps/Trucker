@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -91,6 +94,12 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         addOrderPagerAdapter = new AddOrderPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(addOrderPagerAdapter);
         viewPager.setPagingEnabled(false);
+
+        LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        tabStrip.setEnabled(false);
+        for (int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener((v, event) -> true);
+        }
     }
 
     @Override

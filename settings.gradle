@@ -1,1 +1,1 @@
-include ':app', ':choosecityview', ':routedisplayview', ':appedittext'
+include ':app', ':choosecityview', ':routedisplayview', ':appedittext', ':gallery'

@@ -32,6 +32,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TransportsFragment extends BasePresenterFragment<MyTransportPresenter> implements MyTransportMvpView {
 
+    private static final String TYPE_KEY = "transport_type";
+
+    public static final String GARAGE_TYPE = "garage";
+    public static final String ARCHIVE_TYPE = "archive";
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -40,9 +45,10 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
 
     private TransportAdapter transportAdapter;
 
-    public static TransportsFragment newInstance() {
+    public static TransportsFragment newInstance(String type) {
         Bundle args = new Bundle();
         TransportsFragment fragment = new TransportsFragment();
+        args.putString(TYPE_KEY, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,13 +84,25 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
 
         setUnBinder(ButterKnife.bind(this, view));
 
+        String screenType = getArguments().getString(TYPE_KEY, GARAGE_TYPE);
+
         transportAdapter = new TransportAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(transportAdapter);
 
         transportAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 
-        getPresenter().getUserTransport();
+        switch (screenType) {
+            case GARAGE_TYPE: {
+                getPresenter().getUserTransport();
+                break;
+            }
+            case ARCHIVE_TYPE: {
+                btnAddTransport.hide();
+                break;
+            }
+        }
+
     }
 
     @Override

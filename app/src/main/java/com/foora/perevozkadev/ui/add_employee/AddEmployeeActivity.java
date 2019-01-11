@@ -17,6 +17,7 @@ import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PreferencesHelper;
 import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
+import com.github.matvapps.AppEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +33,12 @@ public class AddEmployeeActivity extends BasePresenterActivity<AddEmployeeMvpPre
     private Button addEmployeeBtn;
     private View btnBack;
 
-    private EditText nameEdtxt;
-    private EditText surnameEdtxt;
-    private EditText phoneEdtxt;
-    private EditText emailEdtxt;
-    private EditText loginEdtxt;
-    private EditText passwordEdtxt;
+    private AppEditText nameEdtxt;
+    private AppEditText surnameEdtxt;
+    private AppEditText phoneEdtxt;
+    private AppEditText emailEdtxt;
+    private AppEditText loginEdtxt;
+    private AppEditText passwordEdtxt;
 
     private UserTypeAdapter userTypeAdapter;
 
@@ -93,12 +94,12 @@ public class AddEmployeeActivity extends BasePresenterActivity<AddEmployeeMvpPre
 
     private void addEmployee() {
         String group = "";
-        String firstName = nameEdtxt.getText().toString();
-        String lastName = surnameEdtxt.getText().toString();
-        String phone = phoneEdtxt.getText().toString();
-        String email = emailEdtxt.getText().toString();
-        String login = loginEdtxt.getText().toString();
-        String password = passwordEdtxt.getText().toString();
+        String firstName = nameEdtxt.getText();
+        String lastName = surnameEdtxt.getText();
+        String phone = phoneEdtxt.getText();
+        String email = emailEdtxt.getText();
+        String login = loginEdtxt.getText();
+        String password = passwordEdtxt.getText();
 
         if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty()
                 || email.isEmpty() || login.isEmpty() || password.isEmpty()) {

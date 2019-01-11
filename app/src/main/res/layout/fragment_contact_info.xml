@@ -24,8 +24,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_whatsapp"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:focusable="true"
@@ -34,8 +34,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_telegram"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -45,8 +45,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_skype"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -56,8 +56,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_phone"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -68,8 +68,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_email"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -80,8 +80,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_person"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -91,8 +91,8 @@
 
 
             <com.github.matvapps.AppEditText
-                style="@style/AppEditTextStyle"
                 android:id="@+id/contact_company"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -109,12 +109,10 @@
 
     <Button
         android:id="@+id/btn_main"
+        style="@style/BtnOrangeStyle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="@color/orange_yellow"
         android:text="Подтвердить заявку"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
