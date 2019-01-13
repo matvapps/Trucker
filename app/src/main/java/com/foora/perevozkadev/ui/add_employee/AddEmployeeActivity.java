@@ -7,15 +7,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.github.matvapps.AppEditText;
 
@@ -136,8 +137,9 @@ public class AddEmployeeActivity extends BasePresenterActivity<AddEmployeeMvpPre
     @Override
     protected AddEmployeeMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper prefs = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs);
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
 
         AddEmployeeMvpPresenter presenter = new AddEmployeePresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);

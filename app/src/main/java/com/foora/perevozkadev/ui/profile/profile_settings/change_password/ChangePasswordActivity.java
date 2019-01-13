@@ -4,21 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.chaos.view.PinView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
+import com.github.matvapps.AppEditText;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -30,10 +32,10 @@ public class ChangePasswordActivity extends BasePresenterActivity<ProfileSetting
     private View btnDone;
     private View btnSubmit;
 
-    private EditText loginEdtxt;
-    private EditText oldPasswordEdtxt;
-    private EditText newPasswordEdtxt;
-    private EditText repeatPasswordEdtxt;
+    private AppEditText loginEdtxt;
+    private AppEditText oldPasswordEdtxt;
+    private AppEditText newPasswordEdtxt;
+    private AppEditText repeatPasswordEdtxt;
 
     private View smsCodeContainer;
     private PinView smsCode;
@@ -100,9 +102,9 @@ public class ChangePasswordActivity extends BasePresenterActivity<ProfileSetting
     @Override
     protected ProfileSettingsMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper prefs = new SharedPrefsHelper(this);
-
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs);
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
 
         ProfileSettingsMvpPresenter presenter = new ProfileSettingsPresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);

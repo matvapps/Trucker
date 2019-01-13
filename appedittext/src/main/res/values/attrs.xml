@@ -8,6 +8,7 @@
             <enum name="phone" value="1"/>
             <enum name="email" value="2"/>
             <enum name="text" value="3"/>
+            <enum name="number" value="10"/>
             <enum name="textMultiline" value="4"/>
         </attr>
         <attr name="aet_imeOption" format="enum">

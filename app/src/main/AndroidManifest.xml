@@ -9,13 +9,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name="com.foora.perevozkadev.PerevozkaApp"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name="com.foora.perevozkadev.service.SyncService" />
 
@@ -32,8 +33,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.add_order.AddOrderActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme.White"/>
+            android:theme="@style/AppTheme.White"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.search_order.SearchOrderActivity"
             android:screenOrientation="portrait"
@@ -41,8 +42,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme.White"/>
+            android:theme="@style/AppTheme.White"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.my_transport.MyTransportActivity"
             android:screenOrientation="portrait"
@@ -50,8 +51,8 @@
         <activity
             android:name="com.foora.perevozkadev.ui.add_transport.AddTransportActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme.White"/>
+            android:theme="@style/AppTheme.White"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name="com.foora.perevozkadev.ui.transport.TransportActivity" />
 
         <meta-data
@@ -83,14 +84,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.foora.perevozkadev.ui.employees.EmployeesActivity"
+            android:name="com.foora.perevozkadev.ui.staff.EmployeesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.add_employee.AddEmployeeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme.White" />
+            android:theme="@style/AppTheme.White"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.employee.EmployeeActivity"
             android:screenOrientation="portrait"

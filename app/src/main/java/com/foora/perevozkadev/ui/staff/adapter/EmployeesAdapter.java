@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.employees.adapter;
+package com.foora.perevozkadev.ui.staff.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +61,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private class EmployeeViewHolder extends BaseViewHolder {
 
         private ImageView userImage;
+        private TextView userShortNameTxtv;
         private TextView userName;
         private TextView userPhone;
 
@@ -69,6 +70,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             userImage = itemView.findViewById(R.id.user_image);
             userName = itemView.findViewById(R.id.user_name);
             userPhone = itemView.findViewById(R.id.user_phone);
+            userShortNameTxtv = itemView.findViewById(R.id.short_name);
         }
 
         @Override
@@ -83,8 +85,28 @@ public class EmployeesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (listener != null)
                 itemView.setOnClickListener(v -> listener.onClick(profile));
 
-            userName.setText(String.format("%s %s", profile.getFirstName(), profile.getLastName()));
+            String name = String.format("%s %s", profile.getFirstName(), profile.getLastName());
+
+            userName.setText(name);
             userPhone.setText(profile.getPhone());
+
+            if (!name.equals(" ")) {
+
+                StringBuilder shortName = new StringBuilder();
+
+                String[] names = name.split(" ");
+                for (int i = 0; i < names.length; i++) {
+                    if (i == 2) break;
+
+                    if (names[i].length() > 1)
+                        shortName.append(names[i].substring(0, 1));
+                }
+
+                if (!shortName.toString().equals("")) {
+                    userShortNameTxtv.setText(shortName.toString());
+                }
+
+            }
         }
     }
 

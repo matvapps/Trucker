@@ -58,12 +58,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/name_edtxt"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
+            app:aet_imeOption="actionNext"
+
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Название профиля" />
+            app:aet_hint="Название профиля" />
 
         <TextView
             android:layout_marginTop="8dp"

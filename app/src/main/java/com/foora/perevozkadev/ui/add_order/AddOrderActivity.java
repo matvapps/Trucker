@@ -9,23 +9,23 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.cargo_info.CargoInfoFragment;
 import com.foora.perevozkadev.ui.add_order.contact_info.ContactInfoFragment;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.add_order.route.RouteFragment;
-import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
 import com.foora.perevozkadev.utils.custom.ViewPagerNoScroll;
 
@@ -34,7 +34,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresenter> implements AddOrderMvpView,
+public class AddOrderActivity extends BaseNavPresenterActivity<AddOrderMvpPresenter> implements AddOrderMvpView,
         RouteFragment.Callback, ContactInfoFragment.Callback, CargoInfoFragment.Callback {
 
     private ViewPagerNoScroll viewPager;
@@ -65,14 +65,18 @@ public class AddOrderActivity extends BasePresenterNavActivity<AddOrderMvpPresen
         return "Новый заказ";
     }
 
-
+    @Override
+    protected int getElevationDp() {
+        return 3;
+    }
 
     @Override
     protected AddOrderMvpPresenter createPresenter() {
 //        LocalRepo localRepo = new LocalRepoImpl(this);
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+        PrefRepo preferencesHelper = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
 
         AddOrderPresenter addOrderPresenter = new AddOrderPresenter(dataManager, AndroidSchedulers.mainThread());
         addOrderPresenter.onAttach(this);

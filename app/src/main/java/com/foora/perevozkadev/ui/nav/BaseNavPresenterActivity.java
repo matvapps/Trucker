@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.base;
+package com.foora.perevozkadev.ui.nav;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,24 +6,17 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
-import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
-import com.foora.perevozkadev.ui.employees.EmployeesActivity;
-import com.foora.perevozkadev.ui.my_orders.MyOrdersActivity;
-import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
-import com.foora.perevozkadev.ui.profile.ProfileActivity;
-import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
+import com.foora.perevozkadev.ui.base.BaseActivity;
+import com.foora.perevozkadev.ui.base.MvpPresenter;
 
-public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends BaseActivity {
+public abstract class BaseNavPresenterActivity<T extends MvpPresenter> extends BaseActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -36,8 +29,12 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_navigation);
-
         setUp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -45,6 +42,10 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
     protected abstract int getContentViewLayoutId();
 
     protected abstract String getTitleStr();
+
+    protected int getElevationDp() {
+        return 0;
+    }
 
     protected void setContentFrame() {
         getLayoutInflater().inflate(getContentViewLayoutId(), frameLayout);
@@ -54,7 +55,8 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                NavDrawerFragment navDrawerFragment = NavDrawerFragment.newInstance();
+                navDrawerFragment.show(getSupportFragmentManager());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -73,7 +75,6 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
 
 //        setUnBinder(ButterKnife.bind(this));
 
-
 //        setSupportActionBar((Toolbar) LayoutInflater.from(this).inflate(getToolbarLayoutId(), null, false));
 
         setSupportActionBar(toolbar);
@@ -82,6 +83,7 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(getMenuResource());
         actionbar.setTitle(getTitleStr());
+        actionbar.setElevation(getElevationDp());
 
         switch (getMenuResource()) {
             case R.drawable.ic_action_menu: {
@@ -95,47 +97,6 @@ public abstract class BasePresenterNavActivity<T extends MvpPresenter> extends B
 
         setContentFrame();
 
-        View headerview = navigationView.getHeaderView(0);
-        headerview.setOnClickListener(view -> {
-            drawerLayout.closeDrawer(GravityCompat.START);
-            ProfileActivity.start(BasePresenterNavActivity.this);
-            finish();
-        });
-
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-
-            menuItem.setChecked(true);
-            drawerLayout.closeDrawers();
-            switch (menuItem.getItemId()) {
-                case R.id.create_order:
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    AddOrderActivity.start(BasePresenterNavActivity.this);
-                    finish();
-                    break;
-                case R.id.search_orders:
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    SearchOrderActivity.start(BasePresenterNavActivity.this);
-                    finish();
-                    break;
-                case R.id.my_transport:
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    MyTransportActivity.start(BasePresenterNavActivity.this);
-                    finish();
-                    break;
-                case R.id.staff:
-                    drawerLayout.closeDrawer(Gravity.START);
-                    EmployeesActivity.start(BasePresenterNavActivity.this);
-                    finish();
-                    break;
-                case R.id.my_orders:
-                    drawerLayout.closeDrawer(Gravity.START);
-                    MyOrdersActivity.start(BasePresenterNavActivity.this);
-                    finish();
-                    break;
-            }
-
-            return true;
-        });
     }
 
     public Toolbar getToolbar() {

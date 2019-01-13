@@ -13,6 +13,8 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,12 +35,15 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     private ProgressDialog mProgressDialog;
 
     private Unbinder mUnBinder;
+    private ViewGroup rootLayout;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
+        rootLayout = findViewById(android.R.id.content);
+        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
     }
 
     @Override
@@ -141,6 +146,23 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     public void onFragmentDetached(String tag) {
 
     }
+
+    private ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            int heightDiff = rootLayout.getRootView().getHeight() - rootLayout.getHeight();
+            if(heightDiff < 500){
+                onHideKeyboard();
+
+            } else {
+                onShowKeyboard();
+
+            }
+        }
+    };
+
+    protected void onShowKeyboard() {}
+    protected void onHideKeyboard() {}
 
     @Override
     public void hideKeyboard() {

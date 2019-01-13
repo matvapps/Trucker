@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.utils.CommonUtils;
@@ -21,11 +23,15 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     private BaseActivity mActivity;
     private Unbinder mUnBinder;
     private ProgressDialog mProgressDialog;
+    private ViewGroup rootLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
+
+        rootLayout = getActivity().findViewById(android.R.id.content);
+        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
     }
 
     @Override
@@ -133,6 +139,25 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     void onClick() {
 
     }
+
+    private ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            int heightDiff = rootLayout.getRootView().getHeight() - rootLayout.getHeight();
+
+            if(heightDiff < 500){
+                onHideKeyboard();
+
+            } else {
+                onShowKeyboard();
+
+            }
+        }
+    };
+
+
+    protected void onShowKeyboard() {}
+    protected void onHideKeyboard() {}
 
     public BaseActivity getBaseActivity() {
         return mActivity;

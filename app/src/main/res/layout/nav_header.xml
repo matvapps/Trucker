@@ -9,25 +9,46 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/img_user_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/circle"
+            android:tint="#E2E5F4" />
+
+        <TextView
+            android:id="@+id/short_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ИП"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:textColor="@color/color_app_blue"
+            android:textSize="18sp"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/txtv_user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Сергей Казатов"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:text="Имя пользователя"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/img_user_icon"
         app:layout_constraintTop_toTopOf="@+id/img_user_icon" />
@@ -75,6 +96,7 @@
         tools:text="2,600 RUB" />
 
     <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginTop="4dp"

@@ -10,10 +10,12 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
@@ -31,6 +33,7 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
     private View btnRemove;
 
     private ImageView userImage;
+    private TextView userShortNameTxtv;
     private TextView userName;
     private TextView userType;
     private TextView userPhone;
@@ -61,13 +64,35 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
         btnRemove.setOnClickListener(v -> getPresenter().removeUser(profile.getUserId()));
 
         userImage = findViewById(R.id.user_image);
+        userShortNameTxtv = findViewById(R.id.short_name);
         userName = findViewById(R.id.user_name);
         userType = findViewById(R.id.user_type);
         userPhone = findViewById(R.id.phone);
         userLogin = findViewById(R.id.login);
         userPassword = findViewById(R.id.password);
 
-        userName.setText(String.format("%s %s", profile.getFirstName(), profile.getLastName()));
+        String name = String.format("%s %s", profile.getFirstName(), profile.getLastName());
+
+        userName.setText(name);
+
+        if (!name.equals(" ")) {
+
+            StringBuilder shortName = new StringBuilder();
+
+            String[] names = name.split(" ");
+            for (int i = 0; i < names.length; i++) {
+                if (i == 2) break;
+
+                if (names[i].length() > 1)
+                    shortName.append(names[i].substring(0, 1));
+            }
+
+            if (!shortName.toString().equals("")) {
+                userShortNameTxtv.setText(shortName.toString());
+            }
+
+        }
+
         userType.setText(profile.getUserGroup());
         userPhone.setText(profile.getPhone());
         userLogin.setText(profile.getUsername());
@@ -83,8 +108,9 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
     @Override
     protected EmployeeMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper prefs = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs);
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
 
         EmployeeMvpPresenter presenter = new EmployeePresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);

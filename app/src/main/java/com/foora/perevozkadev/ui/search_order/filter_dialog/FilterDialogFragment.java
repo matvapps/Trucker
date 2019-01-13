@@ -68,7 +68,7 @@ public class FilterDialogFragment extends BaseDialog implements RouteListAdapter
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.getWindow().setGravity(Gravity.END);
             dialog.getWindow().setWindowAnimations(
-                    R.style.dialog_animation_slide);
+                    R.style.dialog_right_animation_slide);
             dialog.getWindow().setLayout(
                     ViewUtils.dpToPx(300),
                     ViewGroup.LayoutParams.MATCH_PARENT);

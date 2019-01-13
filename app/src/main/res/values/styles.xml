@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!--<item name="android:windowAnimationStyle">@null</item>-->
+
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
 
@@ -20,7 +22,7 @@
 
     <style name="AppTheme.White" parent="AppTheme">
         <item name="colorPrimary">@android:color/white</item>
-        <item name="colorPrimaryDark">@android:color/darker_gray</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
@@ -72,13 +74,22 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
+    <style name="MultilineAppEditTextStyle">
+        <item name="android:layout_height">120dp</item>
+    </style>
+
     <style name="TextViewStyle">
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="dialog_animation_slide">
-        <item name="android:windowEnterAnimation">@anim/slide_left</item>
-        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    <style name="dialog_right_animation_slide">
+        <item name="android:windowEnterAnimation">@anim/slide_left_</item>
+        <item name="android:windowExitAnimation">@anim/slide_right_</item>
+    </style>
+
+    <style name="dialog_left_animation_slide">
+        <item name="android:windowEnterAnimation">@anim/slide_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_left</item>
     </style>
 
     <style name="MenuTextAppearance">

@@ -4,21 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
-import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.general_info.GeneralInfoActivity;
+import com.github.matvapps.AppEditText;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -34,8 +37,8 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
     private View btnBack;
     private View btnDone;
 
-    private TextView profileName;
-    private TextView descriptionTxtv;
+    private AppEditText profileName;
+    private EditText descriptionTxtv;
 
     private Profile profile;
 
@@ -79,9 +82,9 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
     @Override
     protected ProfileSettingsMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper prefs = new SharedPrefsHelper(this);
-
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs);
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
 
         ProfileSettingsMvpPresenter presenter = new ProfileSettingsPresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);

@@ -21,6 +21,7 @@ import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_transport.PhotoListAdapter;
 import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.utils.custom.MyDatePickerFragment;
+import com.github.matvapps.AppEditText;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -41,11 +42,11 @@ public class FragmentRegisterInfo extends BaseFragment {
     private static final int PHOTO_REQUEST = 100;
 
     @BindView(R.id.transport_register_number)
-    EditText registerNumberEdtxt;
+    AppEditText registerNumberEdtxt;
     @BindView(R.id.transport_vin)
-    EditText vinEdtxt;
+    AppEditText vinEdtxt;
     @BindView(R.id.transport_passport_num)
-    EditText passportNumEdtxt;
+    AppEditText passportNumEdtxt;
     @BindView(R.id.transport_register_place)
     EditText registerPlaceEdtxt;
     @BindView(R.id.photo_list)

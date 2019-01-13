@@ -110,6 +110,9 @@ public class AppEditText extends FrameLayout {
     public void setText(String text) {
         this.text = text;
         editText.setText(text);
+        if (text != null)
+            if (!text.isEmpty())
+                setActivated(true);
     }
 
     public void setSingleLine(boolean singleLine) {
@@ -136,20 +139,33 @@ public class AppEditText extends FrameLayout {
         switch (inputType) {
             case TEXT:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+                editText.setSingleLine(true);
+                editText.setMaxLines(1);
                 return;
             case EMAIL:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                editText.setSingleLine(true);
+                editText.setMaxLines(1);
                 break;
             case PASSWORD:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 editText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+                editText.setMaxLines(1);
                 break;
             case PHONE:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_CLASS_PHONE);
+                editText.setSingleLine(true);
+                editText.setMaxLines(1);
                 break;
             case TEXT_MULTILINE:
-                editText.setInputType(android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 editText.setGravity(Gravity.TOP | Gravity.START);
+                editText.setSingleLine(false);
+                editText.setMinLines(3);
+                break;
+            case NUMBER:
+                editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+                editText.setSingleLine(true);
+                editText.setMaxLines(1);
                 break;
         }
     }
@@ -179,7 +195,7 @@ public class AppEditText extends FrameLayout {
     }
 
     public enum InputType {
-        PASSWORD(0), PHONE(1), EMAIL(2), TEXT(3), TEXT_MULTILINE(4);
+        PASSWORD(0), PHONE(1), EMAIL(2), TEXT(3), TEXT_MULTILINE(4), NUMBER(10);
         int id;
 
         InputType(int id) {

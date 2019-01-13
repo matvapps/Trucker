@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.employees;
+package com.foora.perevozkadev.ui.staff;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,15 +13,19 @@ import android.view.ViewGroup;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_employee.AddEmployeeActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.employee.EmployeeActivity;
-import com.foora.perevozkadev.ui.employees.adapter.EmployeesAdapter;
+import com.foora.perevozkadev.ui.staff.adapter.EmployeesAdapter;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +69,9 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
     @Override
     protected EmployeesPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(getContext());
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+        PrefRepo preferencesHelper = new PrefRepoImpl(getContext());
+        LocalRepo localRepo = new LocalRepoImpl(getContext());
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
 
         EmployeesPresenter presenter = new EmployeesPresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);
@@ -101,6 +106,7 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(employeesAdapter);
+        recyclerView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(16), ViewUtils.dpToPx(8), ViewUtils.dpToPx(16),0));
 
         getPresenter().getEmployees();
     }

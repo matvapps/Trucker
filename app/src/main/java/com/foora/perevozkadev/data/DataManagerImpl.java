@@ -1,20 +1,23 @@
 package com.foora.perevozkadev.data;
 
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.model.FilterJson;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -25,11 +28,13 @@ import retrofit2.Call;
 public class DataManagerImpl implements DataManager {
 
     private RemoteRepo remoteRepo;
-    private PreferencesHelper sharedPrefs;
+    private PrefRepo sharedPrefs;
+    private LocalRepo localRepo;
 
-    public DataManagerImpl(RemoteRepo remoteRepo, PreferencesHelper sharedPrefs) {
+    public DataManagerImpl(RemoteRepo remoteRepo, PrefRepo sharedPrefs, LocalRepo localRepo) {
         this.remoteRepo = remoteRepo;
         this.sharedPrefs = sharedPrefs;
+        this.localRepo = localRepo;
     }
 
     @Override
@@ -157,7 +162,37 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public void setUserName(String name) {
+        sharedPrefs.setUserName(name);
+    }
+
+    @Override
+    public String getUserName() {
+        return sharedPrefs.getUserName();
+    }
+
+    @Override
+    public Flowable<List<FilterJson>> getFilters() {
+        return localRepo.getFilters();
+    }
+
+    public void addFilterJson(FilterJson filterJson) {
+        localRepo.addFilterJson(filterJson);
+    }
+
+    public void deleteFilterJson(FilterJson filterJson) {
+        localRepo.deleteFilterJson(filterJson);
+    }
+
+    public void updateFilterJson(FilterJson filterJson) {
+        localRepo.updateFilterJson(filterJson);
+    }
+
+
+    @Override
     public void clear() {
 
     }
+
+
 }

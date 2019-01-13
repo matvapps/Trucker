@@ -9,6 +9,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,9 @@ public class RegisterFragment extends BaseFragment {
 
     @BindView(R.id.login_txtv)
     TextView loginTxtv;
+
+    @BindView(R.id.txtv_container)
+    View txtvContainer;
 
     private Callback listener;
 
@@ -137,6 +141,23 @@ public class RegisterFragment extends BaseFragment {
             onError("Все поля должны быть заполнены");
         }
 
+    }
+
+    @Override
+    protected void onHideKeyboard() {
+        super.onHideKeyboard();
+        Log.d(TAG, "onHideKeyboard: ");
+        if (txtvContainer != null)
+            txtvContainer.getHandler().postDelayed(() -> txtvContainer.setVisibility(View.VISIBLE),25);
+    }
+
+
+    @Override
+    protected void onShowKeyboard() {
+        super.onShowKeyboard();
+        Log.d(TAG, "onShowKeyboard: ");
+        if (txtvContainer != null)
+            txtvContainer.setVisibility(View.GONE);
     }
 
     @Override

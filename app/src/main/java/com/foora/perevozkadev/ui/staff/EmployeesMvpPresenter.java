@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.employees;
+package com.foora.perevozkadev.ui.staff;
 
 import com.foora.perevozkadev.ui.base.MvpPresenter;
 

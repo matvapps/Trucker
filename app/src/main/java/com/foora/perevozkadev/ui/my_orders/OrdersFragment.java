@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
@@ -50,9 +52,9 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
     @Override
     protected MyOrdersPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(getContext());
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
-
+        PrefRepo preferencesHelper = new PrefRepoImpl(getContext());
+        LocalRepo localRepo = new LocalRepoImpl(getContext());
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
         MyOrdersPresenter presenter = new MyOrdersPresenter(dataManager, AndroidSchedulers.mainThread());
         presenter.onAttach(this);
 

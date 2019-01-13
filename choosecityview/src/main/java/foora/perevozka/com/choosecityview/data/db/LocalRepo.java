@@ -13,7 +13,7 @@ import io.reactivex.Flowable;
 public interface LocalRepo {
 
     Flowable<List<Country>> getCountries();
-    Flowable<List<Region>>  getRegionsInCountry(int id);
+    Flowable<List<Region>> getRegionsInCountry(int id);
     Flowable<List<City>> getCityInRegion(int id);
 
 }

@@ -224,7 +224,6 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
         unloadingPlaces = new ArrayList<>();
         transports = new ArrayList<String>();
 
-
         transports.add("Любой");
         transports.add("Рефрижератор");
         transports.add("Тент");

@@ -51,14 +51,18 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/transport_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Тент"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/cargo_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -85,14 +89,18 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/transport_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4 авто"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/cargo_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,11 +130,15 @@
                         android:id="@+id/cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="28 299руб"
                         android:textColor="@color/orange_yellow"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/cost_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -143,8 +155,8 @@
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="43dp"
+                android:layout_height="22dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rouded_rect_orange_light"
@@ -152,13 +164,14 @@
                 android:minWidth="30dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="4dp"
+                android:gravity="center"
                 android:paddingRight="10dp"
                 android:paddingBottom="4dp"
                 android:text="CMR"
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/orange_yellow"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

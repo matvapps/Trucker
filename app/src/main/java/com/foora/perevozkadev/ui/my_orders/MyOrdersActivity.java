@@ -8,13 +8,13 @@ import android.support.v4.view.ViewPager;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class MyOrdersActivity extends BasePresenterNavActivity<MyOrdersMvpPresenter> implements MyOrdersMvpView {
+public class MyOrdersActivity extends BaseNavPresenterActivity<MyOrdersMvpPresenter> implements MyOrdersMvpView {
 
     public static final String TAG = MyOrdersActivity.class.getSimpleName();
 

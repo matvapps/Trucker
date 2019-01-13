@@ -15,13 +15,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_transport.PhotoListAdapter;
 import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+import com.github.matvapps.AppEditText;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,11 +46,11 @@ public class FragmentGeneralInfo extends BaseFragment {
     CustomSpinner transportTypeSpinner;
 
     @BindView(R.id.transport_model)
-    EditText transportModelEdtxt;
+    AppEditText transportModelEdtxt;
     @BindView(R.id.transport_mass_placed)
-    EditText transportMassPlacedEdtxt;
+    AppEditText transportMassPlacedEdtxt;
     @BindView(R.id.transport_no_load_mass)
-    EditText transportNoLoadMassEdtxt;
+    AppEditText transportNoLoadMassEdtxt;
 
 
     private Callback listener;

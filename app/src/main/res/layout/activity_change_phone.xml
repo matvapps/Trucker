@@ -59,35 +59,35 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/login"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
-            android:hint="Логин" />
+            app:aet_hint="Логин" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/password"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Пароль"
-            android:inputType="textPassword" />
+            app:aet_hint="Пароль"
+            app:aet_inputType="password" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/phone"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Телефон"
-            android:inputType="phone" />
+            app:aet_hint="Телефон"
+            app:aet_inputType="phone" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/new_phone"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Новый телефон"
-            android:inputType="phone" />
+            app:aet_hint="Новый телефон"
+            app:aet_inputType="phone" />
 
 
         <LinearLayout
@@ -124,12 +124,10 @@
 
         <Button
             android:id="@+id/btn_submit"
+            style="@style/BtnOrangeStyle"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
             android:layout_marginTop="16dp"
-            android:background="@color/orange_yellow"
-            android:text="Подтвердить"
-            android:textColor="@android:color/white" />
+            android:text="Подтвердить" />
 
 
     </LinearLayout>

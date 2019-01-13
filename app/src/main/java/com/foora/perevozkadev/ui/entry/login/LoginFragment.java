@@ -9,11 +9,12 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ScrollView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -41,15 +42,14 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.register_txtv)
     TextView registerTxtv;
 
-    @BindView(R.id.scrollView)
-    ScrollView scrollView;
+    @BindView(R.id.btn_login)
+    Button btnlogin;
 
     private Callback listener;
 
     @Override
     protected void setUp(View view) {
         initSpannableTextView();
-        scrollView.setEnabled(false);
         edtxtPassword.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginUser();
@@ -71,6 +71,17 @@ public class LoginFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setUnBinder(ButterKnife.bind(this, view));
+
+
+        edtxtPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnlogin.setFocusable(true);
+                btnlogin.setFocusableInTouchMode(true);
+                btnlogin.requestFocus();
+            }
+        });
+
         return view;
     }
 
@@ -145,6 +156,23 @@ public class LoginFragment extends BaseFragment {
             onError("Все поля должны быть заполнены");
         }
 
+    }
+
+    @Override
+    protected void onHideKeyboard() {
+        super.onHideKeyboard();
+        Log.d(TAG, "onHideKeyboard: ");
+        if (registerTxtv != null)
+            registerTxtv.getHandler().postDelayed(() -> registerTxtv.setVisibility(View.VISIBLE),25);
+    }
+
+
+    @Override
+    protected void onShowKeyboard() {
+        super.onShowKeyboard();
+        Log.d(TAG, "onShowKeyboard: ");
+        if (registerTxtv != null)
+            registerTxtv.setVisibility(View.GONE);
     }
 
     // EntryActivity must implement this interface

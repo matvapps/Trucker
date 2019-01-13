@@ -22,10 +22,11 @@ android {
         applicationId "com.perevozka.foora.perevozkadev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 2
+        versionName "0.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        project.ext.set("archivesBaseName", "Perevozka-" + defaultConfig.versionName);
     }
     buildTypes {
         release {
@@ -52,13 +53,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation project(':choosecityview')
-    implementation project(':routedisplayview')
-    implementation project(':appedittext')
+    implementation project(path: ':choosecityview')
+    implementation project(path: ':routedisplayview')
+    implementation project(path: ':appedittext')
+    implementation project(path: ':gallery')
 
     //     android support libraries
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
@@ -104,10 +106,19 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    // ROOM RXJava
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+
     // ROOM
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.7'
 
-    implementation project(path: ':appedittext')
+    // Library for pagination
+    implementation 'com.github.markomilos:paginate:0.5.1'
+
+    // KeyboardVisibilityEvent
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.0'
+
+
 }

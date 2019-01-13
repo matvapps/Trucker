@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.employees;
+package com.foora.perevozkadev.ui.staff;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,15 +7,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.foora.foora.perevozkadev.R;
-import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
-import com.foora.perevozkadev.ui.employees.adapter.EmployeesPagerAdapter;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
+import com.foora.perevozkadev.ui.staff.adapter.EmployeesPagerAdapter;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class EmployeesActivity extends BasePresenterNavActivity<EmployeesMvpPresenter> implements EmployeesMvpView {
+public class EmployeesActivity extends BaseNavPresenterActivity<EmployeesMvpPresenter> implements EmployeesMvpView {
 
     public static final String TAG = EmployeesActivity.class.getSimpleName();
 

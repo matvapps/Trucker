@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-public class SharedPrefsHelper implements PreferencesHelper {
+public class PrefRepoImpl implements PrefRepo {
 
     private static final String PREF_KEY_USER_LOGGED = "PREF_KEY_USER_LOGGED";
     private static final String PREF_USER_TOKEN = "PREF_USER_TOKEN";
+    private static final String PREF_USER_NAME = "PREF_USER_NAME";
 
     private final SharedPreferences prefs;
 
-    public SharedPrefsHelper(Context context) {
+    public PrefRepoImpl(Context context) {
         prefs = context.getSharedPreferences("carriers_info", Context.MODE_PRIVATE);
     }
 
@@ -33,6 +34,18 @@ public class SharedPrefsHelper implements PreferencesHelper {
     @Override
     public void setUserToken(String token) {
         prefs.edit().putString(PREF_USER_TOKEN, token).apply();
+    }
+
+    @Override
+    public void setUserName(String name) {
+        prefs.edit().putString(PREF_USER_NAME, name).apply();
+
+    }
+
+    @Override
+    public String getUserName() {
+        return prefs.getString(PREF_USER_NAME, "");
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Alexandr.
  */
 public class Filter implements Serializable {
+
     @SerializedName("loading_places")
     @Expose
     private List<Place> loadingPlaces = null;

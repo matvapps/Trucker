@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_transport.general_info.FragmentGeneralInfo;
 import com.foora.perevozkadev.ui.add_transport.register_info.FragmentRegisterInfo;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
@@ -75,6 +78,12 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         viewPager.setAdapter(addTransportPagerAdapter);
         viewPager.setPagingEnabled(false);
 
+        LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        tabStrip.setEnabled(false);
+        for (int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener((v, event) -> true);
+        }
+
         requestPermissionsSafely(PERMISSIONS, PERMISSION_ALL);
     }
 
@@ -87,8 +96,9 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
     @Override
     protected AddTransportMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper prefs = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs);
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
 
         AddTransportPresenter addTransportPresenter = new AddTransportPresenter(dataManager, AndroidSchedulers.mainThread());
         addTransportPresenter.onAttach(this);

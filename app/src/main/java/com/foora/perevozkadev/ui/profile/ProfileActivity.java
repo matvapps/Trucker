@@ -17,13 +17,15 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.ui.profile.model.Profile;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.adapter.PartnersAdapter;
 import com.foora.perevozkadev.ui.profile.adapter.ProfileTransportAdapter;
@@ -39,7 +41,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresenter>
+public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresenter>
         implements ProfileMvpView, View.OnClickListener {
 
     public static final String TAG = ProfileActivity.class.getSimpleName();
@@ -52,6 +54,7 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
     private RecyclerView ordersListView;
 
     private TextView userNameTxtv;
+    private TextView userShortNameTxtv;
     private TextView userTypeTxtv;
     private ImageView userImageView;
 
@@ -63,6 +66,7 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
     private ProfileTransportAdapter transportAdapter;
     private OrdersAdapter ordersAdapter;
 
+    private PrefRepo preferencesHelper;
 
 
     public static void start(Activity activity) {
@@ -89,7 +93,6 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
     }
 
 
-
     @Override
     protected void setUp() {
         super.setUp();
@@ -102,6 +105,7 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
         nestedScrollView = findViewById(R.id.root_view);
 
         userNameTxtv = findViewById(R.id.user_name);
+        userShortNameTxtv = findViewById(R.id.short_name);
         userTypeTxtv = findViewById(R.id.user_type);
         userImageView = findViewById(R.id.user_image);
 
@@ -149,15 +153,17 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
         getPresenter().getMyTransport();
         getPresenter().getProfile();
 
+        preferencesHelper = new PrefRepoImpl(this);
+
     }
 
 
     @Override
     protected ProfileMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
-
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+        PrefRepo preferencesHelper = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
 
         ProfilePresenter profilePresenter = new ProfilePresenter(dataManager, AndroidSchedulers.mainThread());
         profilePresenter.onAttach(this);
@@ -226,8 +232,30 @@ public class ProfileActivity extends BasePresenterNavActivity<ProfileMvpPresente
 
     @Override
     public void onGetProfile(Profile profile) {
-        if (profile.getFirstName() != null && !profile.getFirstName().equals(""))
-            userNameTxtv.setText(String.format("%s %s", profile.getFirstName(), profile.getLastName()));
+        if (profile.getFirstName() != null && !profile.getFirstName().equals("")) {
+            String userName = String.format("%s %s", profile.getFirstName(), profile.getLastName());
+
+            if (!userName.equals(" ")) {
+                userNameTxtv.setText(userName);
+
+                preferencesHelper.setUserName(userNameTxtv.getText().toString());
+
+                StringBuilder shortName = new StringBuilder();
+
+                String[] names = userName.split(" ");
+                for (int i = 0; i < names.length; i++) {
+                    if (i == 2) break;
+
+                    if (names[i].length() > 1)
+                        shortName.append(names[i].substring(0, 1));
+                }
+
+                if (!shortName.toString().equals("")) {
+                    userShortNameTxtv.setText(shortName.toString());
+                }
+
+            }
+        }
         if (profile.getDescription() != null)
             expandableTextView.setText(profile.getDescription());
     }

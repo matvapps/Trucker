@@ -60,6 +60,8 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     LinearLayout spinnerContainer;
     @BindView(R.id.transport_spinner)
     CustomSpinner transportSpinner;
+    @BindView(R.id.payment_type)
+    CustomSpinner paymentSpinner;
     @BindView(R.id.add_transport)
     View addTransport;
     @BindView(R.id.edtxt_cost)
@@ -67,7 +69,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @BindView(R.id.spinner_currency)
     CustomSpinner currencySpinner;
     @BindView(R.id.edtxt_car_quantity)
-    EditText carQuantEdtxt;
+    AppEditText carQuantEdtxt;
     @BindView(R.id.edtxt_width)
     EditText widthEdtxt;
     @BindView(R.id.edtxt_height)
@@ -268,10 +270,15 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         cost.add("RUB");
         cost.add("EUR");
 
+        ArrayList<String> paymentType = new ArrayList<>();
+        paymentType.add("Наличные");
+        paymentType.add("На карту");
+        paymentType.add("После получения");
+
         transportArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
         costArrayAdapter = new SpinnerArrayAdapter(getContext(), cost, false);
+        SpinnerArrayAdapter paymentTypeAdapter = new SpinnerArrayAdapter(getContext(), paymentType, false);
 
-//        transportSpinner.setOnItemClickListener((parent, view1, position, id) -> view1.setActivated(true));
         transportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -284,11 +291,25 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             }
         });
 
+        transportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                view.setActivated(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                paymentSpinner.setActivated(false);
+            }
+        });
+
         transportSpinner.setBackground(transparentDrawable);
         currencySpinner.setBackground(transparentDrawable);
 
         transportSpinner.setAdapter(transportArrayAdapter);
         currencySpinner.setAdapter(costArrayAdapter);
+        paymentSpinner.setAdapter(paymentTypeAdapter);
+
 
     }
 

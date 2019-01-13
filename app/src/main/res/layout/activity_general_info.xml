@@ -58,32 +58,32 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/name_edtxt"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
-            android:hint="Имя" />
+            app:aet_hint="Имя" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/surname_edtxt"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Фамилия" />
+            app:aet_hint="Фамилия" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/country_edtxt"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Страна" />
+            app:aet_hint="Страна" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/passport_num_edtxt"
-            style="@style/EditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="Номер паспорта" />
+            app:aet_hint="Номер паспорта" />
 
         <FrameLayout
             android:id="@+id/date_expired"

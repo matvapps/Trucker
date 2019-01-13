@@ -12,15 +12,19 @@ import android.view.MenuItem;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
+import com.foora.perevozkadev.data.db.model.FilterJson;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.base.BasePresenterNavActivity;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
 import com.foora.perevozkadev.ui.search_order.filter.FilterFragment;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.ui.search_order.filter_dialog.FilterDialogFragment;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvpPresenter>
+public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvpPresenter>
         implements SearchOrderMvpView, FilterFragment.Callback {
 
     public static final String TAG = SearchOrderActivity.class.getSimpleName();
@@ -40,6 +44,8 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     TabLayout tabLayout;
 
     private SearchOrderPagerAdapter searchOrderPagerAdapter;
+    private List<FilterJson> savedFilters;
+    private Gson gson;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, SearchOrderActivity.class);
@@ -50,8 +56,13 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUnBinder(ButterKnife.bind(this));
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setUnBinder(ButterKnife.bind(this));
     }
 
     @Override
@@ -62,6 +73,9 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     @Override
     protected void setUp() {
         super.setUp();
+
+        gson = new Gson();
+        savedFilters = new ArrayList<>();
 
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
@@ -94,10 +108,7 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
             }
         });
 
-        //        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
-//
-//        Log.d(TAG, "setUp: " + preferencesHelper.getUserToken());
-//        searchOrderPagerAdapter.getItem()
+        getPresenter().getFilters();
     }
 
     @Override
@@ -113,8 +124,9 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     @Override
     protected SearchOrderMvpPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+        PrefRepo preferencesHelper = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
 
         SearchOrderPresenter searchOrderPresenter = new SearchOrderPresenter<>(dataManager, AndroidSchedulers.mainThread());
         searchOrderPresenter.onAttach(this);
@@ -133,15 +145,22 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cancel:
-                if (viewPager.getCurrentItem() != 0)
+                if (viewPager.getCurrentItem() != 0) {
                     searchOrderPagerAdapter.remove(viewPager.getCurrentItem());
+
+                    Filter filter = searchOrderPagerAdapter.getItem(viewPager.getCurrentItem());
+                    FilterJson filterJson = new FilterJson();
+                    filterJson.setJson(gson.toJson(filter));
+                    filterJson.setId(savedFilters.get(viewPager.getCurrentItem()).getId());
+                    getPresenter().deleteFilter(filterJson);
+
+                }
                 break;
             case R.id.map:
 
                 break;
             case R.id.filter:
                 FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance();
-
                 filterDialogFragment.show(getSupportFragmentManager());
                 break;
         }
@@ -156,7 +175,34 @@ public class SearchOrderActivity extends BasePresenterNavActivity<SearchOrderMvp
     }
 
     @Override
+    public void onGetFilters(List<FilterJson> filters) {
+        savedFilters.clear();
+        searchOrderPagerAdapter.clear();
+        savedFilters.addAll(filters);
+
+
+        searchOrderPagerAdapter.add(new Filter());
+
+        for (FilterJson item : filters) {
+            Filter filter = gson.fromJson(item.getJson(), Filter.class);
+            searchOrderPagerAdapter.add(filter);
+        }
+
+        if (savedFilters.isEmpty()) {
+            onCreateNewFilter(new Filter());
+        } else {
+            viewPager.setCurrentItem(1, true);
+        }
+
+    }
+
+    @Override
     public void onCreateNewFilter(Filter filter) {
+        FilterJson filterJson = new FilterJson();
+        filterJson.setJson(gson.toJson(filter));
+        getPresenter().addFilter(filterJson);
+
+        savedFilters.add(filterJson);
         searchOrderPagerAdapter.add(filter);
         viewPager.setCurrentItem(searchOrderPagerAdapter.getCount() - 1, true);
     }

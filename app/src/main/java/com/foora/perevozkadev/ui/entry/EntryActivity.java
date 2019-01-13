@@ -2,14 +2,15 @@ package com.foora.perevozkadev.ui.entry;
 
 import android.os.Bundle;
 
-import com.crashlytics.android.Crashlytics;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
 import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.data.prefs.PreferencesHelper;
-import com.foora.perevozkadev.data.prefs.SharedPrefsHelper;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.entry.confirm.ConfirmFragment;
 import com.foora.perevozkadev.ui.entry.login.LoginFragment;
@@ -18,14 +19,13 @@ import com.foora.perevozkadev.ui.entry.register.RegisterFragment;
 import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
 
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.foora.perevozkadev.ui.entry.otp.OtpCodeDialogFragment.REGISTER;
 
 public class EntryActivity extends BasePresenterActivity<EntryPresenter> implements EntryMvpView,
         RegisterFragment.Callback, LoginFragment.Callback, OtpCodeDialogFragment.Callback,
-        ConfirmFragment.Callback{
+        ConfirmFragment.Callback {
 
     public static final String TAG = EntryActivity.class.getSimpleName();
 
@@ -34,20 +34,18 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
     private String phone;
     private int userId;
 
-    private PreferencesHelper preferencesHelper;
+    private PrefRepo preferencesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.activity_register);
-
-        preferencesHelper = new SharedPrefsHelper(this);
-
+        preferencesHelper = new PrefRepoImpl(this);
         if (!preferencesHelper.getUserToken().equals("token ")) {
             openMainActivity();
             finish();
         }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
 
         setUnBinder(ButterKnife.bind(this));
 
@@ -97,8 +95,9 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
     @Override
     protected EntryPresenter createPresenter() {
         RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PreferencesHelper preferencesHelper = new SharedPrefsHelper(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper);
+        PrefRepo preferencesHelper = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
 
         EntryPresenter registerPresenter = new EntryPresenter(dataManager, AndroidSchedulers.mainThread());
         registerPresenter.onAttach(this);
@@ -148,7 +147,7 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
         this.password = password;
 
 //        getPresenter().sendSms(login, password);
-            getPresenter().onCheckUserData(login, password);
+        getPresenter().onCheckUserData(login, password);
 //        showConfirmFragment();
     }
 
