@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.foora.foora.perevozkadev">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.foora.perevozkadev.PerevozkaApp"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.foora.perevozkadev.PerevozkaApp"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name="com.foora.perevozkadev.service.SyncService" />
@@ -24,11 +28,7 @@
             android:name="com.foora.perevozkadev.ui.entry.EntryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.foora.perevozkadev.ui.add_order.AddOrderActivity"
@@ -54,10 +54,6 @@
             android:theme="@style/AppTheme.White"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name="com.foora.perevozkadev.ui.transport.TransportActivity" />
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="2f4cefd4288d840132f8c5e70eea901ea3f4128a" />
 
         <activity
             android:name="com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsActivity"
@@ -100,6 +96,23 @@
             android:name="com.foora.perevozkadev.ui.my_orders.MyOrdersActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity android:name="com.foora.perevozkadev.ui.TestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDmDonr8JO8lYMl669D20RE2wG9RxBWzOk" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2f4cefd4288d840132f8c5e70eea901ea3f4128a" />
+
     </application>
 
 </manifest>
