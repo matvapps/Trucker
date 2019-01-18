@@ -6,8 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.foora.perevozkadev.ui.TestActivity">
 
-    <com.foora.perevozkadev.utils.custom.places.AutoCompletePlaceTextView
+    <AutoCompleteTextView
+        android:id="@+id/auto_complete_txtv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Введите адрес"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
