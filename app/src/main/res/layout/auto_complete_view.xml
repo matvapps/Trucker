@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <AutoCompleteTextView
-        android:id="@+id/auto_complete_text_view"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Укажите адрес"/>
+        android:background="@drawable/edit_text_background"
+        android:hint="Введите адрес"
+        android:minHeight="60dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <com.foora.perevozkadev.utils.custom.TextInputAutoCompleteTextView
+            android:id="@+id/auto_complete_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:dropDownAnchor="@+id/text_input_layout"
+            android:gravity="center_vertical|start"
+            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorTextHint"
+            android:textSize="16sp"
+            tools:hint="Введите адрес" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
 </FrameLayout>

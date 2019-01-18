@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.foora.foora.perevozkadev.R;
@@ -15,6 +16,7 @@ import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.add_order.route.model.RouteItem;
 import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.places.PlaceAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,21 +67,21 @@ public class RouteFragment extends BaseFragment {
         if (listener != null) {
 
             for (int i = 0; i < loadList.getChildCount(); i++) {
-                ChooseCityView view = (ChooseCityView) loadList.getChildAt(i);
-                String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
-                if (view.getTitle().equals("Место погрузки") &&
-                        view.getCity() != null) {
+                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) loadList.getChildAt(i);
+
+                String name = placeAutoCompleteTextView.getText();
+
+                if (!name.isEmpty())
                     loadingPlaces.add(new Place(i, name));
-                }
             }
 
             for (int i = 0; i < unloadList.getChildCount(); i++) {
-                ChooseCityView view = (ChooseCityView) unloadList.getChildAt(i);
-                String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
-                if (view.getTitle().equals("Место выгрузки") &&
-                        view.getCity() != null) {
+                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) loadList.getChildAt(i);
+
+                String name = placeAutoCompleteTextView.getText();
+
+                if (!name.isEmpty())
                     unloadingPlaces.add(new Place(i, name));
-                }
             }
 
             if (loadingPlaces.size() == 0) {
@@ -98,12 +100,12 @@ public class RouteFragment extends BaseFragment {
 
     @OnClick(R.id.add_route)
     void onAddLoadRoute() {
-        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
+        loadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.LOADING_PLACE));
     }
 
     @OnClick(R.id.add_route_2)
     void onAddUnLoadRoute() {
-        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
+        unloadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.UNLOADING_PLACE));
     }
 
 
@@ -127,27 +129,29 @@ public class RouteFragment extends BaseFragment {
         loadingPlaces = new ArrayList<>();
         unloadingPlaces = new ArrayList<>();
 
-        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
-        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
+        loadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.LOADING_PLACE));
+        unloadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.UNLOADING_PLACE));
 
     }
 
-    private ChooseCityView getChooseCityView(RouteItem.Type type) {
-        ChooseCityView chooseCityView = new ChooseCityView(getContext());
+    private PlaceAutoCompleteTextView getPlaceAutoCompleteTxtv(RouteItem.Type type) {
+        PlaceAutoCompleteTextView placeAutoCompleteTextView = new PlaceAutoCompleteTextView(getContext());
         switch (type) {
             case LOADING_PLACE:
-                chooseCityView.setTitle("Место погрузки");
+
                 break;
             case UNLOADING_PLACE:
-                chooseCityView.setTitle("Место выгрузки");
+
                 break;
         }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,ViewUtils.dpToPx(8),0,0);
 
-        chooseCityView.setLayoutParams(layoutParams);
-        return chooseCityView;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, ViewUtils.dpToPx(8), 0, 0);
+
+        placeAutoCompleteTextView.setLayoutParams(layoutParams);
+
+        return placeAutoCompleteTextView;
     }
 
     private boolean containsItemWithId(List<Place> items, int id) {
