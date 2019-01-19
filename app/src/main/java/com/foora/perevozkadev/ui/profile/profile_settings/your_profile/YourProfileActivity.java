@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -38,7 +37,7 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
     private View btnDone;
 
     private AppEditText profileName;
-    private EditText descriptionTxtv;
+    private AppEditText descriptionTxtv;
 
     private Profile profile;
 

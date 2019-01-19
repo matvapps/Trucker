@@ -149,7 +149,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String firstCity;
             String secondCity;
 
-            if (firstPlace.length < 3) {
+            if (firstPlace.length <= 3) {
                 firstCity = firstPlace[0].replaceAll("\\s", "");
                 secondCity = secondPlace[0].replaceAll("\\s", "");
             } else {

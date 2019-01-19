@@ -24,7 +24,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import foora.perevozka.com.choosecityview.ChooseCityView;
 
 /**
  * Created by Alexandr.
@@ -76,7 +75,7 @@ public class RouteFragment extends BaseFragment {
             }
 
             for (int i = 0; i < unloadList.getChildCount(); i++) {
-                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) loadList.getChildAt(i);
+                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) unloadList.getChildAt(i);
 
                 String name = placeAutoCompleteTextView.getText();
 

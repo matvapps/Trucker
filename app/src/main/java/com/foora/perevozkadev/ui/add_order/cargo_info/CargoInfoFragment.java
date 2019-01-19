@@ -71,11 +71,11 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @BindView(R.id.edtxt_car_quantity)
     AppEditText carQuantEdtxt;
     @BindView(R.id.edtxt_width)
-    EditText widthEdtxt;
+    AppEditText  widthEdtxt;
     @BindView(R.id.edtxt_height)
-    EditText heightEdtxt;
+    AppEditText  heightEdtxt;
     @BindView(R.id.edtxt_depth)
-    EditText depthEdtxt;
+    AppEditText  depthEdtxt;
 
 
     private SpinnerArrayAdapter transportArrayAdapter;

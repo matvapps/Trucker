@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
-        versionName "0.0.2"
+        versionName "0.0.21"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         project.ext.set("archivesBaseName", "Perevozka-" + defaultConfig.versionName);

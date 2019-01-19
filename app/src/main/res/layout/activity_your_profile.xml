@@ -62,7 +62,6 @@
             android:id="@+id/name_edtxt"
             style="@style/AppEditTextStyle"
             app:aet_imeOption="actionNext"
-
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
             app:aet_hint="Название профиля" />
@@ -75,14 +74,15 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
-        <EditText
+        <com.github.matvapps.AppEditText
             android:id="@+id/description_profile"
-            style="@style/MultiLineEditTextStyle"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:gravity="top"
+            app:aet_inputType="textMultiline"
+            app:aet_imeOption="actionDone"
             android:layout_marginTop="24dp"
-            android:hint="Описание профиля" />
+            app:aet_hint="Описание профиля" />
 
 
     </LinearLayout>

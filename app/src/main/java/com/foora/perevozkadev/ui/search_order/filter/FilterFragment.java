@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+import com.foora.perevozkadev.utils.custom.places.PlaceAutoCompleteTextView;
 import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
@@ -34,7 +36,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import foora.perevozka.com.choosecityview.ChooseCityView;
 
 /**
  * Created by Alexandr.
@@ -97,12 +98,12 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
 
     @OnClick(R.id.add_route)
     void onAddLoadRoute() {
-        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
+        loadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.LOADING_PLACE));
     }
 
     @OnClick(R.id.add_route_2)
     void onAddUnLoadRoute() {
-        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
+        unloadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.UNLOADING_PLACE));
     }
 
     @OnClick(R.id.add_transport)
@@ -124,24 +125,22 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
     void onAccept() {
         if (listener != null) {
 
-            // get loading places
             for (int i = 0; i < loadList.getChildCount(); i++) {
-                ChooseCityView view = (ChooseCityView) loadList.getChildAt(i);
-                String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
-                if (view.getTitle().equals("Место погрузки") &&
-                        view.getCountry() != null) {
+                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) loadList.getChildAt(i);
+
+                String name = placeAutoCompleteTextView.getText();
+
+                if (!name.isEmpty())
                     loadingPlaces.add(new Place(i, name));
-                }
             }
 
-            // get unloading places
             for (int i = 0; i < unloadList.getChildCount(); i++) {
-                ChooseCityView view = (ChooseCityView) unloadList.getChildAt(i);
-                String name = String.format("%s, %s, %s", view.getCountry(), view.getRegion(), view.getCity());
-                if (view.getTitle().equals("Место выгрузки") &&
-                        view.getCountry() != null) {
+                PlaceAutoCompleteTextView placeAutoCompleteTextView = (PlaceAutoCompleteTextView) unloadList.getChildAt(i);
+
+                String name = placeAutoCompleteTextView.getText();
+
+                if (!name.isEmpty())
                     unloadingPlaces.add(new Place(i, name));
-                }
             }
 
             if (!datesTxtv.getText().toString().isEmpty()) {
@@ -242,8 +241,8 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
 
         filter = new Filter();
 
-        loadList.addView(getChooseCityView(RouteItem.Type.LOADING_PLACE));
-        unloadList.addView(getChooseCityView(RouteItem.Type.UNLOADING_PLACE));
+        loadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.LOADING_PLACE));
+        unloadList.addView(getPlaceAutoCompleteTxtv(RouteItem.Type.UNLOADING_PLACE));
 
         Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
         transportSpinner.setBackground(transparentDrawable);
@@ -260,18 +259,24 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
         listener = (Callback) context;
     }
 
-    private ChooseCityView getChooseCityView(RouteItem.Type type) {
-        ChooseCityView chooseCityView = new ChooseCityView(getContext());
+    private PlaceAutoCompleteTextView getPlaceAutoCompleteTxtv(RouteItem.Type type) {
+        PlaceAutoCompleteTextView placeAutoCompleteTextView = new PlaceAutoCompleteTextView(getContext());
         switch (type) {
             case LOADING_PLACE:
-                chooseCityView.setTitle("Место погрузки");
+
                 break;
             case UNLOADING_PLACE:
-                chooseCityView.setTitle("Место выгрузки");
+
                 break;
         }
-        chooseCityView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        return chooseCityView;
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, ViewUtils.dpToPx(8), 0, 0);
+
+        placeAutoCompleteTextView.setLayoutParams(layoutParams);
+
+        return placeAutoCompleteTextView;
     }
 
     @Override

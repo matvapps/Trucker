@@ -346,14 +346,14 @@
                 app:layout_constraintStart_toStartOf="@+id/edtxt_car_quantity"
                 app:layout_constraintTop_toBottomOf="@+id/payment_type" />
 
-            <EditText
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
                 android:id="@+id/edtxt_width"
-                style="@style/EditTextStyle"
                 android:layout_width="0dp"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:inputType="number"
+                app:aet_inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/textView9"
                 app:layout_constraintWidth_percent="0.28" />
@@ -373,14 +373,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/edtxt_car_quantity" />
 
 
-            <EditText
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
                 android:id="@+id/edtxt_height"
-                style="@style/EditTextStyle"
                 android:layout_width="0dp"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:inputType="number"
+                app:aet_inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/textView11"
                 app:layout_constraintTop_toBottomOf="@+id/textView9"
                 app:layout_constraintWidth_percent="0.28" />
@@ -400,14 +400,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/edtxt_car_quantity" />
 
 
-            <EditText
+            <com.github.matvapps.AppEditText
+                style="@style/AppEditTextStyle"
                 android:id="@+id/edtxt_depth"
-                style="@style/EditTextStyle"
                 android:layout_width="0dp"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:inputType="number"
+                app:aet_inputType="number"
                 app:layout_constraintEnd_toEndOf="@+id/edtxt_car_quantity"
                 app:layout_constraintStart_toStartOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"

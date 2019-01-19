@@ -7,9 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -72,7 +69,7 @@ public class AppEditText extends FrameLayout {
         editText = view.findViewById(R.id.edtxt);
         textInputLayout = view.findViewById(R.id.edtxt_input);
 
-//        setSingleLine(singleLine);
+        //        setSingleLine(singleLine);
         setInputType(inputType);
         setImeOption(imeOption);
 //        setMinLines(minLines);
@@ -116,8 +113,10 @@ public class AppEditText extends FrameLayout {
         this.text = text;
         editText.setText(text);
         if (text != null)
-            if (!text.isEmpty())
+            if (!text.isEmpty()) {
                 setActivated(true);
+                textInputLayout.setDefaultHintTextColor(ContextCompat.getColorStateList(getContext(), R.color.orange_yellow));
+            }
     }
 
     public void setSingleLine(boolean singleLine) {
@@ -144,29 +143,24 @@ public class AppEditText extends FrameLayout {
         switch (inputType) {
             case TEXT:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
-                editText.setSingleLine(true);
                 return;
             case EMAIL:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                editText.setSingleLine(true);
                 break;
             case PASSWORD:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 editText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
-                editText.setSingleLine(true);
                 break;
             case PHONE:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_CLASS_PHONE);
-                editText.setSingleLine(true);
                 break;
             case TEXT_MULTILINE:
                 editText.setGravity(Gravity.TOP);
-                editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT |android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 editText.setSingleLine(false);
                 break;
             case NUMBER:
                 editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-                editText.setSingleLine(true);
                 break;
         }
     }
