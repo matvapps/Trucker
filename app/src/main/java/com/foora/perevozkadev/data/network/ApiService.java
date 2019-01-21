@@ -34,7 +34,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
 
-    // Registration / Authorization
+    // Registration
     @FormUrlEncoded
     @POST("user/registration/")
     Call<RegisterResponse> register(@NonNull @Field("username") String login,
