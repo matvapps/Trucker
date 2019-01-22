@@ -3,9 +3,10 @@ package com.foora.perevozkadev.ui.add_order.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
 
     @SerializedName("loading_places")
     @Expose

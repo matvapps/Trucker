@@ -25,6 +25,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<Order> visibleItems;
 
     private int visibleCount = -1;
+    private Callback listener;
 
     public OrdersAdapter() {
         items = new ArrayList<>();
@@ -119,6 +120,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public void onBind(int position) {
             super.onBind(position);
 
+            if (listener != null)
+                itemView.setOnClickListener(v -> listener.onClick(getItem(position)));
+
             Order item = getItem(position);
 
             if (item.getCurrency() == null) {
@@ -168,6 +172,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return items.get(pos);
         }
 
+    }
+
+    public Callback getListener() {
+        return listener;
+    }
+
+    public void setListener(Callback listener) {
+        this.listener = listener;
+    }
+
+    public interface Callback {
+        void onClick(Order order);
     }
 
 }

@@ -47,29 +47,28 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:id="@+id/transport_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="Тент"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:id="@+id/cargo_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="Палеты"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp"/>
-
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -85,29 +84,28 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:id="@+id/transport_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="4 авто"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:id="@+id/cargo_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="15 т / 86 м^3"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp"/>
-
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -123,8 +121,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/cost"
@@ -137,15 +135,14 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:id="@+id/cost_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="На карту"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp"/>
-
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -160,18 +157,18 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rouded_rect_orange_light"
+                android:gravity="center"
                 android:includeFontPadding="false"
                 android:minWidth="30dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="4dp"
-                android:gravity="center"
                 android:paddingRight="10dp"
                 android:paddingBottom="4dp"
                 android:text="CMR"
-                android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/orange_yellow"
                 android:textSize="10sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
