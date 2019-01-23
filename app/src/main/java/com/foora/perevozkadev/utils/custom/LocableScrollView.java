@@ -34,19 +34,11 @@ public class LocableScrollView extends ScrollView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // if we can scroll pass the event to the superclass
-                return mScrollable && super.onTouchEvent(ev);
-            default:
-                return super.onTouchEvent(ev);
-        }
+        return mScrollable && super.onTouchEvent(ev);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // Don't do anything with intercepted touch events if
-        // we are not scrollable
         return mScrollable && super.onInterceptTouchEvent(ev);
     }
 

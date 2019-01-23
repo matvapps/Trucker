@@ -173,7 +173,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
                 break;
             case R.id.filter:
                 FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance();
-                filterDialogFragment.show(getSupportFragmentManager());
+                filterDialogFragment.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
                 break;
         }
 

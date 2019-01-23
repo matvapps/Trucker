@@ -132,5 +132,7 @@ dependencies {
     // SlideUpPanel
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
+    // ViewAnimator
+    implementation 'com.github.florent37:viewanimator:1.0.5'
 
 }

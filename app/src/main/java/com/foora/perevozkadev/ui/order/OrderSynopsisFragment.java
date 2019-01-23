@@ -2,7 +2,6 @@ package com.foora.perevozkadev.ui.order;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.arch.lifecycle.Lifecycle;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -46,6 +47,8 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
     private RouteDisplayView routeDisplayView;
     private MapView mapView;
     private View rootView;
+    private View btnBack;
+    private View toolbar;
 
     private GoogleMap googleMap;
 
@@ -83,16 +86,19 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
 
         routeDisplayView = view.findViewById(R.id.routeDisplayView);
         rootView = view.findViewById(R.id.root_view);
+        toolbar = view.findViewById(R.id.toolbar);
+        btnBack = view.findViewById(R.id.btn_back);
         View v = view.findViewById(R.id.view2);
         View shadow = view.findViewById(R.id.shadow);
         mapView = view.findViewById(R.id.mapView);
 
         mapView.onCreate(savedInstanceState);
 
+        routeDisplayView.setOnTouchListener((v1, event) -> false);
 
 
         FrameLayout.LayoutParams paramsWith5dpMargin = (FrameLayout.LayoutParams) rootView.getLayoutParams();
-        paramsWith5dpMargin.setMargins(0,ViewUtils.dpToPx(5),0,0);
+        paramsWith5dpMargin.setMargins(0, ViewUtils.dpToPx(5), 0, 0);
         FrameLayout.LayoutParams paramsNoMargin = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         routeDisplayView.setRoutes(getRouteItemsFromOrder(order));
@@ -104,9 +110,11 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
         CoordinatorLayout.Behavior behavior = params.getBehavior();
         ((View) view.getParent()).setBackgroundColor(Color.TRANSPARENT);
 
+
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setPeekHeight(ViewUtils.dpToPx(280));
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @SuppressLint("ClickableViewAccessibility")
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
                     String state = "";
@@ -118,6 +126,7 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
                             rootView.setLayoutParams(paramsWith5dpMargin);
                             v.setVisibility(View.VISIBLE);
                             shadow.setVisibility(View.VISIBLE);
+                            hideToolbar();
                             break;
                         }
                         case BottomSheetBehavior.STATE_SETTLING: {
@@ -130,6 +139,7 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
                             rootView.setLayoutParams(paramsNoMargin);
                             v.setVisibility(GONE);
                             shadow.setVisibility(View.GONE);
+                            showToolbar();
                             break;
                         }
                         case BottomSheetBehavior.STATE_COLLAPSED: {
@@ -138,6 +148,7 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
                             rootView.setLayoutParams(paramsWith5dpMargin);
                             v.setVisibility(View.VISIBLE);
                             shadow.setVisibility(View.VISIBLE);
+                            hideToolbar();
                             break;
                         }
                         case BottomSheetBehavior.STATE_HIDDEN: {
@@ -158,7 +169,24 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
         return super.onCreateView(inflater, container, savedInstanceState);
 
 
+    }
 
+    private void showToolbar() {
+        toolbar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideToolbar() {
+        toolbar.setVisibility(View.GONE);
+    }
+
+    public void show(FragmentManager fragmentManager, String tag) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment prevFragment = fragmentManager.findFragmentByTag(tag);
+        if (prevFragment != null) {
+            transaction.remove(prevFragment);
+        }
+        transaction.addToBackStack(null);
+        show(transaction, tag);
     }
 
     @Override
