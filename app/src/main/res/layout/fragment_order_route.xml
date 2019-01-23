@@ -114,7 +114,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_weight="1"
                             android:ellipsize="end"
-                            android:text="Расстояние"
+                            android:text="Длительность"
                             android:textColor="#757575"
                             android:textSize="14sp" />
 
@@ -124,7 +124,7 @@
                             android:layout_weight="2"
                             android:ellipsize="end"
                             android:gravity="end"
-                            android:text="1267 км"
+                            android:text="12 ч 42м"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 
@@ -143,7 +143,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_weight="1"
                             android:ellipsize="end"
-                            android:text="Расстояние"
+                            android:text="Документы"
                             android:textColor="#757575"
                             android:textSize="14sp" />
 
@@ -153,7 +153,7 @@
                             android:layout_weight="2"
                             android:ellipsize="end"
                             android:gravity="end"
-                            android:text="1267 км"
+                            android:text="TIF, Санпаспорт"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 
@@ -172,7 +172,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_weight="1"
                             android:ellipsize="end"
-                            android:text="Расстояние"
+                            android:text="Дополнительно"
                             android:textColor="#757575"
                             android:textSize="14sp" />
 
@@ -182,167 +182,7 @@
                             android:layout_weight="2"
                             android:ellipsize="end"
                             android:gravity="end"
-                            android:text="1267 км"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:text="Расстояние"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:ellipsize="end"
-                            android:gravity="end"
-                            android:text="1267 км"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:text="Расстояние"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:ellipsize="end"
-                            android:gravity="end"
-                            android:text="1267 км"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:text="Расстояние"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:ellipsize="end"
-                            android:gravity="end"
-                            android:text="1267 км"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:text="Расстояние"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:ellipsize="end"
-                            android:gravity="end"
-                            android:text="1267 км"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:text="Расстояние"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:ellipsize="end"
-                            android:gravity="end"
-                            android:text="1267 км"
+                            android:text="Крюки, Догруз, Срочно"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 
@@ -368,7 +208,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_weight="1"
                             android:ellipsize="end"
-                            android:text="Расстояние"
+                            android:text="К-во автомобилей"
                             android:textColor="#757575"
                             android:textSize="14sp" />
 
@@ -378,7 +218,250 @@
                             android:layout_weight="2"
                             android:ellipsize="end"
                             android:gravity="end"
-                            android:text="1267 км"
+                            android:text="4 шт"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:text="Тип транспорта"
+                            android:textColor="#757575"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="Рефрижератор"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/darker_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:text="Вес груза"
+                            android:textColor="#757575"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="83 000 кг"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:text="Объем груза"
+                            android:textColor="#757575"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="92 м"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:text="Размер груза"
+                            android:textColor="#757575"
+                            android:textSize="14sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="end">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text="Выс"
+                                    android:textColor="#757575"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:gravity="end"
+                                    android:text="20 м"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text="Шир"
+                                    android:textColor="#757575"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:gravity="end"
+                                    android:text="15 м"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text="Длн"
+                                    android:textColor="#757575"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:gravity="end"
+                                    android:text="8 м"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:text="Цена за км"
+                            android:textColor="#757575"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="20,63 руб/км"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 

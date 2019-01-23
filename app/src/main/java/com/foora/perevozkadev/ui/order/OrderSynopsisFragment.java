@@ -2,9 +2,11 @@ package com.foora.perevozkadev.ui.order;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.arch.lifecycle.Lifecycle;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,7 +22,12 @@ import android.widget.Toast;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.perevozka.foora.routedisplayview.RouteDisplayView;
 import com.perevozka.foora.routedisplayview.RouteItem;
 import com.perevozka.foora.routedisplayview.ViewUtils;
@@ -30,7 +37,7 @@ import java.util.List;
 
 import static android.view.View.GONE;
 
-public class OrderSynopsisFragment extends BottomSheetDialogFragment {
+public class OrderSynopsisFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
 
     public static final String TAG = OrderSynopsisFragment.class.getSimpleName();
 
@@ -40,6 +47,8 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment {
     private MapView mapView;
     private View rootView;
 
+    private GoogleMap googleMap;
+
     public static OrderSynopsisFragment newInstance(Order order) {
         Bundle args = new Bundle();
         OrderSynopsisFragment fragment = new OrderSynopsisFragment();
@@ -48,10 +57,24 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MapsInitializer.initialize(getContext());
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
+
+
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Order order = (Order) getArguments().getSerializable(ORDER_KEY);
 
@@ -59,21 +82,23 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order_route, null);
 
         routeDisplayView = view.findViewById(R.id.routeDisplayView);
-        mapView = view.findViewById(R.id.mapView);
         rootView = view.findViewById(R.id.root_view);
         View v = view.findViewById(R.id.view2);
         View shadow = view.findViewById(R.id.shadow);
+        mapView = view.findViewById(R.id.mapView);
+
+        mapView.onCreate(savedInstanceState);
+
 
 
         FrameLayout.LayoutParams paramsWith5dpMargin = (FrameLayout.LayoutParams) rootView.getLayoutParams();
         paramsWith5dpMargin.setMargins(0,ViewUtils.dpToPx(5),0,0);
-        FrameLayout.LayoutParams paramsNoMargin = (FrameLayout.LayoutParams) rootView.getLayoutParams();
-        paramsNoMargin.setMargins(0,0,0,0);
+        FrameLayout.LayoutParams paramsNoMargin = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         routeDisplayView.setRoutes(getRouteItemsFromOrder(order));
 
 
-        dialog.setContentView(view);
+        getDialog().setContentView(view);
 
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) view.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
@@ -130,6 +155,28 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment {
             });
         }
 
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
     }
 
     @Override
@@ -193,4 +240,12 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment {
         return result;
     }
 
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        this.googleMap.setMinZoomPreference(12);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+    }
 }

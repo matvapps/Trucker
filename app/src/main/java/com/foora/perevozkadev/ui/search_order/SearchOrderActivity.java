@@ -1,5 +1,6 @@
 package com.foora.perevozkadev.ui.search_order;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,6 +48,16 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
     private List<FilterJson> savedFilters;
     private Gson gson;
 
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE
+    };
+
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, SearchOrderActivity.class);
         activity.startActivity(intent);
@@ -56,6 +67,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestPermissionsSafely(PERMISSIONS, PERMISSION_ALL);
     }
 
     @Override
