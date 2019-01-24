@@ -5,9 +5,11 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/image"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_add_tab" />
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_add_tab"
+        android:tint="@color/colorAccent"/>
 
 </FrameLayout>

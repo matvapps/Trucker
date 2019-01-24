@@ -17,9 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabMinWidth="0dp"
         app:tabBackground="@color/color_app_blue"
         app:tabIndicatorColor="@color/orange_yellow"
-        app:tabTextColor="@android:color/white"
+        app:tabTextColor="@color/white_54"
         app:tabSelectedTextColor="@color/orange_yellow"
         app:tabMode="scrollable"/>
 

@@ -3,12 +3,16 @@ package com.foora.perevozkadev.ui.search_order;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -91,6 +95,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
 
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
+        View firstTab = getLayoutInflater().inflate(R.layout.custom_tab, null);
 
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter());
@@ -106,12 +111,23 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tabLayout.getTabAt(0).setCustomView(R.layout.custom_tab);
+                if (tab.getPosition() == 0) {
+                    ((ImageView) firstTab.findViewById(R.id.image))
+                            .setColorFilter(ContextCompat.getColor(SearchOrderActivity.this, R.color.colorAccent));
+                    ((ImageView) firstTab.findViewById(R.id.image)).setAlpha(1f);
+                    if (tabLayout.getRootView().findViewById(R.id.image) != null) {
+                        tabLayout.getTabAt(0).setCustomView(firstTab);
+                    }
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                if (tab.getPosition() == 0) {
+                    ((ImageView) firstTab.findViewById(R.id.image)).setColorFilter(Color.WHITE);
+                    ((ImageView) firstTab.findViewById(R.id.image)).setAlpha(0.54f);
+                    tabLayout.getTabAt(0).setCustomView(firstTab);
+                }
             }
 
             @Override
@@ -173,7 +189,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
                 break;
             case R.id.filter:
                 FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance();
-                filterDialogFragment.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
+                filterDialogFragment.show(getSupportFragmentManager());
                 break;
         }
 

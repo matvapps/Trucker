@@ -11,13 +11,15 @@
 
     <item
         android:id="@+id/filter"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_action_filter_list"
         android:title=""
+        android:enabled="false"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/cancel"
         android:icon="@drawable/ic_action_clear"
         android:title=""
+        android:enabled="false"
         app:showAsAction="always" />
 </menu>

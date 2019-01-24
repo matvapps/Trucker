@@ -126,7 +126,8 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
 
     @Override
     public void onGetOrders(List<Order> orders) {
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null)
+            swipeRefreshLayout.setRefreshing(false);
         ordersAdapter.setItems(orders);
     }
 

@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,7 +18,6 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 public abstract class BaseNavPresenterActivity<T extends MvpPresenter> extends BaseActivity {
 
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
     Toolbar toolbar;
     FrameLayout frameLayout;
 
@@ -69,7 +67,6 @@ public abstract class BaseNavPresenterActivity<T extends MvpPresenter> extends B
     @Override
     protected void setUp() {
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         frameLayout = findViewById(R.id.content_view);
 

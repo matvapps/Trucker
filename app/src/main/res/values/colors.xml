@@ -6,6 +6,7 @@
 
     <color name="orange_yellow">#ffa000</color>
     <color name="white">#ffffff</color>
+    <color name="white_54">#8AFFFFFF</color>
     <color name="mango">#fdb628</color>
     <color name="red_error">#c62828</color>
     <color name="red_error_light">#47b71c1c</color>
