@@ -55,105 +55,160 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <com.github.matvapps.AppEditText
             android:id="@+id/certificate_num"
             style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:aet_hint="Номер свидельства гос. регистрации" />
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:padding="16dp"
-            android:visibility="gone"
-            android:background="@drawable/rounded_stroke_gray"
-            android:orientation="vertical">
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
-                android:text="Фото свидетельства"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/photo_certificate"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
-                tools:layout_height="80dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Фото свидетельства"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp" />
+
+                <com.github.matvapps.gallery.GalleryView
+                    android:id="@+id/photo_certificate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:gv_maxItems="4" />
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_add_certificate"
+            style="@style/BtnRoundOrangeStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Добавить фото" />
+
 
         <com.github.matvapps.AppEditText
             android:id="@+id/country_register"
             style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             app:aet_hint="Страна гос. регистрации" />
 
         <com.github.matvapps.AppEditText
             android:id="@+id/license_num"
             style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             app:aet_hint="Номер лицензии на перевозки" />
 
-        <LinearLayout
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:padding="16dp"
-            android:visibility="gone"
-            android:background="@drawable/rounded_stroke_gray"
-            android:orientation="vertical">
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
-                android:text="Фото свидетельства"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/photo_license"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
-                tools:layout_height="80dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Фото лицензии"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp" />
 
+                <com.github.matvapps.gallery.GalleryView
+                    android:id="@+id/photo_license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:gv_maxItems="4" />
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_add_license"
+            style="@style/BtnRoundOrangeStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Добавить фото" />
 
         <FrameLayout
-            android:id="@+id/date_expired"
+            android:id="@+id/date_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp">
 
-            <TextView
+            <com.github.matvapps.AppEditText
                 android:id="@+id/date"
-                style="@style/EditTextStyle"
-                android:focusable="false"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="start|center_vertical"
-                android:hint="Дата окончания срока" />
+                app:aet_hint="Дата окончания срока" />
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_today" />
 
         </FrameLayout>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

@@ -48,11 +48,11 @@ public class FragmentRegisterInfo extends BaseFragment {
     @BindView(R.id.transport_passport_num)
     AppEditText passportNumEdtxt;
     @BindView(R.id.transport_register_place)
-    EditText registerPlaceEdtxt;
+    AppEditText registerPlaceEdtxt;
     @BindView(R.id.photo_list)
     RecyclerView photoList;
     @BindView(R.id.date)
-    TextView dateTxtv;
+    AppEditText dateTxtv;
 
 
     private Callback listener;
@@ -75,6 +75,7 @@ public class FragmentRegisterInfo extends BaseFragment {
 
         return view;
     }
+
 
     @Override
     protected void setUp(View view) {
@@ -123,7 +124,7 @@ public class FragmentRegisterInfo extends BaseFragment {
         getImage();
     }
 
-    @OnClick(R.id.date_container)
+    @OnClick(R.id.date)
     void onDateContainerClick() {
 
         MyDatePickerFragment datePickerFragment = new MyDatePickerFragment();
@@ -144,11 +145,11 @@ public class FragmentRegisterInfo extends BaseFragment {
 
     @OnClick(R.id.btn_add)
     void onAddTransport() {
-        String registerNum = registerNumberEdtxt.getText().toString();
-        String vin = vinEdtxt.getText().toString();
-        String pssportNum = passportNumEdtxt.getText().toString();
-        String registerPlace = registerPlaceEdtxt.getText().toString();
-        String registerDate = dateTxtv.getText().toString();
+        String registerNum = registerNumberEdtxt.getText();
+        String vin = vinEdtxt.getText();
+        String pssportNum = passportNumEdtxt.getText();
+        String registerPlace = registerPlaceEdtxt.getText();
+        String registerDate = dateTxtv.getText();
 
         List<File> photos = new ArrayList<>(photoListAdapter.getItems());
 

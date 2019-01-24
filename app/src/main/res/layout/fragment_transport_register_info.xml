@@ -42,17 +42,16 @@
                 android:layout_marginTop="8dp"
                 app:aet_hint="Номер транспорта ТС" />
 
-            <EditText
+            <com.github.matvapps.AppEditText
                 android:id="@+id/transport_register_place"
+                style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
-                style="@style/MultiLineEditTextStyle"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_marginTop="8dp"
-                android:minHeight="120dp"
                 android:gravity="top|start"
-                android:imeOptions="actionDone"
-                android:hint="Место регистрации"
-                android:inputType="textMultiLine"/>
+                app:aet_hint="Место регистрации"
+                app:aet_imeOption="actionDone"
+                app:aet_inputType="textMultiline"/>
 
             <FrameLayout
                 android:id="@+id/date_container"
@@ -60,26 +59,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
-                <TextView
+                <com.github.matvapps.AppEditText
                     android:id="@+id/date"
+                    style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/edit_text_background"
-                    android:gravity="center_vertical"
-                    android:hint="Даты загрузки/выгрузки"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/darker_gray"
-                    android:textSize="16sp" />
+                    app:aet_hint="Даты загрузки/выгрузки" />
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical|end"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_today"
-                    android:layout_gravity="center_vertical|end"/>
+                    android:src="@drawable/ic_today" />
 
             </FrameLayout>
 

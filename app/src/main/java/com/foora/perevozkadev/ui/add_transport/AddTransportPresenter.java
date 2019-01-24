@@ -55,7 +55,8 @@ public class AddTransportPresenter<V extends AddTransportMvpView> extends BasePr
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            getMvpView().onError("Не удалось добавить новый транспорт");
+                            getMvpView().showErrorMessage("Не удалось добавить новый транспорт");
+//                            getMvpView().onError("Не удалось добавить новый транспорт");
                         }
                     }
 
@@ -63,7 +64,7 @@ public class AddTransportPresenter<V extends AddTransportMvpView> extends BasePr
                     public void onFailure(Call<Transport> call, Throwable t) {
                         getMvpView().hideLoading();
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
-                        getMvpView().onError("Не удалось добавить новый транспорт");
+                        getMvpView().showErrorMessage("Не удалось добавить новый транспорт");
                     }
                 });
 

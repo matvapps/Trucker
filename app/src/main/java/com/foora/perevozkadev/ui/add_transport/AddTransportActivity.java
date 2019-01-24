@@ -142,7 +142,7 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
     public void onAddTransport(Transport transport) {
         transportId = transport.getId();
 
-        for (File file: transportPhotos) {
+        for (File file : transportPhotos) {
             getPresenter().addPhotoToTransport(file, transportId);
         }
 
@@ -154,14 +154,15 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         sentPhotoCount++;
 
         if (sentPhotoCount == transportPhotos.size()) {
-            for (File file: passportPhotos) {
+            for (File file : passportPhotos) {
                 getPresenter().addPhotoToTransport(file, transportId);
             }
         }
 
         if (sentPhotoCount == (transportPhotos.size() + passportPhotos.size())) {
-            showMessage("Транспорт успешно добавлен");
-            finish();
+//            showMessage("Транспорт успешно добавлен");
+            SuccessDialogFragment.newInstance().show(getSupportFragmentManager());
+//            finish();
         }
     }
 }

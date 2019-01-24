@@ -2,8 +2,14 @@ package com.foora.perevozkadev.ui.profile.profile_settings.register_info;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -22,7 +28,9 @@ import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
 import com.foora.perevozkadev.utils.custom.MyDatePickerFragment;
 import com.github.matvapps.AppEditText;
+import com.github.matvapps.gallery.GalleryView;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,14 +41,20 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
 
     public static final String TAG = RegisterInfoActivity.class.getSimpleName();
 
+    private final int IMAGE_CERTIFICATE_CODE = 33;
+    private final int IMAGE_LICENSE_CODE = 34;
+
     private View btnBack;
     private View btnDone;
 
     private AppEditText certificateNum;
     private AppEditText countryRegister;
     private AppEditText licenseNum;
-
-    private TextView dateTxtv;
+    private Button addCertificatePhotoBtn;
+    private Button addLicensePhotoBtn;
+    private GalleryView photoCertificateGallery;
+    private GalleryView photoLicenseGallery;
+    private AppEditText dateTxtv;
     private View dateContainer;
 
     private Profile profile;
@@ -60,7 +74,11 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
         countryRegister = findViewById(R.id.country_register);
         licenseNum = findViewById(R.id.license_num);
         dateTxtv = findViewById(R.id.date);
-        dateContainer = findViewById(R.id.date_expired);
+        dateContainer = findViewById(R.id.date_container);
+        addCertificatePhotoBtn = findViewById(R.id.btn_add_certificate);
+        addLicensePhotoBtn = findViewById(R.id.btn_add_license);
+        photoCertificateGallery = findViewById(R.id.photo_certificate);
+        photoLicenseGallery = findViewById(R.id.photo_license);
 
         btnBack = findViewById(R.id.btn_back);
         btnDone = findViewById(R.id.action_done);
@@ -69,7 +87,9 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
         btnDone.setOnClickListener(this);
         dateContainer.setOnClickListener(this);
         dateTxtv.setOnClickListener(this);
-
+        addCertificatePhotoBtn.setOnClickListener(this);
+        addLicensePhotoBtn.setOnClickListener(this);
+        dateTxtv.setClickable(false);
         getPresenter().getProfile();
     }
 
@@ -92,9 +112,9 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
     }
 
     void done() {
-        String certificate = certificateNum.getText().toString();
-        String countryreg = countryRegister.getText().toString();
-        String license = licenseNum.getText().toString();
+        String certificate = certificateNum.getText();
+        String countryreg = countryRegister.getText();
+        String license = licenseNum.getText();
         String licenseExpDate = dateTxtv.getText().toString();
 
         if (!certificate.isEmpty())
@@ -110,14 +130,27 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
 
     }
 
+    private void getImageFromGallery(int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+
+        startActivityForResult(Intent.createChooser(intent, "Выберите фото"), requestCode);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.date:
+            case R.id.date_container:
                 onDateContainerClick();
                 break;
             case R.id.action_done:
                 done();
+                break;
+            case R.id.btn_add_certificate:
+                getImageFromGallery(IMAGE_CERTIFICATE_CODE);
+                break;
+            case R.id.btn_add_license:
+                getImageFromGallery(IMAGE_LICENSE_CODE);
                 break;
         }
     }
@@ -157,6 +190,38 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
     public void onChangeProfile() {
         showMessage("Профиль успешно изменен");
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == IMAGE_CERTIFICATE_CODE) {
+                String imagePath = getPathFromUri(data.getData());
+                photoCertificateGallery.addLink(imagePath);
+            } else if (requestCode == IMAGE_LICENSE_CODE) {
+                String imagePath = getPathFromUri(data.getData());
+                photoLicenseGallery.addLink(imagePath);
+            }
+        }
+
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+//        final Uri selectedImage = data.getData();
+
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, filePathColumn, null, null, null);
+        if (cursor == null)
+            return "";
+
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        Log.d(TAG, "getPathFromUri: " + filePath);
+        return "file:" + filePath;
     }
 
     @Override

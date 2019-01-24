@@ -30,6 +30,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void addItem(String item) {
+        this.items.add(item);
+        notifyDataSetChanged();
+    }
+
     public GalleryAdapter() {
         items = new ArrayList<>();
     }
@@ -44,13 +49,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        if (items.size() == 0)
+            return;
         GalleryViewHolder gviewholder = (GalleryViewHolder) viewHolder;
         gviewholder.onBind(i);
     }
 
     @Override
     public int getItemCount() {
-        return maxItems;
+        if (items.size() > maxItems)
+            return maxItems;
+        else
+            return items.size();
     }
 
     public String getItem(int position) {
@@ -67,7 +77,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setMaxItems(int maxItems) {
         this.maxItems = maxItems;
-        notifyDataSetChanged();
     }
 
     public Callback getListener() {
@@ -93,16 +102,20 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         public void onBind(final int position) {
-            if (getItem(position).isEmpty())
+            if (getItem(position) != null && getItem(position).isEmpty())
                 return;
             Picasso.get()
                     .load(getItem(position))
                     .placeholder(R.color.colorPlaceholder)
                     .into(imageView);
             if (position == maxItems - 1) {
-                container.setVisibility(View.VISIBLE);
-                int num = items.size() - maxItems;
-                textView.setText(String.format(Locale.getDefault(),"+%d", num));
+                    container.setVisibility(View.VISIBLE);
+                    int num = items.size() - maxItems;
+                    if (num == 0)
+                        textView.setVisibility(View.GONE);
+                    else
+                        textView.setVisibility(View.VISIBLE);
+                    textView.setText(String.format(Locale.getDefault(), "+%d", num));
             } else {
                 container.setVisibility(View.GONE);
             }

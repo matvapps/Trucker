@@ -46,7 +46,7 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
     private AppEditText surnameEdtxt;
     private AppEditText countryEdtxt;
     private AppEditText passportNumEdtxt;
-    private TextView dateTxtv;
+    private AppEditText dateTxtv;
     private View dateContainer;
 
     private Profile profile;
@@ -111,11 +111,11 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
     }
 
     private void done() {
-        String name = nameEdtxt.getText().toString();
-        String surname = surnameEdtxt.getText().toString();
-        String country = countryEdtxt.getText().toString();
-        String passportNum = passportNumEdtxt.getText().toString();
-        String date = dateTxtv.getText().toString();
+        String name = nameEdtxt.getText();
+        String surname = surnameEdtxt.getText();
+        String country = countryEdtxt.getText();
+        String passportNum = passportNumEdtxt.getText();
+        String date = dateTxtv.getText();
 
         if (!name.isEmpty()) {
             profile.setFirstName(name);
