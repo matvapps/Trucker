@@ -1,5 +1,6 @@
 package com.foora.perevozkadev.ui.profile.profile_settings.register_info;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -65,6 +67,7 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +88,16 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
 
         btnBack.setOnClickListener(v -> finish());
         btnDone.setOnClickListener(this);
-        dateContainer.setOnClickListener(this);
         dateTxtv.setOnClickListener(this);
+        dateTxtv.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                onDateContainerClick();
+                return true;
+            }
+            return true;
+        });
         addCertificatePhotoBtn.setOnClickListener(this);
         addLicensePhotoBtn.setOnClickListener(this);
-        dateTxtv.setClickable(false);
         getPresenter().getProfile();
     }
 
@@ -115,7 +123,7 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
         String certificate = certificateNum.getText();
         String countryreg = countryRegister.getText();
         String license = licenseNum.getText();
-        String licenseExpDate = dateTxtv.getText().toString();
+        String licenseExpDate = dateTxtv.getText();
 
         if (!certificate.isEmpty())
             profile.setRegCertificateNum(certificate);
@@ -140,7 +148,7 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.date_container:
+            case R.id.date:
                 onDateContainerClick();
                 break;
             case R.id.action_done:

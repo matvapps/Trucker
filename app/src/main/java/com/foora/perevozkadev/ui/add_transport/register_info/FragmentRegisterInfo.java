@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -83,6 +84,15 @@ public class FragmentRegisterInfo extends BaseFragment {
         photoList.setLayoutManager(new LinearLayoutManager(getContext()));
         photoList.setAdapter(photoListAdapter);
         photoList.setNestedScrollingEnabled(false);
+
+        dateTxtv.setOnClickListener(v -> onDateContainerClick());
+        dateTxtv.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                onDateContainerClick();
+                return true;
+            }
+            return true;
+        });
     }
 
     @Override

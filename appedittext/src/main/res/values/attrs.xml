@@ -16,9 +16,6 @@
             <enum name="actionNext" value="6"/>
             <enum name="actionOk" value="7"/>
         </attr>
-        <attr name="aet_singleLine" format="boolean"/>
-        <attr name="aet_minLines" format="integer"/>
-        <attr name="aet_lines" format="integer"/>
     </declare-styleable>
 
 </resources>

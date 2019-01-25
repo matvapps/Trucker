@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.profile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,16 @@ import com.foora.perevozkadev.ui.profile.model.Partner;
 import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsActivity;
 import com.foora.perevozkadev.ui.transport.TransportActivity;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
@@ -42,9 +53,11 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresenter>
-        implements ProfileMvpView, View.OnClickListener {
+        implements ProfileMvpView, View.OnClickListener, OnMapReadyCallback {
 
     public static final String TAG = ProfileActivity.class.getSimpleName();
+
+    private final int PLACE_PICKER_REQUEST = 1;
 
     private NestedScrollView nestedScrollView;
 
@@ -57,6 +70,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     private TextView userShortNameTxtv;
     private TextView userTypeTxtv;
     private ImageView userImageView;
+    private MapView userLocMapView;
 
     private Button seeAllPartners;
     private Button seeAllTransport;
@@ -67,7 +81,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     private OrdersAdapter ordersAdapter;
 
     private PrefRepo preferencesHelper;
-
+    private GoogleMap googleMap;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, ProfileActivity.class);
@@ -80,6 +94,20 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
         setUnBinder(ButterKnife.bind(this));
 
+        userLocMapView = findViewById(R.id.map_image_view);
+        userLocMapView.onCreate(savedInstanceState);
+        userLocMapView.getMapAsync(this);
+    }
+
+    private void openMap() {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(ProfileActivity.this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -210,6 +238,19 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     protected void onResume() {
         super.onResume();
         getPresenter().getProfile();
+        userLocMapView.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        userLocMapView.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        userLocMapView.onDestroy();
     }
 
     @Override
@@ -228,6 +269,16 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        this.googleMap.setMinZoomPreference(12);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapClickListener(latLng -> openMap());
     }
 
     @Override
@@ -272,5 +323,19 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         if (transports.size() <= 2)
             seeAllTransport.setVisibility(View.GONE);
         transportAdapter.setItems(transports);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(place.getLatLng());
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+                googleMap.addMarker(markerOptions);
+
+            }
+        }
     }
 }

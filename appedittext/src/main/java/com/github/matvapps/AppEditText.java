@@ -7,8 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -25,9 +28,6 @@ public class AppEditText extends FrameLayout {
     private String text;
     private InputType inputType;
     private ImeOption imeOption;
-    private boolean singleLine;
-    private int minLines;
-    private int lines;
 
     private TextInputEditText editText;
     private TextInputLayout textInputLayout;
@@ -55,9 +55,6 @@ public class AppEditText extends FrameLayout {
         hint = a.getString(R.styleable.AppEditText_aet_hint);
         text = a.getString(R.styleable.AppEditText_aet_text);
         inputType = InputType.fromId(a.getInt(R.styleable.AppEditText_aet_inputType, 3));
-        singleLine = a.getBoolean(R.styleable.AppEditText_aet_singleLine, true);
-        lines = a.getInteger(R.styleable.AppEditText_aet_lines, 1);
-        minLines = a.getInteger(R.styleable.AppEditText_aet_minLines, 1);
         imeOption = ImeOption.fromId(a.getInt(R.styleable.AppEditText_aet_imeOption, 7));
 
         a.recycle();
@@ -69,11 +66,8 @@ public class AppEditText extends FrameLayout {
         editText = view.findViewById(R.id.edtxt);
         textInputLayout = view.findViewById(R.id.edtxt_input);
 
-        //        setSingleLine(singleLine);
         setInputType(inputType);
         setImeOption(imeOption);
-//        setMinLines(minLines);
-//        setLines(lines);
         setHint(hint);
         setText(text);
 
@@ -92,16 +86,15 @@ public class AppEditText extends FrameLayout {
 
     }
 
-    public void setMinLines(int minLines) {
-        this.minLines = minLines;
-        editText.setMinLines(minLines);
+    @Override
+    public void setOnTouchListener(OnTouchListener l) {
+        editText.setOnTouchListener(l);
     }
 
-    public void setLines(int lines) {
-        this.lines = lines;
-        editText.setLines(lines);
-    }
-
+//    @Override
+//    public void setOnClickListener(@Nullable View.OnClickListener l) {
+//        editText.setOnClickListener(l);
+//    }
 
     public void setHint(String hint) {
         this.hint = hint;
@@ -119,10 +112,6 @@ public class AppEditText extends FrameLayout {
             }
     }
 
-    public void setSingleLine(boolean singleLine) {
-        this.singleLine = singleLine;
-        editText.setSingleLine(singleLine);
-    }
 
     public void setImeOption(ImeOption imeOption) {
         this.imeOption = imeOption;

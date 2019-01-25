@@ -280,7 +280,7 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <com.google.android.gms.maps.MapView
             android:id="@+id/map_image_view"
             android:layout_width="0dp"
             android:layout_height="150dp"
@@ -288,27 +288,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:scaleType="centerCrop"
+            android:foreground="?attr/selectableItemBackground"
             android:src="@drawable/map_pattern"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:riv_corner_radius="5dp" />
 
-
-        <!--TODO delete-->
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/roundedImageView3"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:scaleType="centerCrop"
-            android:src="#ab1a1a1a"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:riv_corner_radius="5dp" />
 
         <TextView
             android:id="@+id/textView13"
@@ -385,14 +371,19 @@
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нажмите чтоб выбрать местоположение"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#80020202"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="Нажмите чтобы изменить местоположение"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/roundedImageView3"
-            app:layout_constraintEnd_toEndOf="@+id/roundedImageView3"
-            app:layout_constraintStart_toStartOf="@+id/roundedImageView3"
-            app:layout_constraintTop_toTopOf="@+id/roundedImageView3" />
+            app:layout_constraintBottom_toBottomOf="@+id/map_image_view"
+            app:layout_constraintStart_toStartOf="@+id/map_image_view" />
 
 
     </android.support.constraint.ConstraintLayout>

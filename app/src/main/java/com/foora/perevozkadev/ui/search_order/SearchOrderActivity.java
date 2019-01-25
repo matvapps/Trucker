@@ -48,6 +48,8 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
 
+    private View firstTab;
+
     private SearchOrderPagerAdapter searchOrderPagerAdapter;
     private List<FilterJson> savedFilters;
     private Gson gson;
@@ -95,7 +97,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
 
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
-        View firstTab = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        firstTab = getLayoutInflater().inflate(R.layout.custom_tab, null);
 
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter());
@@ -176,12 +178,22 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
                 if (viewPager.getCurrentItem() != 0) {
                     searchOrderPagerAdapter.remove(viewPager.getCurrentItem());
 
+                    if (viewPager.getCurrentItem() != 1) {
+                        ((ImageView) firstTab.findViewById(R.id.image))
+                                .setColorFilter(ContextCompat.getColor(SearchOrderActivity.this, R.color.colorAccent));
+                        ((ImageView) firstTab.findViewById(R.id.image)).setAlpha(1f);
+                        tabLayout.getTabAt(0).setCustomView(firstTab);
+                    } else {
+                        ((ImageView) firstTab.findViewById(R.id.image)).setColorFilter(Color.WHITE);
+                        ((ImageView) firstTab.findViewById(R.id.image)).setAlpha(0.54f);
+                        tabLayout.getTabAt(0).setCustomView(firstTab);
+                    }
+
                     Filter filter = searchOrderPagerAdapter.getItem(viewPager.getCurrentItem());
                     FilterJson filterJson = new FilterJson();
                     filterJson.setJson(gson.toJson(filter));
                     filterJson.setId(savedFilters.get(viewPager.getCurrentItem()).getId());
                     getPresenter().deleteFilter(filterJson);
-
                 }
                 break;
             case R.id.map:

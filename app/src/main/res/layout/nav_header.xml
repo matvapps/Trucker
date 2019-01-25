@@ -7,15 +7,15 @@
     android:gravity="bottom"
     android:background="@color/color_app_blue_middle"
     android:padding="16dp"
+    android:foreground="?attr/selectableItemBackground"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <FrameLayout
         android:id="@+id/img_user_icon"
         android:layout_width="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/user_image"
@@ -28,11 +28,11 @@
             android:id="@+id/short_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="ИП"
             android:textAllCaps="true"
-            android:layout_gravity="center"
             android:textColor="@color/color_app_blue"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
     </FrameLayout>
 
