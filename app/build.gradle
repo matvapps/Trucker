@@ -128,6 +128,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     // Maps Api
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    // Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    //
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
 
     // SlideUpPanel
     implementation 'com.sothree.slidinguppanel:library:3.4.0'

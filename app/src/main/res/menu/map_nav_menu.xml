@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_search"
+        android:enabled="false"
+        android:icon="@drawable/ic_action_receipt"
+        android:title="Поиск заказов"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_calculate"
+        android:enabled="false"
+        android:icon="@drawable/ic_action_map"
+        android:title="Рассчитать"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_track"
+        android:enabled="false"
+        android:icon="@drawable/ic_action_place"
+        android:title="Отследить"
+        app:showAsAction="ifRoom"/>
+</menu>
