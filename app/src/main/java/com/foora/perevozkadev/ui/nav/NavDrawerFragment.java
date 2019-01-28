@@ -21,6 +21,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
 import com.foora.perevozkadev.ui.base.BaseDialog;
+import com.foora.perevozkadev.ui.messages.MessagesActivity;
 import com.foora.perevozkadev.ui.my_orders.MyOrdersActivity;
 import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
 import com.foora.perevozkadev.ui.profile.ProfileActivity;
@@ -220,6 +221,13 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
                 });
                 dismissDialog();
                 break;
+            case R.id.messages: {
+                dialog.setOnDismissListener(dialog1 -> {
+                    MessagesActivity.start(getActivity());
+                    getActivity().finish();
+                });
+                dismissDialog();
+            }
         }
     }
 }

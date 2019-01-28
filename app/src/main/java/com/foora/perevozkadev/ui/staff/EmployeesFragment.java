@@ -22,9 +22,8 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_employee.AddEmployeeActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.employee.EmployeeActivity;
-import com.foora.perevozkadev.ui.staff.adapter.EmployeesAdapter;
 import com.foora.perevozkadev.ui.profile.model.Profile;
-import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.ui.staff.adapter.EmployeesAdapter;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(employeesAdapter);
-        recyclerView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(16), ViewUtils.dpToPx(8), ViewUtils.dpToPx(16),0));
+        recyclerView.addItemDecoration(new ItemSpacingDecoration(0, 0, 0,0));
 
         getPresenter().getEmployees();
     }

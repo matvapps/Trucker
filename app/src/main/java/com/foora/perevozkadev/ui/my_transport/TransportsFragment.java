@@ -22,7 +22,6 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_transport.AddTransportActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
-import com.foora.perevozkadev.ui.transport.TransportAdapter;
 import com.foora.perevozkadev.ui.transport.TransportActivity;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;

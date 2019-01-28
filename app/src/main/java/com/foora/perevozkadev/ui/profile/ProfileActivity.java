@@ -69,6 +69,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     private TextView userNameTxtv;
     private TextView userShortNameTxtv;
     private TextView userTypeTxtv;
+    private TextView transportTxtv;
+    private TextView orderTxtv;
     private ImageView userImageView;
     private MapView userLocMapView;
 
@@ -132,6 +134,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         seeAllTransport = findViewById(R.id.btn_see_all_transport);
         nestedScrollView = findViewById(R.id.root_view);
 
+        transportTxtv = findViewById(R.id.transport_txtv);
+        orderTxtv = findViewById(R.id.orders_txtv);
         userNameTxtv = findViewById(R.id.user_name);
         userShortNameTxtv = findViewById(R.id.short_name);
         userTypeTxtv = findViewById(R.id.user_type);
@@ -315,6 +319,9 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     public void onGetUserOrders(List<Order> orderList) {
         if (orderList.size() <= 2)
             seeAllOrders.setVisibility(View.GONE);
+        if (orderList.isEmpty()) {
+            orderTxtv.setVisibility(View.GONE);
+        }
         ordersAdapter.setItems(orderList);
     }
 
@@ -322,6 +329,9 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     public void onGetUserTransport(List<Transport> transports) {
         if (transports.size() <= 2)
             seeAllTransport.setVisibility(View.GONE);
+        if (transports.isEmpty()) {
+            transportTxtv.setVisibility(View.GONE);
+        }
         transportAdapter.setItems(transports);
     }
 

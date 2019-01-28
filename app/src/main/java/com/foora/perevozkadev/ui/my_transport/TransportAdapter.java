@@ -1,4 +1,4 @@
-package com.foora.perevozkadev.ui.transport;
+package com.foora.perevozkadev.ui.my_transport;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

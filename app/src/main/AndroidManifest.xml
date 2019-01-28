@@ -112,6 +112,7 @@
             android:value="2f4cefd4288d840132f8c5e70eea901ea3f4128a" />
 
         <activity android:name="com.foora.perevozkadev.ui.order.OrderActivity"/>
+        <activity android:name="com.foora.perevozkadev.ui.messages.MessagesActivity" />
     </application>
 
 </manifest>
