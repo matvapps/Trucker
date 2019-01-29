@@ -22,22 +22,21 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     @BindView(R.id.mapView)
     MapView mapView;
 
-    private GoogleMap googleMap;
+    public GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
-        setUp();
+        setUnBinder(ButterKnife.bind(this));
 
         mapView.onCreate(savedInstanceState);
 
+        setUp();
     }
 
     @Override
     protected void setUp() {
-        setUnBinder(ButterKnife.bind(this));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, CalcDistanceFragment.newInstance(), CalcDistanceFragment.TAG);
         fragmentTransaction.commit();
