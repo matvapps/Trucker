@@ -207,10 +207,10 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             cost = Float.parseFloat(costEdtxt.getText().toString());
             currency = (String) currencySpinner.getSelectedItem();
 
-            carQuant = Integer.parseInt(carQuantEdtxt.getText().toString());
-            width = Float.parseFloat(widthEdtxt.getText().toString());
-            height = Float.parseFloat(heightEdtxt.getText().toString());
-            depth = Float.parseFloat(depthEdtxt.getText().toString());
+            carQuant = Integer.parseInt(carQuantEdtxt.getText());
+            width = Float.parseFloat(widthEdtxt.getText());
+            height = Float.parseFloat(heightEdtxt.getText());
+            depth = Float.parseFloat(depthEdtxt.getText());
 
             listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
                     massToNum, volumeFromNum, volumeToNum,

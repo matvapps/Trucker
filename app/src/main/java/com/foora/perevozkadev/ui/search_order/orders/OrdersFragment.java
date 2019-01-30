@@ -24,12 +24,13 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
-import com.foora.perevozkadev.ui.order.OrderSynopsisFragment;
+import com.foora.perevozkadev.ui.order.OrderFragment;
 import com.foora.perevozkadev.ui.search_order.SearchOrderMvpView;
 import com.foora.perevozkadev.ui.search_order.SearchOrderPresenter;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
+import com.google.gson.Gson;
 import com.paginate.Paginate;
 
 import java.util.List;
@@ -109,7 +110,7 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
 
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
-        ordersAdapter.setListener(order -> OrderSynopsisFragment.newInstance(order).show(getFragmentManager(), OrderSynopsisFragment.TAG));
+        ordersAdapter.setListener(order -> OrderFragment.newInstance(new Gson().toJson(order)).show(getFragmentManager(), OrderFragment.TAG));
 
         Paginate.with(orderListView, this)
                 .setLoadingTriggerThreshold(2)

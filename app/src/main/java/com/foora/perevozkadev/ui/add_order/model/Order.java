@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Order implements Serializable {
 
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("loading_places")
     @Expose
     private List<Place> loadingPlaces = null;
@@ -103,7 +106,7 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(List<Place> loadingPlaces, List<Place> unloadingPlaces,
+    public Order(String id, List<Place> loadingPlaces, List<Place> unloadingPlaces,
                  String status, String loadingDate, String unloadingDate,
                  String cargo, Double weightFrom, Double weightTo,
                  Double volumeFrom, Double volumeTo, String transportType,
@@ -113,6 +116,7 @@ public class Order implements Serializable {
                  String email, String docs, String loading, String conditions,
                  String additionally, String skype, String phone,
                  String telegram, String whatsapp) {
+        this.id = id;
         this.loadingPlaces = loadingPlaces;
         this.unloadingPlaces = unloadingPlaces;
         this.status = status;
@@ -142,6 +146,14 @@ public class Order implements Serializable {
         this.phone = phone;
         this.telegram = telegram;
         this.whatsapp = whatsapp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Place> getLoadingPlaces() {

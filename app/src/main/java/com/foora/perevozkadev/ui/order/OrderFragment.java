@@ -18,44 +18,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
+import com.foora.perevozkadev.ui.choose_transport.ChooseTransportActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.perevozka.foora.routedisplayview.RouteDisplayView;
 import com.perevozka.foora.routedisplayview.RouteItem;
 import com.perevozka.foora.routedisplayview.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static android.view.View.GONE;
 
-public class OrderSynopsisFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
+public class OrderFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
 
-    public static final String TAG = OrderSynopsisFragment.class.getSimpleName();
+    public static final String TAG = OrderFragment.class.getSimpleName();
 
     private static final String ORDER_KEY = "order_key";
+
 
     private RouteDisplayView routeDisplayView;
     private MapView mapView;
     private View rootView;
     private View btnBack;
     private View toolbar;
+    private Button btnRespond;
+    private Gson gson;
 
     private GoogleMap googleMap;
+    private Order order;
 
-    public static OrderSynopsisFragment newInstance(Order order) {
+    public static OrderFragment newInstance(String orderJson) {
         Bundle args = new Bundle();
-        OrderSynopsisFragment fragment = new OrderSynopsisFragment();
-        args.putSerializable(ORDER_KEY, order);
+        OrderFragment fragment = new OrderFragment();
+        args.putString(ORDER_KEY, orderJson);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,12 +82,14 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
 
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Order order = (Order) getArguments().getSerializable(ORDER_KEY);
+        gson = new Gson();
+
+        if (order == null)
+            order = gson.fromJson(getArguments().getString(ORDER_KEY), Order.class);
 
         //Set the custom view
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order_route, null);
@@ -91,6 +101,9 @@ public class OrderSynopsisFragment extends BottomSheetDialogFragment implements 
         View v = view.findViewById(R.id.view2);
         View shadow = view.findViewById(R.id.shadow);
         mapView = view.findViewById(R.id.mapView);
+        btnRespond = view.findViewById(R.id.btn_respond);
+
+        btnRespond.setOnClickListener(v1 -> ChooseTransportActivity.start(getActivity(), order.getCarQuantity(), order.getId()));
 
         mapView.onCreate(savedInstanceState);
 

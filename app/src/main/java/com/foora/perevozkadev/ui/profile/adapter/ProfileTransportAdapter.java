@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,13 +25,18 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
     private List<Transport> items;
     private List<Transport> visibleItems;
 
+    private List<Integer> selectedItemPositions;
+
     private int visibleCount = -1;
+    private boolean useSelection = false;
+    private int maxSelectedItems = -1;
 
     private Callback listener;
 
     public ProfileTransportAdapter() {
         items = new ArrayList<>();
         visibleItems = new ArrayList<>();
+        selectedItemPositions = new ArrayList<>();
     }
 
     public void setItems(List<Transport> transports) {
@@ -101,6 +107,7 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
         private TextView transportNum;
         private TextView transportType;
         private ImageButton settingsBtn;
+        private CheckBox checkBox;
 
         public TransportViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +116,7 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
             transportNum = itemView.findViewById(R.id.transport_num);
             transportType = itemView.findViewById(R.id.transport_type);
             settingsBtn = itemView.findViewById(R.id.settings);
+            checkBox = itemView.findViewById(R.id.checkBox);
 
         }
 
@@ -122,9 +130,30 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
             super.onBind(position);
 
             Transport transport = getItem(position);
+            if (isUseSelection()) {
+                checkBox.setVisibility(View.VISIBLE);
+                if (selectedItemPositions.contains(position)) {
+                    checkBox.setSelected(true);
+                }
+            } else
+                checkBox.setVisibility(View.GONE);
 
-            if (listener != null)
-                itemView.setOnClickListener(v -> listener.onClick(position, transport));
+            itemView.setOnClickListener(v -> {
+                if (maxSelectedItems == -1 || selectedItemPositions.size() < maxSelectedItems) {
+                    if (isUseSelection()) {
+                        checkBox.setChecked(!checkBox.isChecked());
+                        if (checkBox.isChecked()) {
+                            selectedItemPositions.add((Integer) position);
+                        } else {
+                            selectedItemPositions.remove((Integer) position);
+                        }
+                    }
+                }
+                if (listener != null)
+                    listener.onClick(position, transport);
+            });
+
+
 
             transportName.setText(transport.getModel());
             transportType.setText(transport.getType());
@@ -144,4 +173,28 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
         void onClick(int pos, Transport transport);
     }
 
+    public List<Transport> getSelectedItems() {
+        List<Transport> selectedTransports = new ArrayList<>();
+        for (int pos :selectedItemPositions) {
+            selectedTransports.add(getItem(pos));
+        }
+
+        return selectedTransports;
+    }
+
+    public boolean isUseSelection() {
+        return useSelection;
+    }
+
+    public void setUseSelection(boolean useSelection) {
+        this.useSelection = useSelection;
+    }
+
+    public int getMaxSelectedItems() {
+        return maxSelectedItems;
+    }
+
+    public void setMaxSelectedItems(int maxSelectedItems) {
+        this.maxSelectedItems = maxSelectedItems;
+    }
 }
