@@ -1,8 +1,10 @@
 package com.foora.perevozkadev.ui.map;
 
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
@@ -22,7 +24,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     @BindView(R.id.mapView)
     MapView mapView;
 
-    public GoogleMap googleMap;
+    GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         setUnBinder(ButterKnife.bind(this));
 
         mapView.onCreate(savedInstanceState);
+
+        mapView.getMapAsync(this);
 
         setUp();
     }
@@ -45,12 +49,31 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        Log.d("TAG", "onMapReady");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 
     @Override
@@ -65,5 +88,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         mapView.onDestroy();
     }
 
-
+    public GoogleMap getGoogleMap() {
+        return googleMap;
+    }
 }

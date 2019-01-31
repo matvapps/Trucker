@@ -98,7 +98,9 @@ public class Order implements Serializable {
     @SerializedName("whatsapp")
     @Expose
     private String whatsapp;
-
+//    @SerializedName("status")
+//    @Expose
+//    private String status;
     /**
      * No args constructor for use in serialization
      *

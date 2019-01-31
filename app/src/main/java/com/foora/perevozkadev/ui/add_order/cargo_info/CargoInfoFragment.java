@@ -80,6 +80,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
     private SpinnerArrayAdapter transportArrayAdapter;
     private SpinnerArrayAdapter costArrayAdapter;
+    private SpinnerArrayAdapter paymentTypeAdapter;
     private ArrayList<String> transports;
 
     public static CargoInfoFragment newInstance() {
@@ -102,6 +103,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     private float width;
     private float height;
     private float depth;
+    private String paymentType;
 
 
     @Nullable
@@ -180,10 +182,10 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
                     volumeFrom.getText().isEmpty() ||
                     volumeTo.getText().isEmpty() ||
                     costEdtxt.getText().toString().isEmpty() ||
-                    carQuantEdtxt.getText().toString().isEmpty() ||
-                    widthEdtxt.getText().toString().isEmpty() ||
-                    heightEdtxt.getText().toString().isEmpty() ||
-                    depthEdtxt.getText().toString().isEmpty()) {
+                    carQuantEdtxt.getText().isEmpty() ||
+                    widthEdtxt.getText().isEmpty() ||
+                    heightEdtxt.getText().isEmpty() ||
+                    depthEdtxt.getText().isEmpty()) {
 
                 onError("Заполните все поля");
                 return;
@@ -206,6 +208,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             // read cost and currency
             cost = Float.parseFloat(costEdtxt.getText().toString());
             currency = (String) currencySpinner.getSelectedItem();
+            paymentType = (String) paymentSpinner.getSelectedItem();
 
             carQuant = Integer.parseInt(carQuantEdtxt.getText());
             width = Float.parseFloat(widthEdtxt.getText());
@@ -215,7 +218,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
                     massToNum, volumeFromNum, volumeToNum,
                     transportType, cost, currency,
-                    carQuant, width, height, depth);
+                    carQuant, width, height, depth, paymentType);
 
         }
     }
@@ -277,7 +280,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
         transportArrayAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
         costArrayAdapter = new SpinnerArrayAdapter(getContext(), cost, false);
-        SpinnerArrayAdapter paymentTypeAdapter = new SpinnerArrayAdapter(getContext(), paymentType, false);
+        paymentTypeAdapter = new SpinnerArrayAdapter(getContext(), paymentType, false);
 
         transportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -291,7 +294,19 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             }
         });
 
-        transportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        currencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                view.setActivated(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                currencySpinner.setActivated(false);
+            }
+        });
+
+        paymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 view.setActivated(true);
@@ -331,7 +346,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
                                 List<String> transportTypes,
                                 float cost, String currency,
                                 int carQuant, float width,
-                                float height, float depth);
+                                float height, float depth, String paymentType);
     }
 
 }

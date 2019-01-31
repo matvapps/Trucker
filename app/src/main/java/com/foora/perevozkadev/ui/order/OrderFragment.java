@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -38,6 +39,7 @@ import com.perevozka.foora.routedisplayview.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import static android.view.View.GONE;
@@ -55,8 +57,22 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     private View btnBack;
     private View toolbar;
     private Button btnRespond;
-    private Gson gson;
+    private TextView distanceTxtv;
+    private TextView timeTxtv;
+    private TextView carQuantityTxtv;
+    private TextView transportTypeTxtv;
+    private TextView cargoMassTxtv;
+    private TextView volumeTxtv;
+    private TextView heightTxtv;
+    private TextView widthTextv;
+    private TextView depthTxtv;
+    private TextView priceForKmTxtv;
+    private TextView paymentType;
+    private TextView costTxtv;
 
+
+
+    private Gson gson;
     private GoogleMap googleMap;
     private Order order;
 
@@ -102,6 +118,17 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         View shadow = view.findViewById(R.id.shadow);
         mapView = view.findViewById(R.id.mapView);
         btnRespond = view.findViewById(R.id.btn_respond);
+        timeTxtv = view.findViewById(R.id.time_txtv);
+        carQuantityTxtv = view.findViewById(R.id.car_quantity_txtv);
+        transportTypeTxtv = view.findViewById(R.id.transport_type_txtv);
+        cargoMassTxtv = view.findViewById(R.id.mass_txtv);
+        volumeTxtv = view.findViewById(R.id.volume_txtv);
+        heightTxtv = view.findViewById(R.id.height_txtv);
+        widthTextv = view.findViewById(R.id.width_txtv);
+        depthTxtv = view.findViewById(R.id.depth_txtv);
+        priceForKmTxtv = view.findViewById(R.id.km_cost_txtv);
+        paymentType = view.findViewById(R.id.payment_txtv);
+        costTxtv = view.findViewById(R.id.cost_txtv);
 
         btnRespond.setOnClickListener(v1 -> ChooseTransportActivity.start(getActivity(), order.getCarQuantity(), order.getId()));
 
@@ -115,7 +142,18 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         FrameLayout.LayoutParams paramsNoMargin = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         routeDisplayView.setRoutes(getRouteItemsFromOrder(order));
+        carQuantityTxtv.setText(String.valueOf(order.getCarQuantity()));
+        transportTypeTxtv.setText(order.getTransportType());
+        cargoMassTxtv.setText(String.valueOf(order.getWeightTo()));
+        volumeTxtv.setText(String.valueOf(order.getVolumeTo()));
 
+        String[] size = order.getSize().split("x");
+        widthTextv.setText(size[0]);
+        heightTxtv.setText(size[1]);
+        depthTxtv.setText(size[2]);
+
+        paymentType.setText(order.getPaymentType1());
+        costTxtv.setText(String.format(Locale.getDefault(), "%d %s", Math.round(order.getCost()), order.getCurrency().toLowerCase()));
 
         getDialog().setContentView(view);
 

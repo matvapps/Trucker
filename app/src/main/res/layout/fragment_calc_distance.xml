@@ -26,7 +26,7 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/distance_txtv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
@@ -38,7 +38,7 @@
                 android:text="235 км" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/time_txtv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
@@ -59,8 +59,8 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintStart_toStartOf="@+id/distance_txtv"
+                app:layout_constraintTop_toBottomOf="@+id/distance_txtv" />
 
             <TextView
                 android:id="@+id/textView28"
@@ -73,8 +73,8 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="@+id/textView13"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                app:layout_constraintStart_toStartOf="@+id/time_txtv"
+                app:layout_constraintTop_toBottomOf="@+id/time_txtv" />
 
         </android.support.constraint.ConstraintLayout>
 

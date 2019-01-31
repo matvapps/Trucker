@@ -131,6 +131,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/distance_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -160,6 +161,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/time_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -232,6 +234,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:alpha="0.25"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/darker_gray" />
@@ -254,6 +257,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/car_quantity_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -283,6 +287,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/transport_type_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -297,6 +302,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:alpha="0.25"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/darker_gray" />
@@ -320,6 +326,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/mass_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -349,6 +356,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/volume_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -401,6 +409,7 @@
 
 
                                     <TextView
+                                        android:id="@+id/height_txtv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
@@ -429,6 +438,7 @@
 
 
                                     <TextView
+                                        android:id="@+id/width_txtv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
@@ -455,6 +465,7 @@
 
 
                                     <TextView
+                                        android:id="@+id/depth_txtv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
@@ -475,6 +486,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:alpha="0.25"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/darker_gray" />
@@ -497,6 +509,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/km_cost_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
@@ -537,7 +550,7 @@
                 android:background="@android:color/white">
 
                 <TextView
-                    android:id="@+id/textView27"
+                    android:id="@+id/cost_txtv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -551,6 +564,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/payment_txtv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
@@ -559,8 +573,8 @@
                     android:textColor="#727dab"
                     android:textSize="12sp"
                     android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="@+id/textView27"
-                    app:layout_constraintTop_toBottomOf="@+id/textView27" />
+                    app:layout_constraintStart_toStartOf="@+id/cost_txtv"
+                    app:layout_constraintTop_toBottomOf="@+id/cost_txtv" />
 
 
                 <Button

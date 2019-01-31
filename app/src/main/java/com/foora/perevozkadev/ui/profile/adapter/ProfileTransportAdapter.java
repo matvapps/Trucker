@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,20 +140,33 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
                 checkBox.setVisibility(View.GONE);
 
             itemView.setOnClickListener(v -> {
-                if (maxSelectedItems == -1 || selectedItemPositions.size() < maxSelectedItems) {
-                    if (isUseSelection()) {
+
+//                if (isUseSelection()) {
+//                    checkBox.setChecked(!checkBox.isChecked());
+////                    if (maxSelectedItems == -1 || selectedItemPositions.size() < maxSelectedItems) {
+//
+//                }
+//
+                if (isUseSelection()) {
+
+                    if (maxSelectedItems == -1 || selectedItemPositions.size() < maxSelectedItems) {
                         checkBox.setChecked(!checkBox.isChecked());
                         if (checkBox.isChecked()) {
                             selectedItemPositions.add((Integer) position);
                         } else {
                             selectedItemPositions.remove((Integer) position);
                         }
+                    } else {
+                        checkBox.setChecked(false);
+                        selectedItemPositions.remove((Integer) position);
                     }
+
                 }
+
+
                 if (listener != null)
                     listener.onClick(position, transport);
             });
-
 
 
             transportName.setText(transport.getModel());
@@ -175,7 +189,7 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public List<Transport> getSelectedItems() {
         List<Transport> selectedTransports = new ArrayList<>();
-        for (int pos :selectedItemPositions) {
+        for (int pos : selectedItemPositions) {
             selectedTransports.add(getItem(pos));
         }
 

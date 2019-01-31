@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
     private RecyclerView transportListView;
     private TextView requiredCarQuant;
     private Button btnSendRequest;
+    private View btnBack;
 
     private ProfileTransportAdapter transportAdapter;
 
@@ -76,9 +78,11 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
         transportListView = findViewById(R.id.transport_list);
         requiredCarQuant = findViewById(R.id.required_car_amount);
         btnSendRequest = findViewById(R.id.btn_send_request);
+        btnBack = findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(v -> finish());
 
         transportListView.setLayoutManager(new LinearLayoutManager(this));
-
 
         transportAdapter = new ProfileTransportAdapter();
         transportAdapter.setUseSelection(true);
@@ -87,6 +91,7 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
         transportListView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(8),0, ViewUtils.dpToPx(8), ViewUtils.dpToPx(5)));
 
         requiredCarQuant.setText(String.format(Locale.getDefault(), "Для заказа нужно %d автомобиля", requiredCar));
+        transportAdapter.setMaxSelectedItems(requiredCar);
 
         getPresenter().getTransport();
     }

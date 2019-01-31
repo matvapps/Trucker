@@ -34,11 +34,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -110,7 +106,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDmDonr8JO8lYMl669D20RE2wG9RxBWzOk" />
+            android:value="AIzaSyCeq76Uh6AckX9RUiTwITjAakze2d4rpNM" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="2f4cefd4288d840132f8c5e70eea901ea3f4128a" />
@@ -128,7 +124,11 @@
             android:theme="@style/AppTheme.Map"
             android:windowSoftInputMode="stateAlwaysHidden">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name="com.foora.perevozkadev.ui.choose_transport.ChooseTransportActivity" />
