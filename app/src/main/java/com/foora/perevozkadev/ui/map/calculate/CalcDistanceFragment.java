@@ -20,6 +20,7 @@ import com.foora.perevozkadev.ui.map.MapActivity;
 import com.foora.perevozkadev.ui.messages.MessagesFragment;
 import com.foora.perevozkadev.utils.ScreenUtils;
 import com.foora.perevozkadev.utils.ViewUtils;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,6 +44,7 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
     public static final String TAG = CalcDistanceFragment.class.getSimpleName();
 
     private FloatingActionButton currentLocationFab;
+    private View resultContainer;
     private TextView distanceTxtv;
     private TextView timeTxtv;
 
@@ -65,6 +67,7 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
         currentLocationFab = rootView.findViewById(R.id.current_location);
         distanceTxtv = rootView.findViewById(R.id.distance_txtv);
         timeTxtv = rootView.findViewById(R.id.time_txtv);
+        resultContainer = rootView.findViewById(R.id.bottom_container);
 
 
         currentLocationFab.setOnClickListener(view -> function());
@@ -199,6 +202,14 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
 
                 distanceTxtv.setText(getDistance(result));
                 timeTxtv.setText(getTime(result));
+
+                resultContainer.setVisibility(View.VISIBLE);
+                ViewAnimator
+                        .animate(resultContainer)
+                        .slideBottom()
+                        .duration(500)
+                        .start();
+
             }
 
 
