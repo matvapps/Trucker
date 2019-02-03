@@ -61,7 +61,7 @@
                     android:id="@+id/user_image"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/circle_small"
                     android:tint="@color/colorVioletLight" />
 
                 <TextView

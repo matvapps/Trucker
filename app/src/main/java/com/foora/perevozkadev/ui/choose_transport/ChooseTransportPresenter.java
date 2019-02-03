@@ -3,6 +3,8 @@ package com.foora.perevozkadev.ui.choose_transport;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 
@@ -50,7 +52,7 @@ public class ChooseTransportPresenter<V extends ChooseTransportMvpView> extends 
 //                            getMvpView().onGetUserTransport(response.body().getTransports());
                         } else {
                             try {
-                                Log.e(TAG, "onResponse: " + response.errorBody().string() );
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -65,5 +67,43 @@ public class ChooseTransportPresenter<V extends ChooseTransportMvpView> extends 
                     }
                 });
 
+    }
+
+    @Override
+    public void sendRequest(int orderId, RequestBody requestBody) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "sendRequest: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager()
+                .sendRequest(getDataManager().getUserToken(), orderId, requestBody)
+                .enqueue(new Callback<OrderRequest>() {
+                    @Override
+                    public void onResponse(Call<OrderRequest> call, Response<OrderRequest> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onRequestSuccess();
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderRequest> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Ошибка отправления запроса");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
     }
 }

@@ -6,7 +6,9 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
@@ -115,6 +117,10 @@ public interface ApiService {
                                      @Query("weight_to") float weightTo,
                                      @Query("volume_from") float volumeFrom,
                                      @Query("volume_to") float volumeTo);
+
+    @GET("order/{order_id}/")
+    Call<Order> getOrderById(@Header("Authorization") String token,
+                            @Path("order_id") int orderId);
     // ----------------------------------------------------------------------------------------
 
     // Employees
@@ -161,5 +167,17 @@ public interface ApiService {
                                  @Header("Authorization") String token);
     // ----------------------------------------------------------------------------------------
 
+
+    // Requests
+    @Headers({"Accept: application/json"})
+    @POST("order/{order_id}/requests/")
+    Call<OrderRequest> sendRequest(@Header("Authorization") String token,
+                                   @Path(value = "order_id", encoded = true) int orderId,
+                                   @Body RequestBody requestBody);
+
+    @GET("user/requests/")
+    Call<List<OrderRequest>> getUserRequests(@Header("Authorization") String token);
+
+    // ----------------------------------------------------------------------------------------
 
 }

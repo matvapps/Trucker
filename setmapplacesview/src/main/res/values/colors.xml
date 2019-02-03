@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/color_app_blue</color>
+    <color name="colorPrimaryDark">@color/color_app_blue_dark</color>
+    <color name="colorAccent">@color/orange_yellow</color>
+
+    <color name="orange_yellow">#ffa000</color>
+    <color name="white">#ffffff</color>
+    <color name="white_54">#8AFFFFFF</color>
+    <color name="mango">#fdb628</color>
+    <color name="red_error">#c62828</color>
+    <color name="red_error_light">#47b71c1c</color>
+
+    <color name="text_message_black">#212121</color>
+
+
+
+    <color name="colorOrangeLight">#2dff6f00</color>
+    <color name="color_app_blue_light">#c5cae9</color>
+    <color name="color_background">#f5f5f5</color>
+    <color name="color_background_gray">#eeeeee</color>
+    <color name="color_app_blue">#4859a2</color>
+    <color name="color_app_blue_middle">#3a4782</color>
+    <color name="color_app_blue_dark">#2D3764</color>
+
+    <color name="color_info_light">#47263074</color>
+
+
+    <color name="colorTextHint">#84000000</color>
+    <color name="colorText">#000000</color>
+
+</resources>

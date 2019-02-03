@@ -10,7 +10,7 @@ public class Order implements Serializable {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("loading_places")
     @Expose
     private List<Place> loadingPlaces = null;
@@ -108,7 +108,7 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(String id, List<Place> loadingPlaces, List<Place> unloadingPlaces,
+    public Order(int id, List<Place> loadingPlaces, List<Place> unloadingPlaces,
                  String status, String loadingDate, String unloadingDate,
                  String cargo, Double weightFrom, Double weightTo,
                  Double volumeFrom, Double volumeTo, String transportType,
@@ -150,11 +150,11 @@ public class Order implements Serializable {
         this.whatsapp = whatsapp;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -3,7 +3,9 @@ package com.foora.perevozkadev.ui.order;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -26,21 +28,29 @@ import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.choose_transport.ChooseTransportActivity;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 import com.perevozka.foora.routedisplayview.RouteDisplayView;
 import com.perevozka.foora.routedisplayview.RouteItem;
 import com.perevozka.foora.routedisplayview.ViewUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
 import static android.view.View.GONE;
 
@@ -70,7 +80,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     private TextView paymentType;
     private TextView costTxtv;
 
-
+    private List<com.google.maps.model.LatLng> places;
 
     private Gson gson;
     private GoogleMap googleMap;
@@ -87,7 +97,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MapsInitializer.initialize(getContext());
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -103,6 +113,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         gson = new Gson();
+        places = new ArrayList<>();
 
         if (order == null)
             order = gson.fromJson(getArguments().getString(ORDER_KEY), Order.class);
@@ -117,6 +128,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         View v = view.findViewById(R.id.view2);
         View shadow = view.findViewById(R.id.shadow);
         mapView = view.findViewById(R.id.mapView);
+        distanceTxtv = view.findViewById(R.id.distance_txtv);
         btnRespond = view.findViewById(R.id.btn_respond);
         timeTxtv = view.findViewById(R.id.time_txtv);
         carQuantityTxtv = view.findViewById(R.id.car_quantity_txtv);
@@ -130,9 +142,15 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         paymentType = view.findViewById(R.id.payment_txtv);
         costTxtv = view.findViewById(R.id.cost_txtv);
 
-        btnRespond.setOnClickListener(v1 -> ChooseTransportActivity.start(getActivity(), order.getCarQuantity(), order.getId()));
-
         mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
+        btnBack.setOnClickListener(v1 -> dismiss());
+        btnRespond.setOnClickListener(v1 -> {
+            ChooseTransportActivity.start(getActivity(), order.getCarQuantity(), order.getId());
+            dismiss();
+        });
+//        mapView.onCreate(savedInstanceState);
 
         routeDisplayView.setOnTouchListener((v1, event) -> false);
 
@@ -142,15 +160,15 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         FrameLayout.LayoutParams paramsNoMargin = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         routeDisplayView.setRoutes(getRouteItemsFromOrder(order));
-        carQuantityTxtv.setText(String.valueOf(order.getCarQuantity()));
+        carQuantityTxtv.setText(String.format(Locale.getDefault(), "%d шт", order.getCarQuantity()));
         transportTypeTxtv.setText(order.getTransportType());
-        cargoMassTxtv.setText(String.valueOf(order.getWeightTo()));
-        volumeTxtv.setText(String.valueOf(order.getVolumeTo()));
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f кг", order.getWeightTo()));
+        volumeTxtv.setText(String.format(Locale.getDefault(), "%.0f м³", order.getVolumeTo()));
 
         String[] size = order.getSize().split("x");
-        widthTextv.setText(size[0]);
-        heightTxtv.setText(size[1]);
-        depthTxtv.setText(size[2]);
+        widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));
+        heightTxtv.setText(String.format(Locale.getDefault(), "%s м", size[1]));
+        depthTxtv.setText(String.format(Locale.getDefault(), "%s м", size[2]));
 
         paymentType.setText(order.getPaymentType1());
         costTxtv.setText(String.format(Locale.getDefault(), "%d %s", Math.round(order.getCost()), order.getCurrency().toLowerCase()));
@@ -241,6 +259,24 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
@@ -274,25 +310,6 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         List<Place> loadingPlaces = order.getLoadingPlaces();
         List<Place> unloadingPlaces = order.getUnloadingPlaces();
 
-//        String[] firstPlace = order.getLoadingPlaces().get(0).getName().split(",");
-//        String[] secondPlace = order.getUnloadingPlaces().get(0).getName().split(",");
-//
-//        String firstCity;
-//        String secondCity;
-//
-//        if (firstPlace.length <= 3) {
-//            firstCity = firstPlace[0].replaceAll("\\s", "");
-//            secondCity = secondPlace[0].replaceAll("\\s", "");
-//        } else {
-//            firstCity = firstPlace[2].replaceAll("\\s", "");
-//            secondCity = secondPlace[2].replaceAll("\\s", "");
-//        }
-//
-//
-//        result.add(new RouteItem(order.getLoadingDate(), firstCity, ""));
-//        result.add(new RouteItem(order.getUnloadingDate(), secondCity, ""));
-
-
         for (int i = 0; i < loadingPlaces.size(); i++) {
             Place place = loadingPlaces.get(i);
             String name = place.getName().split(",")[0];
@@ -319,12 +336,148 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         return result;
     }
 
+    private com.google.maps.model.LatLng getLatLngFromAddress(String address) {
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+        List<android.location.Address> addresses = new ArrayList();
+        try {
+            addresses = geocoder.getFromLocationName(address, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        android.location.Address add = addresses.get(0);
+        double lat = add.getLatitude();
+        double lng = add.getLongitude();
+
+        return new com.google.maps.model.LatLng(lat, lng);
+    }
+
+    private void initMapRoute() {
+        for (Place place : order.getLoadingPlaces()) {
+            places.add(getLatLngFromAddress(place.getName()));
+        }
+
+        for (Place place : order.getUnloadingPlaces()) {
+            places.add(getLatLngFromAddress(place.getName()));
+        }
+
+        for (int i = 0; i < places.size(); i++) {
+            addMarkerToMap(places.get(i));
+        }
+
+
+        DirectionsResult result = null;
+        try {
+
+            com.google.maps.model.LatLng[] latLngs = new com.google.maps.model.LatLng[places.size()];
+            for (int i = 0; i < places.size(); i++) {
+                latLngs[i] = places.get(i);
+            }
+
+            result = DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.DRIVING)
+                    .language("ru")
+                    .origin(places.get(0))
+                    .destination(places.get(places.size() - 1))
+                    .waypoints(latLngs)
+                    .await();
+
+            CameraUpdate track =
+                    CameraUpdateFactory.newLatLngBounds(
+                            getLatLngBounds(result), 100);
+
+            if (googleMap != null) {
+                googleMap.moveCamera(track);
+//                googleMap.setMaxZoomPreference(4);
+                googleMap.addPolyline(getLine(result));
+
+                distanceTxtv.setText(getDistance(result));
+                timeTxtv.setText(getTime(result));
+
+
+            }
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void addMarkerToMap(com.google.maps.model.LatLng point) {
+        googleMap.addMarker(
+                new MarkerOptions()
+                        .position(new LatLng(point.lat, point.lng)));
+    }
+
+    private GeoApiContext getGeoContext() {
+        return new GeoApiContext.Builder()
+                .apiKey("AIzaSyCeq76Uh6AckX9RUiTwITjAakze2d4rpNM")
+                .build();
+    }
+
+    private LatLngBounds getLatLngBounds(DirectionsResult result) {
+        List<com.google.maps.model.LatLng> path = result.routes[0].overviewPolyline.decodePath();
+
+        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
+
+        for (int i = 0; i < path.size(); i++) {
+            com.google.android.gms.maps.model.LatLng latLng =
+                    new com.google.android.gms.maps.model.LatLng(path.get(i).lat, path.get(i).lng);
+
+            latLngBuilder.include(latLng);
+        }
+
+        return latLngBuilder.build();
+    }
+
+    private String getDistance(DirectionsResult result) {
+        long distance = 0;
+
+        for (int i = 0; i < result.routes[0].legs.length; i++) {
+            distance += result.routes[0].legs[i].distance.inMeters;
+        }
+        return String.format(Locale.getDefault(), "%d км", distance / 1000);
+    }
+
+    private String getTime(DirectionsResult result) {
+        long timeSec = 0;
+        for (int i = 0; i < result.routes[0].legs.length; i++) {
+            timeSec += result.routes[0].legs[i].duration.inSeconds;
+        }
+
+        return String.format(Locale.getDefault(), "%02d ч %02d м", timeSec / 3600, (timeSec % 3600) / 60);
+    }
+
+    private PolylineOptions getLine(DirectionsResult result) {
+        List<com.google.maps.model.LatLng> path = result.routes[0].overviewPolyline.decodePath();
+
+        PolylineOptions line = new PolylineOptions();
+        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
+
+        for (int i = 0; i < path.size(); i++) {
+            com.google.android.gms.maps.model.LatLng latLng =
+                    new com.google.android.gms.maps.model.LatLng(path.get(i).lat, path.get(i).lng);
+
+            line.add(latLng);
+            latLngBuilder.include(latLng);
+        }
+
+        line.width(com.foora.perevozkadev.utils.ViewUtils.dpToPx(4)).color(ContextCompat.getColor(getContext(), R.color.color_map_route));
+
+        return line;
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        this.googleMap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        Handler handler = new Handler();
+        handler.postDelayed(this::initMapRoute, 700);
     }
 }

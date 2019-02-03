@@ -7,7 +7,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -66,5 +70,15 @@ public class MessagesActivity extends BaseNavPresenterActivity<MessagesMvpPresen
         return null;
     }
 
+
+    @Override
+    public void onGetUserRequests(List<OrderRequest> orderRequests) {
+
+    }
+
+    @Override
+    public void onGetOrderByRequest(OrderRequest orderRequest, Order order) {
+
+    }
 
 }

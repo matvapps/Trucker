@@ -1,9 +1,12 @@
 package com.foora.perevozkadev.ui.map;
 
-import android.os.PersistableBundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -23,8 +26,15 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     FrameLayout container;
     @BindView(R.id.mapView)
     MapView mapView;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
     GoogleMap googleMap;
+
+    public static void start(Activity activity) {
+        Intent intent = new Intent(activity, MapActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         setUnBinder(ButterKnife.bind(this));
 
         mapView.onCreate(savedInstanceState);
-
         mapView.getMapAsync(this);
 
         setUp();
@@ -41,9 +50,25 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void setUp() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, CalcDistanceFragment.newInstance(), CalcDistanceFragment.TAG);
-        fragmentTransaction.commit();
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.action_calculate:
+                    Fragment fragmentA = getSupportFragmentManager().findFragmentByTag(CalcDistanceFragment.TAG);
+                    if (fragmentA == null) {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.container, CalcDistanceFragment.newInstance(), CalcDistanceFragment.TAG);
+                        fragmentTransaction.commit();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+
+        });
+        bottomNavigationView.setSelectedItemId(R.id.action_calculate);
+
     }
 
     @Override
@@ -85,7 +110,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
     }
 
     public GoogleMap getGoogleMap() {

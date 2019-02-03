@@ -10,7 +10,7 @@
         android:id="@+id/image"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/circle_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

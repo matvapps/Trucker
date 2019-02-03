@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DrawableRoute">
+        <attr name="dr_type" format="enum">
+            <enum name="first_route" value="22" />
+            <enum name="base_route" value="23" />
+            <enum name="last_route" value="24" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="MapPlacesView">
+        <attr name="mpw_dropdownAnchor" format="reference"/>
+    </declare-styleable>
+</resources>

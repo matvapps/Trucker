@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.foora.perevozkadev.ui.my_transport.TransportsFragment;
-
 /**
  * Created by Alexandr.
  */
@@ -33,9 +31,9 @@ public class MessagesPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case 0:
-                return "Сообщения";
             case 1:
+                return "Сообщения";
+            case 0:
                 return "Оповещения";
             default:
                 return null;

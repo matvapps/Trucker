@@ -5,6 +5,8 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
@@ -70,6 +72,11 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
+    public Call<Order> getOrderById(String token, int orderId) {
+        return getApi().getOrderById(token, orderId);
+    }
+
+    @Override
     public Call<Profile> getProfile(String token) {
         return getApi().getProfile(token);
     }
@@ -123,4 +130,16 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     public Call<String> deleteUserFromStaff(int userId, String token) {
         return getApi().deleteUserFromStaff(userId, token);
     }
+
+    @Override
+    public Call<OrderRequest> sendRequest(String token, int orderId, RequestBody requestBody) {
+        return getApi().sendRequest(token, orderId, requestBody);
+    }
+
+    @Override
+    public Call<List<OrderRequest>> getUserRequests(String token) {
+        return getApi().getUserRequests(token);
+    }
+
+
 }

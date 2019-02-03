@@ -58,6 +58,7 @@ dependencies {
     implementation project(path: ':routedisplayview')
     implementation project(path: ':appedittext')
     implementation project(path: ':gallery')
+    implementation project(path: ':setmapplacesview')
 
     //     android support libraries
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"

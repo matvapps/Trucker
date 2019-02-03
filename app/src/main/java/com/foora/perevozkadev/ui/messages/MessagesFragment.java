@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,18 @@ import com.foora.perevozkadev.data.db.LocalRepo;
 import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
+import com.foora.perevozkadev.ui.messages.model.Message;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,20 +77,19 @@ public class MessagesFragment extends BasePresenterFragment<MessagesPresenter> i
         super.setUp(view);
 
         setUnBinder(ButterKnife.bind(this, view));
-
-        List<String> messages = new ArrayList<>();
-        messages.add("");
-        messages.add("");
-        messages.add("");
-        messages.add("");
-
-
         messageAdapter = new MessageAdapter();
-        messageAdapter.setItems(messages);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(messageAdapter);
 
+        messageAdapter.setListener(new MessageAdapter.Callback() {
+            @Override
+            public void onItemClick(int pos, Message message) {
+
+            }
+        });
+
+        getPresenter().getUserRequests();
     }
 
     @Override
@@ -91,4 +97,49 @@ public class MessagesFragment extends BasePresenterFragment<MessagesPresenter> i
         super.onResume();
     }
 
+    @Override
+    public void onGetUserRequests(List<OrderRequest> orderRequests) {
+//        messageAdapter.setItems(orderRequests);
+        for (OrderRequest orderRequest : orderRequests) {
+            getPresenter().getOrderByRequest(orderRequest);
+        }
+    }
+
+    @Override
+    public void onGetOrderByRequest(OrderRequest orderRequest, Order order) {
+        Log.d(TAG, "onGetOrderByRequest: " + order);
+        String name = "";
+        String route;
+        String message;
+        String dateStr = "";
+
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        SimpleDateFormat outFormat = new SimpleDateFormat("dd MMM");
+        try {
+            Date date;
+            if (orderRequest.getUpdatedAt() != null)
+                date = format.parse(orderRequest.getUpdatedAt());
+            else
+                date = format.parse(orderRequest.getCreatedAt());
+            dateStr = outFormat.format(date);
+
+        } catch (ParseException e) {
+            Log.e(TAG, "onGetOrderByRequest: " + e.getMessage(), e);
+        }
+
+        String firstPlace = order.getLoadingPlaces()
+                .get(0).getName().split(",")[0];
+        String secondPlace = order.getUnloadingPlaces()
+                .get(order.getUnloadingPlaces().size() - 1).getName().split(",")[0];
+
+        int placeCount = order.getLoadingPlaces().size() + order.getUnloadingPlaces().size() - 2;
+
+        name = firstPlace.substring(0, 1) + secondPlace.substring(0, 1);
+
+        route = String.format(Locale.getDefault(), "%s - (%d) - %s", firstPlace, placeCount, secondPlace);
+        message = orderRequest.getText();
+
+        Message messageObj = new Message(name, route, message, dateStr);
+        messageAdapter.addItem(messageObj);
+    }
 }

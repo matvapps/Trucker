@@ -21,7 +21,7 @@
             android:id="@+id/user_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/circle"
+            android:src="@drawable/circle_small"
             android:tint="#E2E5F4" />
 
         <TextView

@@ -6,7 +6,9 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
@@ -17,8 +19,6 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.Header;
 
 public interface RemoteRepo {
     Call<RegisterResponse> register(@NonNull String login,
@@ -52,12 +52,14 @@ public interface RemoteRepo {
 
 //    Call<GetOrderResponse> getOrders();
 
-    Call<GetOrderResponse> getOrders(@Header("Authorization") String token,
-                                     @Field("weight_from") float weightFrom,
-                                     @Field("weight_to") float weightTo,
-                                     @Field("volume_from") float volumeFrom,
-                                     @Field("volume_to") float volumeTo);
+    Call<GetOrderResponse> getOrders(@NonNull String token,
+                                     @NonNull float weightFrom,
+                                     @NonNull float weightTo,
+                                     @NonNull float volumeFrom,
+                                     @NonNull float volumeTo);
 
+    Call<Order> getOrderById(@NonNull String token,
+                             @NonNull int orderId);
 
     Call<Profile> getProfile(@NonNull String token);
 
@@ -95,4 +97,10 @@ public interface RemoteRepo {
     Call<String> deleteUserFromStaff(@NonNull int userId,
                                      @NonNull String token);
 
+
+    Call<OrderRequest> sendRequest(@NonNull String token,
+                                   @NonNull int orderId,
+                                   @NonNull RequestBody requestBody);
+
+    Call<List<OrderRequest>> getUserRequests(@NonNull String token);
 }

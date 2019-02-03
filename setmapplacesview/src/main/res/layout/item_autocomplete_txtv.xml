@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.matvapps.setmapplacesview.PlaceAutoCompleteView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/place_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:fontFamily="sans-serif"
+    android:letterSpacing="0.01"
+    android:lineSpacingExtra="8sp"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:singleLine="true"
+    android:textStyle="normal"
+    app:layout_constraintBottom_toBottomOf="@+id/place_image"
+    app:layout_constraintEnd_toStartOf="@+id/place_image"
+    app:layout_constraintStart_toEndOf="@+id/route_drawable"
+    app:layout_constraintTop_toTopOf="@+id/place_image"
+    tools:text="Ваше местоположение" />
+

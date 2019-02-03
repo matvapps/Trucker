@@ -128,8 +128,6 @@
             android:theme="@style/AppTheme.Map"
             android:windowSoftInputMode="stateAlwaysHidden">
 
-
-
         </activity>
         <activity android:name="com.foora.perevozkadev.ui.choose_transport.ChooseTransportActivity" />
 

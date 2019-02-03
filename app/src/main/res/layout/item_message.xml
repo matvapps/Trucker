@@ -12,24 +12,29 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/circle"
+        android:src="@drawable/circle_small"
         android:tint="#E2E5F4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif"
         android:lineSpacingExtra="8sp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="Саратов - (2) - Волгоградск"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
-        android:text="Саратов - (2) - Волгоградск" />
+        app:layout_constraintTop_toTopOf="@+id/image" />
 
     <TextView
         android:id="@+id/message"
@@ -60,19 +65,20 @@
         android:text="23 июл" />
 
     <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="8sp"
+        android:text="ЛУ"
         android:textColor="#4859a2"
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintEnd_toEndOf="@+id/image"
         app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
-        android:text="ЛУ" />
+        app:layout_constraintTop_toTopOf="@+id/image" />
 
     <View
         android:layout_width="0dp"

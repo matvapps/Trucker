@@ -74,6 +74,14 @@
         <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="BtnRoundedBlueStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/rounded_rect_blue</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="AppEditTextStyle" parent="AppTheme">
         <item name="android:layout_height">60dp</item>
     </style>

@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ChooseTransportMvpView extends MvpView {
     void onGetUserTransports(List<Transport> transports);
+    void onRequestSuccess();
 }

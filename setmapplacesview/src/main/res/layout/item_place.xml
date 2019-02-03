@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.github.matvapps.setmapplacesview.view.DrawableRoute
+        android:id="@+id/route_drawable"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--<include-->
+        <!--layout="@layout/item_autocomplete_txtv"-->
+        <!--android:id="@+id/place_autocomplete"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="13dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/place_image"-->
+        <!--app:layout_constraintEnd_toStartOf="@+id/place_image"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/route_drawable"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/place_image" />-->
+
+    <com.github.matvapps.setmapplacesview.PlaceAutoCompleteView
+        android:id="@+id/place_autocomplete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:fontFamily="sans-serif"
+        android:hint="Ваше местоположение"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="8sp"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textColorHint="#8A000000"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/place_image"
+        app:layout_constraintEnd_toStartOf="@+id/place_image"
+        app:layout_constraintStart_toEndOf="@+id/route_drawable"
+        app:layout_constraintTop_toTopOf="@+id/place_image" />
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="9dp"
+        android:alpha="0.15"
+        android:background="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/place_autocomplete"
+        app:layout_constraintStart_toStartOf="@+id/place_autocomplete"
+        app:layout_constraintTop_toBottomOf="@+id/place_autocomplete" />
+
+    <ImageView
+        android:id="@+id/place_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_action_clear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

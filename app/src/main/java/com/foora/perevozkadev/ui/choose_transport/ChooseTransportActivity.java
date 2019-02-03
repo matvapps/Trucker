@@ -3,7 +3,6 @@ package com.foora.perevozkadev.ui.choose_transport;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,15 +16,16 @@ import com.foora.perevozkadev.data.db.LocalRepo;
 import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
-import com.foora.perevozkadev.ui.profile.ProfilePresenter;
 import com.foora.perevozkadev.ui.profile.adapter.ProfileTransportAdapter;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,9 +48,9 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
     private ProfileTransportAdapter transportAdapter;
 
     private int requiredCar;
-    private String orderId;
+    private int orderId;
 
-    public static void start(Activity activity, int requiredCar, String orderId) {
+    public static void start(Activity activity, int requiredCar, int orderId) {
         Intent intent = new Intent(activity, ChooseTransportActivity.class);
         intent.putExtra(KEY_REQUIRED_CAR, requiredCar);
         intent.putExtra(KEY_ORDER_ID, orderId);
@@ -62,7 +62,7 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
         super.onCreate(savedInstanceState);
 
         requiredCar = getIntent().getIntExtra(KEY_REQUIRED_CAR, 0);
-        orderId = getIntent().getStringExtra(KEY_ORDER_ID);
+        orderId = getIntent().getIntExtra(KEY_ORDER_ID, -1);
 
         setContentView(R.layout.activity_choose_transport);
 
@@ -81,6 +81,20 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
         btnBack = findViewById(R.id.btn_back);
 
         btnBack.setOnClickListener(v -> finish());
+        btnSendRequest.setOnClickListener(v -> {
+            List<Transport> transports = transportAdapter.getSelectedItems();
+            List<Integer> transportIds = new ArrayList<>();
+            for (Transport item: transports) {
+                transportIds.add(item.getId());
+            }
+
+            RequestBody requestBody = new RequestBody();
+            requestBody.setText("Some message");
+            requestBody.setTransports(transportIds);
+
+            getPresenter().sendRequest(orderId, requestBody);
+
+        });
 
         transportListView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -114,5 +128,10 @@ public class ChooseTransportActivity extends BasePresenterActivity<ChooseTranspo
     @Override
     public void onGetUserTransports(List<Transport> transports) {
         transportAdapter.setItems(transports);
+    }
+
+    @Override
+    public void onRequestSuccess() {
+        SuccessDialogFragment.newInstance().show(getSupportFragmentManager());
     }
 }

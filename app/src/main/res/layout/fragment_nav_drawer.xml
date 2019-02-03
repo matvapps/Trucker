@@ -2,21 +2,24 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
+    android:background="@color/color_app_blue"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:background="@color/color_app_blue"
         android:orientation="vertical">
 
 
-        <include layout="@layout/nav_header"
+        <include
             android:id="@+id/nav_header"
+            layout="@layout/nav_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/create_order"
@@ -33,13 +36,13 @@
 
             <ImageView
                 android:id="@+id/user_image"
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/circle" />
+                android:src="@drawable/circle_small"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -72,13 +75,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/icon_search_order" />
+                android:src="@drawable/icon_search_order"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -103,13 +106,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_my_orders" />
+                android:src="@drawable/ic_my_orders"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -130,18 +133,19 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:alpha="0.5"
             android:background="@drawable/nav_item_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_my_transport" />
+                android:src="@drawable/ic_my_transport"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -167,13 +171,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_my_transport" />
+                android:src="@drawable/ic_my_transport"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -198,13 +202,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_staff" />
+                android:src="@drawable/ic_staff"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -231,13 +235,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_messages" />
+                android:src="@drawable/ic_messages"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -263,18 +267,19 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:alpha="0.5"
             android:background="@drawable/nav_item_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/circle" />
+                android:src="@drawable/circle_small"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -289,6 +294,7 @@
 
 
         <LinearLayout
+            android:id="@+id/calculate_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -299,13 +305,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/circle" />
+                android:src="@drawable/ic_action_map"
+                android:tint="#E2E5F4" />
 
 
             <TextView
@@ -331,18 +337,19 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:alpha="0.5"
             android:background="@drawable/nav_item_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:tint="#E2E5F4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/settings" />
+                android:src="@drawable/settings"
+                android:tint="#E2E5F4" />
 
 
             <TextView

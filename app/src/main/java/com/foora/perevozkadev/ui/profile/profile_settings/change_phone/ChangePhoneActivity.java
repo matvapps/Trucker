@@ -91,6 +91,7 @@ public class ChangePhoneActivity  extends BasePresenterActivity<ProfileSettingsM
 
     }
 
+
     private void submit() {
         if (smsCodeContainer.getVisibility() == View.GONE) {
 

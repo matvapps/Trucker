@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.matvapps.setmapplacesview" >
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCeq76Uh6AckX9RUiTwITjAakze2d4rpNM" />
+
+</manifest>

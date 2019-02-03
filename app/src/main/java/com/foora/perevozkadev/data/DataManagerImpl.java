@@ -8,7 +8,9 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -82,6 +84,11 @@ public class DataManagerImpl implements DataManager {
         return remoteRepo.getOrders(token, weightFrom, weightTo, volumeFrom, volumeTo);
     }
 
+    @Override
+    public Call<Order> getOrderById(String token, int orderId) {
+        return remoteRepo.getOrderById(token, orderId);
+    }
+
 //    @Override
 //    public Call<GetOrderResponse> getOrders() {
 //        return remoteRepo.getOrders();
@@ -139,6 +146,16 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<String> deleteUserFromStaff(int userId, String token) {
         return remoteRepo.deleteUserFromStaff(userId, token);
+    }
+
+    @Override
+    public Call<OrderRequest> sendRequest(String token, int orderId, RequestBody requestBody) {
+        return remoteRepo.sendRequest(token, orderId, requestBody);
+    }
+
+    @Override
+    public Call<List<OrderRequest>> getUserRequests(String token) {
+        return remoteRepo.getUserRequests(token);
     }
 
     @Override

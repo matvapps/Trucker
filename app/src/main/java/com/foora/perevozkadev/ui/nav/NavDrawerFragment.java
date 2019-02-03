@@ -21,6 +21,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
 import com.foora.perevozkadev.ui.base.BaseDialog;
+import com.foora.perevozkadev.ui.map.MapActivity;
 import com.foora.perevozkadev.ui.messages.MessagesActivity;
 import com.foora.perevozkadev.ui.my_orders.MyOrdersActivity;
 import com.foora.perevozkadev.ui.my_transport.MyTransportActivity;
@@ -54,6 +55,8 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
     View btnStaff;
     @BindView(R.id.messages)
     View btnMessages;
+    @BindView(R.id.calculate_distance)
+    View calculateDistance;
 
     @BindView(R.id.user_image)
     ImageView userImage;
@@ -126,10 +129,11 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
         btnCreateOrder.setOnClickListener(this);
         btnSearchOrders.setOnClickListener(this);
         btnMyOrders.setOnClickListener(this);
-        btnSearchTransport.setOnClickListener(this);
+//        btnSearchTransport.setOnClickListener(this);
         btnMyTransport.setOnClickListener(this);
         btnStaff.setOnClickListener(this);
         btnMessages.setOnClickListener(this);
+        calculateDistance.setOnClickListener(this);
 
         if (userName != null && !userName.equals("")) {
             userNameTxtv.setText(userName);
@@ -154,16 +158,14 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
             btnCreateOrder.setActivated(true);
         } else if (getActivity() instanceof SearchOrderActivity) {
             btnSearchOrders.setActivated(true);
-
         } else if (getActivity() instanceof MyTransportActivity) {
             btnMyTransport.setActivated(true);
-
         } else if (getActivity() instanceof EmployeesActivity) {
             btnStaff.setActivated(true);
-
         } else if (getActivity() instanceof MyOrdersActivity) {
             btnMyOrders.setActivated(true);
-
+        } else if (getActivity() instanceof MapActivity) {
+            calculateDistance.setActivated(true);
         }
     }
 
@@ -178,10 +180,11 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
         btnCreateOrder.setActivated(false);
         btnSearchOrders.setActivated(false);
         btnMyOrders.setActivated(false);
-        btnSearchTransport.setActivated(false);
+//        btnSearchTransport.setActivated(false);
         btnMyTransport.setActivated(false);
         btnStaff.setActivated(false);
         btnMessages.setActivated(false);
+        calculateDistance.setActivated(false);
 
         v.setActivated(true);
 
@@ -224,6 +227,13 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
             case R.id.messages: {
                 dialog.setOnDismissListener(dialog1 -> {
                     MessagesActivity.start(getActivity());
+                    getActivity().finish();
+                });
+                dismissDialog();
+            }
+            case R.id.calculate_distance: {
+                dialog.setOnDismissListener(dialog1 -> {
+                    MapActivity.start(getActivity());
                     getActivity().finish();
                 });
                 dismissDialog();
