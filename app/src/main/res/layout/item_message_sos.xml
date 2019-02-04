@@ -12,6 +12,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
+        android:tint="#ffe2d6"
         android:src="@drawable/message_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,30 +43,56 @@
         android:fontFamily="sans-serif-medium"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="8sp"
-        android:textColor="#32438d"
+        android:text="SOS! Транспорт попал в аварию!"
+        android:textColor="#ff4d00"
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/background"
-        app:layout_constraintTop_toTopOf="@+id/background"
-        tools:text="Груз отправился со склада А" />
+        app:layout_constraintTop_toTopOf="@+id/background" />
 
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="8sp"
+        android:textAllCaps="true"
+        android:text="Смотреть на карте"
+        android:textColor="#ff4d00"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="12dp"
         android:fontFamily="sans-serif"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="6sp"
-        android:textColor="#575757"
+        android:text="Перейти к заказу"
+        android:textColor="#ff4d00"
         android:textSize="14sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Санкт-Питербург, RU, ул. Строитлей 12,  склад № 6" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="6dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:tint="#ff4d00"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background" />
 
 </android.support.constraint.ConstraintLayout>

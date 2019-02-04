@@ -142,4 +142,7 @@ dependencies {
     // ViewAnimator
     implementation 'com.github.florent37:viewanimator:1.0.5'
 
+    //
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
 }

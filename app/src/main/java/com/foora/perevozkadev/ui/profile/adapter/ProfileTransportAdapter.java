@@ -49,6 +49,14 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
         updateVisibleItems();
     }
 
+    public void addItem(Transport tranport) {
+        this.items.add(tranport);
+        if (visibleCount == -1) {
+            visibleCount = items.size();
+        }
+        updateVisibleItems();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

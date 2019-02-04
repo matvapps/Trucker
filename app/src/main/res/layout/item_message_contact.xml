@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/contact_image"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_phone"
+        android:tint="@color/color_app_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="8sp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/color_app_blue"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_image"
+        app:layout_constraintStart_toEndOf="@+id/contact_image"
+        app:layout_constraintTop_toTopOf="@+id/contact_image"
+        tools:text="+7 099 93 54 221" />
+
+</android.support.constraint.ConstraintLayout>

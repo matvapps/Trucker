@@ -12,6 +12,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
+        android:tint="#e2e4f0"
         android:src="@drawable/message_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,7 @@
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="@+id/background"
-        tools:text="Груз отправился со склада А" />
+        android:text="Заказ завершен" />
 
 
     <TextView
@@ -59,13 +60,23 @@
         android:fontFamily="sans-serif"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="6sp"
+        android:text="Перейти к заказу"
         android:textColor="#575757"
         android:textSize="14sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Санкт-Питербург, RU, ул. Строитлей 12,  склад № 6" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:tint="@color/color_app_blue"
+        android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background" />
 
 </android.support.constraint.ConstraintLayout>

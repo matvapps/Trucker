@@ -47,7 +47,7 @@
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="@+id/background"
-        tools:text="Груз отправился со склада А" />
+        tools:text="Азамат Алиев принял Вашу заявку" />
 
 
     <TextView
@@ -55,17 +55,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="12dp"
         android:fontFamily="sans-serif"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="6sp"
         android:textColor="#575757"
         android:textSize="14sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Санкт-Питербург, RU, ул. Строитлей 12,  склад № 6" />
+        tools:text="Теперь вы можете обсудить условия заказа" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/contact_list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
 
 </android.support.constraint.ConstraintLayout>
