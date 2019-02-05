@@ -96,7 +96,7 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
 
         orderListView.setLayoutManager(new LinearLayoutManager(getContext()));
         orderListView.addItemDecoration(
-                new ItemSpacingDecoration(ViewUtils.dpToPx(16),
+                new ItemSpacingDecoration(ViewUtils.dpToPx(8),
                         ViewUtils.dpToPx(8),
                         ViewUtils.dpToPx(8),
                         0));

@@ -58,12 +58,12 @@
         android:fontFamily="sans-serif"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="6sp"
+        android:text="Теперь вы можете обсудить условия заказа"
         android:textColor="#575757"
         android:textSize="14sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="Теперь вы можете обсудить условия заказа" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contact_list"

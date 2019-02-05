@@ -23,9 +23,11 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.messages.model.Message;
+import com.foora.perevozkadev.ui.messages_info.MessagesInfoActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -43,6 +45,7 @@ public class MessagesFragment extends BasePresenterFragment<MessagesPresenter> i
     RecyclerView recyclerView;
 
     private MessageAdapter messageAdapter;
+    private List<OrderRequest> orderRequests;
 
     public static MessagesFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,24 +85,35 @@ public class MessagesFragment extends BasePresenterFragment<MessagesPresenter> i
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(messageAdapter);
 
+        orderRequests = new ArrayList<>();
+
         messageAdapter.setListener(new MessageAdapter.Callback() {
             @Override
             public void onItemClick(int pos, Message message) {
-
+                MessagesInfoActivity.start(getActivity(), orderRequests.get(pos).getId(), message.getRoute());
             }
         });
 
-        getPresenter().getUserRequests();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        messageAdapter.clear();
+        getPresenter().getUserRequests();
+        getPresenter().getToUserRequests();
     }
 
     @Override
     public void onGetUserRequests(List<OrderRequest> orderRequests) {
 //        messageAdapter.setItems(orderRequests);
+        for (OrderRequest orderRequest : orderRequests) {
+            getPresenter().getOrderByRequest(orderRequest);
+        }
+    }
+
+    @Override
+    public void onGetToUserRequests(List<OrderRequest> orderRequests) {
         for (OrderRequest orderRequest : orderRequests) {
             getPresenter().getOrderByRequest(orderRequest);
         }
@@ -141,5 +155,6 @@ public class MessagesFragment extends BasePresenterFragment<MessagesPresenter> i
 
         Message messageObj = new Message(name, route, message, dateStr);
         messageAdapter.addItem(messageObj);
+        orderRequests.add(orderRequest);
     }
 }

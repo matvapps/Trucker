@@ -35,6 +35,8 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
 
         getMvpView().showLoading();
 
+        Log.d(TAG, "token " + getDataManager().getUserToken());
+
         getDataManager().getProfile(getDataManager().getUserToken())
                 .enqueue(new Callback<Profile>() {
                     @Override

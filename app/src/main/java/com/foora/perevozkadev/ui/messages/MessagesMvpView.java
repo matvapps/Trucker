@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface MessagesMvpView extends MvpView {
     void onGetUserRequests(List<OrderRequest> orderRequests);
+    void onGetToUserRequests(List<OrderRequest> orderRequests);
     void onGetOrderByRequest(OrderRequest orderRequest, Order order);
 }

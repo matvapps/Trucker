@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.messages_info;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,11 @@ import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.network.model.Action;
-import com.foora.perevozkadev.data.network.model.RequestInfo;
+import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.adapter.ProfileTransportAdapter;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
@@ -30,10 +32,13 @@ import java.util.Locale;
  */
 public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private RequestInfo requestInfo;
+    public static final String TAG = MessagesInfoAdapter.class.getSimpleName();
+
+    private OrderRequest requestInfo;
     private List<Action> actions;
     private ProfileTransportAdapter transportAdapter;
     private ContactAdapter contactAdapter;
+    private Profile profile;
 
     private Callback listener;
 
@@ -41,9 +46,11 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.actions = new ArrayList<>();
     }
 
-    public void setRequestInfo(RequestInfo requestInfo) {
+    public void setOrderRequest(OrderRequest requestInfo) {
         this.requestInfo = requestInfo;
         this.actions = requestInfo.getActions();
+        this.actions.remove(actions.size() - 1);
+        notifyDataSetChanged();
     }
 
     public Action getItem(int pos) {
@@ -52,18 +59,30 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addTransport(Transport transport) {
         transportAdapter.addItem(transport);
+        Log.d(TAG, "addTransport: " + transportAdapter.getItemCount());
+        Log.d(TAG, "addTransport: " + requestInfo.getTransports().size());
         if (transportAdapter.getItemCount() == requestInfo.getTransports().size())
             notifyDataSetChanged();
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View rootView;
+
+        Log.d(TAG, "onCreateViewHolder: " + i);
+
         switch (i) {
             case 0:
                 rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_request, viewGroup, false);
                 return new ActionRequestViewHolder(rootView);
+            case 1:
+                rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_request_accepted, viewGroup, false);
+                return new ActionAcceptedViewHolder(rootView);
         }
 
         return null;
@@ -79,7 +98,12 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return actions.size();
     }
 
-    private class ActionRequestViewHolder extends BaseViewHolder {
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    private class ActionRequestViewHolder extends BaseMessageViewHolder {
 
         RecyclerView transportList;
         Button btnRefuse;
@@ -107,20 +131,31 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            if (getItemCount() > 1) {
+            if (profile.getUserId() == requestInfo.getSenderId()) {
+                btnAccept.setVisibility(View.GONE);
+                btnRefuse.setText("Ожидание ответа");
+
+            } else {
+                btnRefuse.setOnClickListener(v -> {
+                    if (listener != null)
+                        listener.onRefuseRequest(requestInfo.getId());
+                });
+
+                btnAccept.setOnClickListener(v -> {
+                    if (listener != null)
+                        listener.onAcceptRequest(requestInfo.getId());
+                });
+            }
+
+            if (requestInfo.getStatus() == 1) {
                 btnRefuse.setVisibility(View.GONE);
                 btnAccept.setVisibility(View.GONE);
             }
 
-            btnRefuse.setOnClickListener(v -> {
-                if (listener != null)
-                    listener.onRefuseRequest(requestInfo.getId());
-            });
+//            if (getItemCount() > 1) {
 
-            btnAccept.setOnClickListener(v -> {
-                if (listener != null)
-                    listener.onAcceptRequest(requestInfo.getId());
-            });
+//            }
+
 
             if (transportAdapter.getItemCount() != requestInfo.getTransports().size()) {
                 for (int transportId : requestInfo.getTransports()) {

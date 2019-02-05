@@ -3,6 +3,8 @@ package com.foora.perevozkadev.ui.my_orders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +23,10 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
+import com.foora.perevozkadev.ui.my_order_info.MyOrderInfoActivity;
 import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
 import java.util.List;
 
@@ -38,6 +43,8 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
 
     @BindView(R.id.order_list)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_to_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     private OrdersAdapter ordersAdapter;
@@ -79,7 +86,16 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
 
         ordersAdapter = new OrdersAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(8), ViewUtils.dpToPx(8), ViewUtils.dpToPx(8), 0));
         recyclerView.setAdapter(ordersAdapter);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+        ordersAdapter.setListener(new OrdersAdapter.Callback() {
+            @Override
+            public void onClick(Order order) {
+                MyOrderInfoActivity.start(getActivity(), order.getId());
+            }
+        });
 
 //        ordersAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 

@@ -6,6 +6,7 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
@@ -27,8 +28,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -76,7 +77,7 @@ public interface ApiService {
 
 
     @Headers({"Accept: application/json"})
-    @PUT("user/")
+    @PATCH("user/")
     Call<Profile> changeProfile(@Header("Authorization") String token,
                                 @Body Profile profile);
 
@@ -175,9 +176,23 @@ public interface ApiService {
                                    @Path(value = "order_id", encoded = true) int orderId,
                                    @Body RequestBody requestBody);
 
-    @GET("user/requests/")
+    @GET("user/my-requests/")
     Call<List<OrderRequest>> getUserRequests(@Header("Authorization") String token);
 
+    @GET("user/requests-to-my-orders/")
+    Call<List<OrderRequest>> getToUserRequests(@Header("Authorization") String token);
+
+    @GET("order/request/{request_id}/info/")
+    Call<OrderRequest> getRequestInfo(@Header("Authorization") String token,
+                                      @Path(value = "request_id", encoded = true) int requestId);
+
+    @GET("order/request/{request_id}/reject/")
+    Call<List<NullResponse>> rejectRequest(@Header("Authorization") String token,
+                                           @Path(value = "request_id", encoded = true) int requestId);
+
+    @GET("order/request/{request_id}/confirm/")
+    Call<List<NullResponse>> confirmRequest(@Header("Authorization") String token,
+                                @Path(value = "request_id", encoded = true) int requestId);
     // ----------------------------------------------------------------------------------------
 
 }

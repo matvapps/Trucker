@@ -98,6 +98,9 @@ public class Order implements Serializable {
     @SerializedName("whatsapp")
     @Expose
     private String whatsapp;
+    @SerializedName("add_info")
+    @Expose
+    private String additionalInfo;
 //    @SerializedName("status")
 //    @Expose
 //    private String status;
@@ -108,16 +111,7 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(int id, List<Place> loadingPlaces, List<Place> unloadingPlaces,
-                 String status, String loadingDate, String unloadingDate,
-                 String cargo, Double weightFrom, Double weightTo,
-                 Double volumeFrom, Double volumeTo, String transportType,
-                 Integer carQuantity, Double cost, String currency,
-                 Double distance, String size, String paymentType1,
-                 String paymentType2, String companyName, String contactPerson,
-                 String email, String docs, String loading, String conditions,
-                 String additionally, String skype, String phone,
-                 String telegram, String whatsapp) {
+    public Order(int id, List<Place> loadingPlaces, List<Place> unloadingPlaces, String status, String loadingDate, String unloadingDate, String cargo, Double weightFrom, Double weightTo, Double volumeFrom, Double volumeTo, String transportType, Integer carQuantity, Double cost, String currency, Double distance, String size, String paymentType1, String paymentType2, String companyName, String contactPerson, String email, String docs, String loading, String conditions, String additionally, String skype, String phone, String telegram, String whatsapp, String additionalInfo) {
         this.id = id;
         this.loadingPlaces = loadingPlaces;
         this.unloadingPlaces = unloadingPlaces;
@@ -148,6 +142,7 @@ public class Order implements Serializable {
         this.phone = phone;
         this.telegram = telegram;
         this.whatsapp = whatsapp;
+        this.additionalInfo = additionalInfo;
     }
 
     public int getId() {
@@ -390,10 +385,19 @@ public class Order implements Serializable {
         this.whatsapp = whatsapp;
     }
 
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
-                "loadingPlaces=" + loadingPlaces +
+                "id=" + id +
+                ", loadingPlaces=" + loadingPlaces +
                 ", unloadingPlaces=" + unloadingPlaces +
                 ", status='" + status + '\'' +
                 ", loadingDate='" + loadingDate + '\'' +
@@ -422,6 +426,7 @@ public class Order implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", telegram='" + telegram + '\'' +
                 ", whatsapp='" + whatsapp + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
                 '}';
     }
 }

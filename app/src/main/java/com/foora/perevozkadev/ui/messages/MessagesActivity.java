@@ -77,6 +77,11 @@ public class MessagesActivity extends BaseNavPresenterActivity<MessagesMvpPresen
     }
 
     @Override
+    public void onGetToUserRequests(List<OrderRequest> orderRequests) {
+
+    }
+
+    @Override
     public void onGetOrderByRequest(OrderRequest orderRequest, Order order) {
 
     }

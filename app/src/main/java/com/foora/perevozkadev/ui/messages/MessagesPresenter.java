@@ -65,6 +65,47 @@ public class MessagesPresenter<V extends MessagesMvpView> extends BasePresenter<
 
     }
 
+
+    @Override
+    public void getToUserRequests() {
+        if (getMvpView() == null)
+            Log.e(TAG, "getUserRequests: MessageMvpView not attached");
+
+        getMvpView().showLoading();
+
+        getDataManager()
+                .getToUserRequests(getDataManager().getUserToken())
+                .enqueue(new Callback<List<OrderRequest>>() {
+                    @Override
+                    public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetToUserRequests(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Не удалось получить запросы");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+
+    }
+
+
     @Override
     public void getOrderByRequest(OrderRequest orderRequest) {
         if (getMvpView() == null)

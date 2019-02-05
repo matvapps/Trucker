@@ -32,6 +32,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        this.items.clear();
+        notifyDataSetChanged();
+    }
+
     public void addItem(Message item) {
         this.items.add(item);
         notifyDataSetChanged();

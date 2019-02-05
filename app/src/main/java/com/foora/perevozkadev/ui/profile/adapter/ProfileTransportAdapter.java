@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +48,10 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
         updateVisibleItems();
     }
 
-    public void addItem(Transport tranport) {
-        this.items.add(tranport);
+    public void addItem(Transport transport) {
+        this.items.add(transport);
         if (visibleCount == -1) {
-            visibleCount = items.size();
+            visibleCount = items.size() + 1;
         }
         updateVisibleItems();
     }

@@ -8,6 +8,7 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
@@ -156,6 +157,26 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<List<OrderRequest>> getUserRequests(String token) {
         return remoteRepo.getUserRequests(token);
+    }
+
+    @Override
+    public Call<List<OrderRequest>> getToUserRequests(String token) {
+        return remoteRepo.getToUserRequests(token);
+    }
+
+    @Override
+    public Call<OrderRequest> getRequestInfo(String token, int requestId) {
+        return remoteRepo.getRequestInfo(token, requestId);
+    }
+
+    @Override
+    public Call<List<NullResponse>> rejectRequest(String token, int requestId) {
+        return remoteRepo.rejectRequest(token, requestId);
+    }
+
+    @Override
+    public Call<List<NullResponse>> confirmRequest(String token, int requestId) {
+        return remoteRepo.confirmRequest(token, requestId);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
@@ -103,4 +104,15 @@ public interface RemoteRepo {
                                    @NonNull RequestBody requestBody);
 
     Call<List<OrderRequest>> getUserRequests(@NonNull String token);
+
+    Call<List<OrderRequest>> getToUserRequests(@NonNull String token);
+
+    Call<OrderRequest> getRequestInfo(@NonNull String token,
+                                      @NonNull int requestId);
+
+    Call<List<NullResponse>> rejectRequest(@NonNull String token,
+                                           @NonNull int requestId);
+
+    Call<List<NullResponse>> confirmRequest(@NonNull String token,
+                                @NonNull int requestId);
 }

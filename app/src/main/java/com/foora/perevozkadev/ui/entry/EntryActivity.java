@@ -1,5 +1,7 @@
 package com.foora.perevozkadev.ui.entry;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.foora.foora.perevozkadev.R;
@@ -35,6 +37,11 @@ public class EntryActivity extends BasePresenterActivity<EntryPresenter> impleme
     private int userId;
 
     private PrefRepo preferencesHelper;
+
+    public static void start(Activity activity) {
+        Intent intent = new Intent(activity, EntryActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

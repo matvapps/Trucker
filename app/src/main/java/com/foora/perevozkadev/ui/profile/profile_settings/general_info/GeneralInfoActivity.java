@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -136,6 +135,9 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
         if (!date.isEmpty()) {
             profile.setPassportExpirationDate(date);
         }
+
+        if (profile.getCurrency() == null || profile.getCurrency().isEmpty())
+            profile.setCurrency("nul");
 
         Log.d(TAG, "done: " + profile.toString());
 

@@ -5,13 +5,14 @@ import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
+import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
-import com.foora.perevozkadev.data.network.model.RequestBody;
-import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
+import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 
 import java.util.List;
 
@@ -139,6 +140,26 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     @Override
     public Call<List<OrderRequest>> getUserRequests(String token) {
         return getApi().getUserRequests(token);
+    }
+
+    @Override
+    public Call<List<OrderRequest>> getToUserRequests(String token) {
+        return getApi().getToUserRequests(token);
+    }
+
+    @Override
+    public Call<OrderRequest> getRequestInfo(String token, int requestId) {
+        return getApi().getRequestInfo(token, requestId);
+    }
+
+    @Override
+    public Call<List<NullResponse>> rejectRequest(String token, int requestId) {
+        return getApi().rejectRequest(token, requestId);
+    }
+
+    @Override
+    public Call<List<NullResponse>> confirmRequest(String token, int requestId) {
+        return getApi().confirmRequest(token, requestId);
     }
 
 

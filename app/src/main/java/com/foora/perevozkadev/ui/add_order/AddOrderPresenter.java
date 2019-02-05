@@ -34,8 +34,10 @@ public class AddOrderPresenter <V extends AddOrderMvpView> extends BasePresenter
 
         getMvpView().showLoading();
 
+        Log.d(TAG, "addOrder: " + getDataManager().getUserToken());
+        
         getDataManager()
-                .addOrder("token 069a0d70c5be4879e65c877da252e07f0db56a3d", order)
+                .addOrder(getDataManager().getUserToken(), order)
                 .enqueue(new Callback<BaseResponse>() {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {

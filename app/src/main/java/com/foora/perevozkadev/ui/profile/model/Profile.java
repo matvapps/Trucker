@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Profile implements Serializable {
 
-    @SerializedName("user_id")
+    @SerializedName("id")
     @Expose
     private Integer userId;
     @SerializedName("username")

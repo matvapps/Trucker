@@ -76,6 +76,8 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     AppEditText  heightEdtxt;
     @BindView(R.id.edtxt_depth)
     AppEditText  depthEdtxt;
+    @BindView(R.id.additional_info)
+    AppEditText addInfoEdtxt;
 
 
     private SpinnerArrayAdapter transportArrayAdapter;
@@ -218,7 +220,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
                     massToNum, volumeFromNum, volumeToNum,
                     transportType, cost, currency,
-                    carQuant, width, height, depth, paymentType);
+                    carQuant, width, height, depth, paymentType, addInfoEdtxt.getText());
 
         }
     }
@@ -346,7 +348,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
                                 List<String> transportTypes,
                                 float cost, String currency,
                                 int carQuant, float width,
-                                float height, float depth, String paymentType);
+                                float height, float depth, String paymentType, String additionalInfo);
     }
 
 }

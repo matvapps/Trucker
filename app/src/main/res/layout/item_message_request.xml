@@ -48,12 +48,12 @@
             android:fontFamily="sans-serif"
             android:letterSpacing="0.02"
             android:lineSpacingExtra="6sp"
+            android:text="Здравствуйте, я готов взятся \nза этот заказ."
             android:textColor="#221122"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="@+id/background"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Здравствуйте, я готов взятся \nза этот заказ." />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -64,6 +64,7 @@
             android:fontFamily="sans-serif"
             android:letterSpacing="0.02"
             android:lineSpacingExtra="6sp"
+            android:text="Предлагаю такие ТС:"
             android:textColor="#221122"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -103,6 +104,7 @@
             android:letterSpacing="0.05"
             android:lineSpacingExtra="2sp"
             android:text="Отказаться"
+            android:layout_marginBottom="3dp"
             android:textColor="#959595"
             android:textStyle="normal" />
 
@@ -111,9 +113,9 @@
             style="@style/BtnRoundedBlueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:layout_weight="3"
-            android:text="Принять Заявку" />
+            android:text="Принять Заявку"
+            android:visibility="visible" />
     </LinearLayout>
 
 </LinearLayout>

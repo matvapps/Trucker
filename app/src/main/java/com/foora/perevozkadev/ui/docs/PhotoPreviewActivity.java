@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.Button;
 
 import com.foora.foora.perevozkadev.R;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -64,7 +63,6 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         Uri uri = Uri.parse(imageUri);
         Picasso.get()
                 .load(uri)
-                .centerCrop()
                 .into(photoView);
 
 

@@ -94,7 +94,7 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
         transportAdapter = new TransportAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(transportAdapter);
-        recyclerView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(16), ViewUtils.dpToPx(8), ViewUtils.dpToPx(16), 0));
+        recyclerView.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(8), ViewUtils.dpToPx(8), ViewUtils.dpToPx(8), 0));
 
         transportAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 

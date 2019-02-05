@@ -1,7 +1,6 @@
 package com.perevozka.foora.routedisplayview;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,7 +69,7 @@ public class RouteDrawable extends FrameLayout {
     public void changeRouteDrawable(Type type) {
         switch (type) {
             case BASE_ROUTE:
-                imageView.setImageResource(R.drawable.circle_outline_gray);
+                imageView.setImageResource(R.drawable.circle_outline_blue);
                 imageView.getLayoutParams().height = ViewUtils.dpToPx(10);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.requestLayout();

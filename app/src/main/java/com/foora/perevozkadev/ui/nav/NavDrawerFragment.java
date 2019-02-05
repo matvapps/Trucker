@@ -21,6 +21,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.AddOrderActivity;
 import com.foora.perevozkadev.ui.base.BaseDialog;
+import com.foora.perevozkadev.ui.entry.EntryActivity;
 import com.foora.perevozkadev.ui.map.MapActivity;
 import com.foora.perevozkadev.ui.messages.MessagesActivity;
 import com.foora.perevozkadev.ui.my_orders.MyOrdersActivity;
@@ -57,6 +58,8 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
     View btnMessages;
     @BindView(R.id.calculate_distance)
     View calculateDistance;
+    @BindView(R.id.exit)
+    View btnExit;
 
     @BindView(R.id.user_image)
     ImageView userImage;
@@ -134,6 +137,7 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
         btnStaff.setOnClickListener(this);
         btnMessages.setOnClickListener(this);
         calculateDistance.setOnClickListener(this);
+        btnExit.setOnClickListener(this);
 
         if (userName != null && !userName.equals("")) {
             userNameTxtv.setText(userName);
@@ -230,6 +234,7 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
                     getActivity().finish();
                 });
                 dismissDialog();
+                break;
             }
             case R.id.calculate_distance: {
                 dialog.setOnDismissListener(dialog1 -> {
@@ -237,6 +242,17 @@ public class NavDrawerFragment extends BaseDialog implements View.OnClickListene
                     getActivity().finish();
                 });
                 dismissDialog();
+                break;
+            }
+            case R.id.exit: {
+                PrefRepo preferencesHelper = new PrefRepoImpl(getContext());
+                dialog.setOnDismissListener(dialog1 -> {
+                    preferencesHelper.clear();
+                    EntryActivity.start(getActivity());
+                    getActivity().finish();
+                });
+                dismissDialog();
+                break;
             }
         }
     }
