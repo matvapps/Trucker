@@ -2,8 +2,10 @@ package com.foora.perevozkadev.data.network;
 
 
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
+import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.NullResponse;
@@ -20,6 +22,11 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface RemoteRepo {
     Call<RegisterResponse> register(@NonNull String login,
@@ -115,4 +122,12 @@ public interface RemoteRepo {
 
     Call<List<NullResponse>> confirmRequest(@NonNull String token,
                                 @NonNull int requestId);
+
+    Call<AddFileResponse> addFileToOrder(@NonNull String token,
+                                         @NonNull int orderId,
+                                         @NonNull MultipartBody.Part file);
+
+    Call<List<FileResponse>> getOrderFiles(@NonNull String token,
+                                     @NonNull int orderId);
+
 }

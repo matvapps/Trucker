@@ -4,8 +4,10 @@ import com.foora.perevozkadev.data.db.LocalRepo;
 import com.foora.perevozkadev.data.db.model.FilterJson;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
+import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.NullResponse;
@@ -177,6 +179,16 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<List<NullResponse>> confirmRequest(String token, int requestId) {
         return remoteRepo.confirmRequest(token, requestId);
+    }
+
+    @Override
+    public Call<AddFileResponse> addFileToOrder(String token, int orderId, MultipartBody.Part file) {
+        return remoteRepo.addFileToOrder(token, orderId, file);
+    }
+
+    @Override
+    public Call<List<FileResponse>> getOrderFiles(String token, int orderId) {
+        return remoteRepo.getOrderFiles(token, orderId);
     }
 
     @Override

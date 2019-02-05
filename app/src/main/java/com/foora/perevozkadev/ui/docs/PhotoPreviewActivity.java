@@ -10,13 +10,14 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.base.BaseActivity;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 
 /**
  * Created by Alexander Matvienko on 04.02.2019.
  */
-public class PhotoPreviewActivity extends AppCompatActivity {
+public class PhotoPreviewActivity extends BaseActivity {
 
     public static final String TAG = PhotoPreviewActivity.class.getSimpleName();
     public static final int PHOTO_PREVIEW_CODE = 32;
@@ -66,6 +67,11 @@ public class PhotoPreviewActivity extends AppCompatActivity {
                 .into(photoView);
 
 
+
+    }
+
+    @Override
+    protected void setUp() {
 
     }
 }

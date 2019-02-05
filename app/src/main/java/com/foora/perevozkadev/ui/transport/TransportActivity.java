@@ -115,7 +115,7 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
 
         List<String> photos = new ArrayList<>();
         for (String item : transport.getPhotos()) {
-            photos.add("http://dev.perevozka.me/api/" + item);
+            photos.add("http://dev.perevozka.me/api" + item);
         }
 
 

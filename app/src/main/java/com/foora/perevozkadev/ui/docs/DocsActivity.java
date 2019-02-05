@@ -6,19 +6,38 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.DataManagerImpl;
+import com.foora.perevozkadev.data.db.LocalRepo;
+import com.foora.perevozkadev.data.db.LocalRepoImpl;
+import com.foora.perevozkadev.data.network.RemoteRepo;
+import com.foora.perevozkadev.data.network.RemoteRepoImpl;
+import com.foora.perevozkadev.data.network.model.FileResponse;
+import com.foora.perevozkadev.data.prefs.PrefRepo;
+import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
+import com.foora.perevozkadev.ui.add_order.AddOrderPresenter;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.GridSpacingItemDecoration;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implements DocsMvpView {
 
@@ -29,11 +48,15 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
 
     private static final String KEY_ORDER_ID = "order_id";
 
+    private RecyclerView docsList;
     private FloatingActionButton btnFromGallery;
     private FloatingActionButton btnFromCamera;
 
+    private DocsAdapter docsAdapter;
 
     private String imageFilePath;
+
+    private int orderId;
 
     public static void start(Activity activity, int orderId) {
         Intent intent = new Intent(activity, DocsActivity.class);
@@ -48,17 +71,28 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
 
         setUnBinder(ButterKnife.bind(this));
 
+        orderId = getIntent().getIntExtra(KEY_ORDER_ID, -1);
+
         setUp();
     }
 
     @Override
     protected void setUp() {
 
+        docsList = findViewById(R.id.docs_list);
         btnFromGallery = findViewById(R.id.btn_from_gallery);
         btnFromCamera = findViewById(R.id.btn_from_camera);
 
         btnFromCamera.setOnClickListener(v -> takeImage());
         btnFromGallery.setOnClickListener(v -> takePhoto());
+
+        docsAdapter = new DocsAdapter();
+        docsList.setLayoutManager(new GridLayoutManager(this, 2));
+        docsList.addItemDecoration(new GridSpacingItemDecoration(2, ViewUtils.dpToPx(8), true));
+//        docsList.setLayoutManager(new LinearLayoutManager(this));
+        docsList.setAdapter(docsAdapter);
+
+        getPresenter().getOrderFiles(orderId);
     }
 
     private void takeImage() {
@@ -105,16 +139,16 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
+        switch (requestCode) {
             case TAKE_IMAGE_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     PhotoPreviewActivity.startForResult(this, selectedImage.toString());
                 }
 
                 break;
             case TAKE_IMAGE_FROM_CAMERA_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = Uri.fromFile(new File(imageFilePath));
                     PhotoPreviewActivity.startForResult(this, selectedImage.toString());
 
@@ -133,8 +167,27 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
 
     @Override
     protected DocsMvpPresenter createPresenter() {
-        return null;
+        RemoteRepo remoteRepo = new RemoteRepoImpl();
+        PrefRepo preferencesHelper = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, preferencesHelper, localRepo);
+
+        DocsMvpPresenter docsPresenter = new DocsPresenter(dataManager, AndroidSchedulers.mainThread());
+        docsPresenter.onAttach(this);
+
+        return docsPresenter;
     }
 
 
+    @Override
+    public void onGetOrderFiles(List<FileResponse> files) {
+        docsAdapter.setItems(files);
+        Log.d(TAG, "onGetOrderFiles: " + files.toString());
+        docsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAddFileToOrder() {
+        getPresenter().getOrderFiles(orderId);
+    }
 }

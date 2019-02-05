@@ -2,8 +2,10 @@ package com.foora.perevozkadev.data.network;
 
 
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
+import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.NullResponse;
@@ -55,7 +57,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("user/sms/send/")
     Call<String> sendSms(@NonNull @Field("login") String login,
-                               @NonNull @Field("phone") String phone);
+                         @NonNull @Field("phone") String phone);
 
     @FormUrlEncoded
     @POST("auth/")
@@ -121,7 +123,7 @@ public interface ApiService {
 
     @GET("order/{order_id}/")
     Call<Order> getOrderById(@Header("Authorization") String token,
-                            @Path("order_id") int orderId);
+                             @Path("order_id") int orderId);
     // ----------------------------------------------------------------------------------------
 
     // Employees
@@ -131,14 +133,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("user/staff/add/")
     Call<Profile> addUserToStaff(@Header("Authorization") String token,
-                           @NonNull @Field("username") String login,
-                           @NonNull @Field("password") String password,
-                           @NonNull @Field("email") String email,
-                           @NonNull @Field("phone") String phone,
-                           @NonNull @Field("user_type") String userType,
-                           @NonNull @Field("first_name") String firstName,
-                           @NonNull @Field("last_name") String lastName,
-                           @NonNull @Field("group") String group);
+                                 @NonNull @Field("username") String login,
+                                 @NonNull @Field("password") String password,
+                                 @NonNull @Field("email") String email,
+                                 @NonNull @Field("phone") String phone,
+                                 @NonNull @Field("user_type") String userType,
+                                 @NonNull @Field("first_name") String firstName,
+                                 @NonNull @Field("last_name") String lastName,
+                                 @NonNull @Field("group") String group);
 
 
     @DELETE("user/staff/{user_id}/delete/")
@@ -152,13 +154,13 @@ public interface ApiService {
     @Headers({"Accept: application/json"})
     @POST("transport/")
     Call<Transport> addTransport(@Header("Authorization") String token,
-                                    @Body Transport transport);
+                                 @Body Transport transport);
 
     @Multipart
     @POST("transport/{transport_id}/photo/")
     Call<BaseResponse> addTransportPhoto(@Path(value = "transport_id", encoded = true) int transportId,
-                                   @Header("Authorization") String token,
-                                   @Part MultipartBody.Part image);
+                                         @Header("Authorization") String token,
+                                         @Part MultipartBody.Part image);
 
     @GET("transport/")
     Call<TransportResponse> getTransport(@Header("Authorization") String token);
@@ -192,7 +194,21 @@ public interface ApiService {
 
     @GET("order/request/{request_id}/confirm/")
     Call<List<NullResponse>> confirmRequest(@Header("Authorization") String token,
-                                @Path(value = "request_id", encoded = true) int requestId);
+                                            @Path(value = "request_id", encoded = true) int requestId);
     // ----------------------------------------------------------------------------------------
+
+
+    // Order files
+    @POST("order/{order_id}/files/")
+    Call<AddFileResponse> addFileToOrder(@Header("Authorization") String token,
+                                         @Path(value = "order_id", encoded = true) int orderId,
+                                         @Part MultipartBody.Part file);
+
+    @GET("order/{order_id}/files/")
+    Call<List<FileResponse>> getOrderFiles(@Header("Authorization") String token,
+                                     @Path(value = "order_id", encoded = true) int orderId);
+
+    // ----------------------------------------------------------------------------------------
+
 
 }

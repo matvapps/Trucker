@@ -1,8 +1,10 @@
 package com.foora.perevozkadev.data.network;
 
 import com.foora.perevozkadev.data.network.model.ActivateResponse;
+import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.NullResponse;
@@ -160,6 +162,16 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     @Override
     public Call<List<NullResponse>> confirmRequest(String token, int requestId) {
         return getApi().confirmRequest(token, requestId);
+    }
+
+    @Override
+    public Call<AddFileResponse> addFileToOrder(String token, int orderId, MultipartBody.Part file) {
+        return getApi().addFileToOrder(token, orderId, file);
+    }
+
+    @Override
+    public Call<List<FileResponse>> getOrderFiles(String token, int orderId) {
+        return getApi().getOrderFiles(token, orderId);
     }
 
 
