@@ -63,7 +63,7 @@
                     android:id="@+id/date"
                     style="@style/AppEditTextStyle"
                     android:layout_width="match_parent"
-                    app:aet_hint="Даты загрузки/выгрузки" />
+                    app:aet_hint="Дата окончания действия" />
 
                 <ImageView
                     android:id="@+id/imageView2"

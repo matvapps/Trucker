@@ -147,4 +147,43 @@ public class ProfilePresenter<V extends ProfileMvpView> extends BasePresenter<V>
                 });
 
     }
+
+    @Override
+    public void changeProfile(Profile profile) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "changeProfile: View isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().changeProfile(getDataManager().getUserToken(), profile)
+                .enqueue(new Callback<Profile>() {
+                    @Override
+                    public void onResponse(Call<Profile> call, Response<Profile> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: changeProfile end with code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onChangeProfile();
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Profile> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Не удалось обновить профиль");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+    }
+
 }

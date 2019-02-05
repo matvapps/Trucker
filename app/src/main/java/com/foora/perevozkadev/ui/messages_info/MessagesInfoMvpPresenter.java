@@ -11,4 +11,6 @@ public interface MessagesInfoMvpPresenter<V extends MessagesInfoMvpView> extends
     void getProfile();
     void rejectRequest(int requestId);
     void confirmRequest(int requestId);
+    void getOrderById(int orderId);
+
 }

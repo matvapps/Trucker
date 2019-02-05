@@ -19,9 +19,12 @@ import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -75,6 +78,7 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
         messagesInfoAdapter = new MessagesInfoAdapter();
         messagesInfoAdapter.setListener(this);
         messagesList.setLayoutManager(new LinearLayoutManager(this));
+        messagesList.addItemDecoration(new ItemSpacingDecoration(0, ViewUtils.dpToPx(12), 0, 0));
         messagesList.setAdapter(messagesInfoAdapter);
 
     }
@@ -119,7 +123,13 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
 
     @Override
     public void onConfirmRequest() {
+        getPresenter().getProfile();
+    }
 
+    @Override
+    public void onGetOrder(Order order) {
+        Log.d(TAG, "onGetOrder: " + order.toString());
+        messagesInfoAdapter.setOrder(order);
     }
 
 
@@ -140,7 +150,7 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
     }
 
     @Override
-    public void onRequestProfile(int userId) {
-
+    public void onRequestOrder(int orderId) {
+        getPresenter().getOrderById(orderId);
     }
 }

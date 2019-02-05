@@ -83,6 +83,14 @@ public class Profile implements Serializable {
     @SerializedName("group")
     @Expose
     private String userGroup;
+    @SerializedName("location_latitude")
+    @Expose
+    private double latitude;
+    @SerializedName("location_longitude")
+    @Expose
+    private double longitude;
+
+
 
     public Integer getUserId() {
         return userId;
@@ -276,6 +284,22 @@ public class Profile implements Serializable {
         this.userGroup = userGroup;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
@@ -303,6 +327,8 @@ public class Profile implements Serializable {
                 ", useNotification='" + useNotification + '\'' +
                 ", is2faEnabled=" + is2faEnabled +
                 ", userGroup='" + userGroup + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

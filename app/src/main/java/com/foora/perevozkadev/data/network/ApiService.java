@@ -8,10 +8,10 @@ import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
@@ -189,16 +189,17 @@ public interface ApiService {
                                       @Path(value = "request_id", encoded = true) int requestId);
 
     @GET("order/request/{request_id}/reject/")
-    Call<List<NullResponse>> rejectRequest(@Header("Authorization") String token,
+    Call<OrderRequest> rejectRequest(@Header("Authorization") String token,
                                            @Path(value = "request_id", encoded = true) int requestId);
 
-    @GET("order/request/{request_id}/confirm/")
-    Call<List<NullResponse>> confirmRequest(@Header("Authorization") String token,
+    @PATCH("order/request/{request_id}/confirm/")
+    Call<OrderRequest> confirmRequest(@Header("Authorization") String token,
                                             @Path(value = "request_id", encoded = true) int requestId);
     // ----------------------------------------------------------------------------------------
 
 
     // Order files
+    @Multipart
     @POST("order/{order_id}/files/")
     Call<AddFileResponse> addFileToOrder(@Header("Authorization") String token,
                                          @Path(value = "order_id", encoded = true) int orderId,
@@ -209,6 +210,16 @@ public interface ApiService {
                                      @Path(value = "order_id", encoded = true) int orderId);
 
     // ----------------------------------------------------------------------------------------
+
+    // Change status
+    @FormUrlEncoded
+    @POST("order/{order_id}/status/")
+    Call<StatusResponse> changeOrderStatus(@Header("Authorization") String token,
+                                           @Path(value = "order_id", encoded = true) int orderId,
+                                           @NonNull @Field("status") String status);
+
+    // ----------------------------------------------------------------------------------------
+
 
 
 }

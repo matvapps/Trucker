@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface ProfileMvpView extends MvpView {
 
+    void onChangeProfile();
     void onGetProfile(Profile profile);
     void onGetUserOrders(List<Order> orderList);
     void onGetUserTransport(List<Transport> transports);

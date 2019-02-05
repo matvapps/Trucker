@@ -36,6 +36,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 app:aet_inputType="number"
+                app:aet_hint="К-во"
+                app:aet_postfix=" шт"
                 app:aet_imeOption="actionNext"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -108,6 +110,7 @@
                         android:layout_height="60dp"
                         android:layout_marginTop="8dp"
                         android:focusable="true"
+                        app:aet_postfix=" кг"
                         android:focusableInTouchMode="true"
                         app:aet_hint="Масса от"
                         app:aet_inputType="phone"
@@ -121,6 +124,7 @@
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:focusable="true"
+                        app:aet_postfix=" кг"
                         android:focusableInTouchMode="true"
                         app:aet_hint="Масса до"
                         app:aet_inputType="phone"
@@ -138,6 +142,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         app:aet_hint="Объем от"
+                        app:aet_postfix=" м³"
                         app:aet_inputType="phone"
                         app:layout_constraintStart_toStartOf="@+id/txtv_dates"
                         app:layout_constraintTop_toBottomOf="@+id/spinner_mass_from"
@@ -151,6 +156,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         app:aet_hint="Объем до"
+                        app:aet_postfix=" м³"
                         app:aet_inputType="phone"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_volume_from"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +264,6 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintStart_toStartOf="@+id/text3"
                 app:layout_constraintTop_toBottomOf="@+id/text3">
@@ -267,20 +272,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <EditText
+                    <com.github.matvapps.AppEditText
+                        style="@style/AppEditTextStyle"
                         android:id="@+id/edtxt_cost"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
                         android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:inputType="number"
+                        app:aet_inputType="number"
+                        app:aet_hint="Цена"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/spinner_currency"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.63" />
+                        app:layout_constraintWidth_default="percent" />
 
                     <com.foora.perevozkadev.utils.custom.CustomSpinner
                         android:id="@+id/spinner_currency"
@@ -354,6 +360,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 app:aet_inputType="number"
+                app:aet_hint="Разм."
+                app:aet_postfix=" м"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/textView9"
                 app:layout_constraintWidth_percent="0.28" />
@@ -381,6 +389,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 app:aet_inputType="number"
+                app:aet_postfix=" м"
+                app:aet_hint="Разм."
                 app:layout_constraintStart_toStartOf="@+id/textView11"
                 app:layout_constraintTop_toBottomOf="@+id/textView9"
                 app:layout_constraintWidth_percent="0.28" />
@@ -406,6 +416,8 @@
                 android:layout_width="0dp"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
+                app:aet_hint="Разм."
+                app:aet_postfix=" м"
                 android:focusableInTouchMode="true"
                 app:aet_inputType="number"
                 app:layout_constraintEnd_toEndOf="@+id/edtxt_car_quantity"

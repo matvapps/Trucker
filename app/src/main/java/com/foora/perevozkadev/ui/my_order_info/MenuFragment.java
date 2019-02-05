@@ -18,7 +18,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.add_order.model.Order;
+import com.foora.perevozkadev.ui.change_status.ChangeStatusFragment;
 import com.foora.perevozkadev.ui.docs.DocsActivity;
+import com.google.gson.Gson;
 
 /**
  * Created by Alexandr.
@@ -29,7 +32,7 @@ public class MenuFragment extends BottomSheetDialogFragment {
 
     private static final String ORDER_KEY = "order_key";
 
-    int orderId;
+    Order order;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -38,10 +41,10 @@ public class MenuFragment extends BottomSheetDialogFragment {
     }
 
 
-    public static MenuFragment newInstance(int orderId) {
+    public static MenuFragment newInstance(String orderJson) {
         Bundle args = new Bundle();
         MenuFragment fragment = new MenuFragment();
-        args.putInt(ORDER_KEY, orderId);
+        args.putString(ORDER_KEY, orderJson);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +54,10 @@ public class MenuFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order_menu, null);
 
-        orderId = getArguments().getInt(ORDER_KEY);
+        String orderJson = getArguments().getString(ORDER_KEY);
+
+        Gson gson = new Gson();
+        order = gson.fromJson(orderJson, Order.class);
 
         View orderTrack = view.findViewById(R.id.order_track);
         View orderFiles = view.findViewById(R.id.order_files);
@@ -62,11 +68,11 @@ public class MenuFragment extends BottomSheetDialogFragment {
         });
 
         orderFiles.setOnClickListener(v -> {
-            DocsActivity.start(getActivity(), orderId);
+            DocsActivity.start(getActivity(), order.getId());
         });
 
         orderChangeState.setOnClickListener(v -> {
-
+            ChangeStatusFragment.newInstance(orderJson).show(getFragmentManager());
         });
 
 

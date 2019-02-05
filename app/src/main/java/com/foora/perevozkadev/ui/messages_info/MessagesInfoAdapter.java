@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.network.model.Action;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.adapter.ProfileTransportAdapter;
@@ -39,6 +40,7 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private ProfileTransportAdapter transportAdapter;
     private ContactAdapter contactAdapter;
     private Profile profile;
+    private Order order;
 
     private Callback listener;
 
@@ -59,8 +61,6 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addTransport(Transport transport) {
         transportAdapter.addItem(transport);
-        Log.d(TAG, "addTransport: " + transportAdapter.getItemCount());
-        Log.d(TAG, "addTransport: " + requestInfo.getTransports().size());
         if (transportAdapter.getItemCount() == requestInfo.getTransports().size())
             notifyDataSetChanged();
     }
@@ -69,12 +69,15 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.profile = profile;
     }
 
+    public void setOrder(Order order) {
+        this.order = order;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View rootView;
-
-        Log.d(TAG, "onCreateViewHolder: " + i);
 
         switch (i) {
             case 0:
@@ -83,9 +86,10 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case 1:
                 rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_request_accepted, viewGroup, false);
                 return new ActionAcceptedViewHolder(rootView);
+            default:
+                rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_base, viewGroup, false);
+                return new ActionBaseViewHolder(rootView);
         }
-
-        return null;
     }
 
     @Override
@@ -142,8 +146,10 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 });
 
                 btnAccept.setOnClickListener(v -> {
-                    if (listener != null)
+                    if (listener != null) {
                         listener.onAcceptRequest(requestInfo.getId());
+                        Log.d(TAG, "onBind: " + requestInfo.getId());
+                    }
                 });
             }
 
@@ -190,9 +196,19 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-
-            if (listener != null) {
-//                listener.onRequestProfile(requestInfo.);
+            if (order == null) {
+                if (listener != null) {
+                    listener.onRequestOrder(requestInfo.getOrderId());
+                }
+            } else {
+                contactAdapter.clear();
+                if (profile.getUserId() == requestInfo.getSenderId()) {
+                    titleTxtv.setText(String.format("%s %s", order.getContactPerson(), "принял вашу заявку"));
+                } else {
+                    titleTxtv.setText("Вы отправили данные пользователю");
+                }
+                contactAdapter.addItem(order.getPhone());
+                contactAdapter.addItem(order.getEmail());
             }
 
         }
@@ -212,6 +228,13 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+
+            if (requestInfo.getStatus() == 2) {
+                titleTxtv.setTextColor(R.color.red_error);
+                titleTxtv.setText("аш запрос отклонен");
+            } else
+                titleTxtv.setText(getItem(position).getAction());
+
         }
     }
 
@@ -295,7 +318,7 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         void onRefuseRequest(int requestId);
 
-        void onRequestProfile(int userId);
+        void onRequestOrder(int orderId);
     }
 
 }

@@ -7,11 +7,14 @@ import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.Scheduler;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +31,7 @@ public class DocsPresenter<V extends DocsMvpView> extends BasePresenter<V> imple
     }
 
     @Override
-    public void addFileToOrder(int orderId, MultipartBody.Part file) {
+    public void addFileToOrder(int orderId, File file) {
         if (!isViewAttached()) {
             Log.e(TAG, "addFileToOrder: DocsMvpView isn't attach");
             return;
@@ -36,7 +39,11 @@ public class DocsPresenter<V extends DocsMvpView> extends BasePresenter<V> imple
 
         getMvpView().showLoading();
 
-        getDataManager().addFileToOrder(getDataManager().getUserToken(), orderId, file)
+        MultipartBody.Part image;
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+        image = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
+
+        getDataManager().addFileToOrder(getDataManager().getUserToken(), orderId, image)
                 .enqueue(new Callback<AddFileResponse>() {
                     @Override
                     public void onResponse(Call<AddFileResponse> call, Response<AddFileResponse> response) {

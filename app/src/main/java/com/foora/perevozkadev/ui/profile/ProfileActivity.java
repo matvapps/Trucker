@@ -22,6 +22,7 @@ import com.foora.perevozkadev.data.db.LocalRepo;
 import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
+import com.foora.perevozkadev.ui.my_order_info.MyOrderInfoActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
@@ -84,6 +85,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
     private PrefRepo preferencesHelper;
     private GoogleMap googleMap;
+
+    private Profile profile;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, ProfileActivity.class);
@@ -180,6 +183,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         partnersAdapter.setItems(partners);
 
         transportAdapter.setListener((pos, transport) -> TransportActivity.start(ProfileActivity.this, transport.getId()));
+
+        ordersAdapter.setListener(order -> MyOrderInfoActivity.start(ProfileActivity.this, order.getId()));
 
         getPresenter().getMyOrders();
         getPresenter().getMyTransport();
@@ -279,6 +284,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         this.googleMap.setMinZoomPreference(12);
+
         LatLng ny = new LatLng(40.7143528, -74.0059731);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         googleMap.getUiSettings().setAllGesturesEnabled(false);
@@ -286,7 +292,14 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     }
 
     @Override
+    public void onChangeProfile() {
+        getPresenter().getProfile();
+    }
+
+    @Override
     public void onGetProfile(Profile profile) {
+        this.profile = profile;
+
         if (profile.getFirstName() != null && !profile.getFirstName().equals("")) {
             String userName = String.format("%s %s", profile.getFirstName(), profile.getLastName());
 
@@ -344,6 +357,11 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
                 markerOptions.position(place.getLatLng());
                 googleMap.animateCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 googleMap.addMarker(markerOptions);
+
+                profile.setLatitude(place.getLatLng().latitude);
+                profile.setLongitude(place.getLatLng().longitude);
+
+                getPresenter().changeProfile(profile);
 
             }
         }

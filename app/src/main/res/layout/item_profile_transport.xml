@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/roundedImageView2"
+                android:id="@+id/bg_image"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/trucker"
@@ -32,25 +32,37 @@
 
             <TextView
                 android:id="@+id/transport_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/roundedImageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/bg_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Scania R 500" />
 
             <TextView
                 android:id="@+id/transport_type"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="24dp"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="16sp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/transport_name"
                 app:layout_constraintTop_toBottomOf="@+id/transport_name"
                 tools:text="Цельнометалический" />

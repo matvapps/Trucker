@@ -3,14 +3,13 @@ package com.foora.perevozkadev.ui.messages_info;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
-import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
 import java.io.IOException;
-import java.util.List;
 
 import io.reactivex.Scheduler;
 import retrofit2.Call;
@@ -152,9 +151,9 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
         getMvpView().showLoading();
 
         getDataManager().rejectRequest(getDataManager().getUserToken(), requestId)
-                .enqueue(new Callback<List<NullResponse>>() {
+                .enqueue(new Callback<OrderRequest>() {
                     @Override
-                    public void onResponse(Call<List<NullResponse>> call, Response<List<NullResponse>> response) {
+                    public void onResponse(Call<OrderRequest> call, Response<OrderRequest> response) {
                         getMvpView().hideLoading();
 
                         if (response.isSuccessful()) {
@@ -170,7 +169,7 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
                     }
 
                     @Override
-                    public void onFailure(Call<List<NullResponse>> call, Throwable t) {
+                    public void onFailure(Call<OrderRequest> call, Throwable t) {
                         getMvpView().hideLoading();
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
@@ -187,13 +186,13 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
         getMvpView().showLoading();
 
         getDataManager().confirmRequest(getDataManager().getUserToken(), requestId)
-                .enqueue(new Callback<List<NullResponse>>() {
+                .enqueue(new Callback<OrderRequest>() {
                     @Override
-                    public void onResponse(Call<List<NullResponse>> call, Response<List<NullResponse>> response) {
+                    public void onResponse(Call<OrderRequest> call, Response<OrderRequest> response) {
                         getMvpView().hideLoading();
 
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "onResponse: " + response.body());
+                            Log.d(TAG, "onResponse: " + response.toString());
                             getMvpView().onConfirmRequest();
                         } else {
                             try {
@@ -205,11 +204,48 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
                     }
 
                     @Override
-                    public void onFailure(Call<List<NullResponse>> call, Throwable t) {
+                    public void onFailure(Call<OrderRequest> call, Throwable t) {
                         getMvpView().hideLoading();
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
                 });
+    }
+
+    @Override
+    public void getOrderById(int id) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getOrderById: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().getOrderById(getDataManager().getUserToken(), id)
+                .enqueue(new Callback<Order>() {
+                    @Override
+                    public void onResponse(Call<Order> call, Response<Order> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetOrder(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Order> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+
     }
 
 }

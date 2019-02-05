@@ -50,7 +50,7 @@ public class MyOrdersActivity extends BaseNavPresenterActivity<MyOrdersMvpPresen
 
     @Override
     protected String getTitleStr() {
-        return "Мои закакзы";
+        return "Мои заказы";
     }
 
     @Override

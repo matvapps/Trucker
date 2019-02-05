@@ -136,23 +136,23 @@ public class OtpCodeDialogFragment extends BaseDialog implements OtpDialogMvpVie
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
 
-        listener = (Callback) context;
-    }
+            listener = (Callback) context;
+        }
 
-    public void show(FragmentManager fragmentManager) {
-        super.show(fragmentManager, TAG);
-    }
+        public void show(FragmentManager fragmentManager) {
+            super.show(fragmentManager, TAG);
+        }
 
-    @Override
-    public void dismissDialog() {
-        super.dismissDialog(TAG);
-    }
+        @Override
+        public void dismissDialog() {
+            super.dismissDialog(TAG);
+        }
 
-    public interface Callback extends FragmentCallback {
-        void onReceiveSmsCode(String type, String smsCode);
-    }
+        public interface Callback extends FragmentCallback {
+            void onReceiveSmsCode(String type, String smsCode);
+        }
 }

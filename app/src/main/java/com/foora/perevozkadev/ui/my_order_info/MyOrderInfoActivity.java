@@ -24,6 +24,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
+import com.foora.perevozkadev.ui.change_status.ChangeStatusFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
@@ -50,7 +52,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPresenter> implements MyOrderInfoMvpView,
-        OnMapReadyCallback {
+        OnMapReadyCallback, ChangeStatusFragment.Callback {
 
     public static final String TAG = MyOrderInfoActivity.class.getSimpleName();
     private static final String KEY_ORDER_ID = "key_order_id";
@@ -129,12 +131,7 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         mapView.getMapAsync(this);
 
         btnBack.setOnClickListener(v1 -> finish());
-        btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MenuFragment.newInstance(orderId).show(getSupportFragmentManager(), MenuFragment.TAG);
-            }
-        });
+
 
     }
 
@@ -214,6 +211,13 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         heightTxtv.setText(String.format(Locale.getDefault(), "%s м", size[1]));
         depthTxtv.setText(String.format(Locale.getDefault(), "%s м", size[2]));
 
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuFragment.newInstance(new Gson().toJson(order)).show(getSupportFragmentManager(), MenuFragment.TAG);
+            }
+        });
+
 //        paymentType.setText(order.getPaymentType1());
 //        costTxtv.setText(String.format(Locale.getDefault(),
 //                "%d %s",
@@ -221,7 +225,13 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
 //                order.getCurrency().toLowerCase()));
     }
 
-    private List<RouteItem> getRouteItemsFromOrder(Order order) {
+    @Override
+    public void onChangeOrderStatus() {
+        showMessage("Статус заказа успешно изменен");
+        getPresenter().getOrderById(orderId);
+    }
+
+    private List<RouteItem> getRouteItemsFromOrder(@NonNull Order order) {
         List<RouteItem> result = new ArrayList<>();
         List<Place> loadingPlaces = order.getLoadingPlaces();
         List<Place> unloadingPlaces = order.getUnloadingPlaces();
@@ -394,5 +404,15 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         this.googleMap = googleMap;
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         getPresenter().getOrderById(orderId);
+    }
+
+    @Override
+    public void onChangeStatus(String status) {
+        getPresenter().changeOrderStatus(orderId, status);
+    }
+
+    @Override
+    public void onCallManager() {
+
     }
 }

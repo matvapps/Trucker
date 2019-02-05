@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +113,7 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     class TransportViewHolder extends BaseViewHolder {
 
+        private ImageView bgImage;
         private TextView transportName;
         private TextView transportNum;
         private TextView transportType;
@@ -120,6 +123,7 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
         public TransportViewHolder(View itemView) {
             super(itemView);
 
+            bgImage = itemView.findViewById(R.id.bg_image);
             transportName = itemView.findViewById(R.id.transport_name);
             transportNum = itemView.findViewById(R.id.transport_num);
             transportType = itemView.findViewById(R.id.transport_type);
@@ -138,6 +142,11 @@ public class ProfileTransportAdapter extends RecyclerView.Adapter<RecyclerView.V
             super.onBind(position);
 
             Transport transport = getItem(position);
+
+            if (transport.getPhotos().size() >= 1)
+                Picasso.get().load("http://dev.perevozka.me" + transport.getPhotos().get(0))
+                        .into(bgImage);
+
             if (isUseSelection()) {
                 checkBox.setVisibility(View.VISIBLE);
                 if (selectedItemPositions.contains(position)) {

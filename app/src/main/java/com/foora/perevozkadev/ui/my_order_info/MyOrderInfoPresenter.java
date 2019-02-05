@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.my_order_info;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 
@@ -59,5 +60,39 @@ public class MyOrderInfoPresenter<V extends MyOrderInfoMvpView> extends BasePres
                     }
                 });
 
+    }
+
+    @Override
+    public void changeOrderStatus(int orderId, String status) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "changeOrderStatus: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().changeOrderStatus(getDataManager().getUserToken(), orderId, status)
+                .enqueue(new Callback<StatusResponse>() {
+                    @Override
+                    public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                        getMvpView().hideLoading();
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body());
+                            getMvpView().onChangeOrderStatus();
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string() );
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<StatusResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
     }
 }

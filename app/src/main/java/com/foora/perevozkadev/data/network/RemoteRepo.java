@@ -8,10 +8,10 @@ import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
@@ -22,11 +22,6 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Path;
 
 public interface RemoteRepo {
     Call<RegisterResponse> register(@NonNull String login,
@@ -117,17 +112,21 @@ public interface RemoteRepo {
     Call<OrderRequest> getRequestInfo(@NonNull String token,
                                       @NonNull int requestId);
 
-    Call<List<NullResponse>> rejectRequest(@NonNull String token,
+    Call<OrderRequest> rejectRequest(@NonNull String token,
                                            @NonNull int requestId);
 
-    Call<List<NullResponse>> confirmRequest(@NonNull String token,
-                                @NonNull int requestId);
+    Call<OrderRequest> confirmRequest(@NonNull String token,
+                                            @NonNull int requestId);
 
     Call<AddFileResponse> addFileToOrder(@NonNull String token,
                                          @NonNull int orderId,
                                          @NonNull MultipartBody.Part file);
 
     Call<List<FileResponse>> getOrderFiles(@NonNull String token,
-                                     @NonNull int orderId);
+                                           @NonNull int orderId);
+
+    Call<StatusResponse> changeOrderStatus(String token,
+                                           int orderId,
+                                           String status);
 
 }

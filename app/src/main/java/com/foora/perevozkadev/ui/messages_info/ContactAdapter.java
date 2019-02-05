@@ -31,6 +31,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        contacts.clear();
+        notifyDataSetChanged();
+    }
+
     public void addItem(String item) {
         contacts.add(item);
         notifyItemInserted(contacts.size() - 1);
@@ -80,6 +85,18 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super.onBind(position);
 
             contactData.setText(getItem(position));
+
+            switch (position) {
+                case 0:
+                    contactImage.setImageResource(R.drawable.ic_phone);
+                    break;
+                case 1:
+                    contactImage.setImageResource(R.drawable.ic_email);
+                    break;
+                default:
+                    contactImage.setImageResource(R.drawable.circle);
+                    break;
+            }
 
         }
     }

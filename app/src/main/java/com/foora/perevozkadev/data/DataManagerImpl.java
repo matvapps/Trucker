@@ -10,10 +10,10 @@ import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
-import com.foora.perevozkadev.data.network.model.NullResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -172,12 +172,12 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<List<NullResponse>> rejectRequest(String token, int requestId) {
+    public Call<OrderRequest> rejectRequest(String token, int requestId) {
         return remoteRepo.rejectRequest(token, requestId);
     }
 
     @Override
-    public Call<List<NullResponse>> confirmRequest(String token, int requestId) {
+    public Call<OrderRequest> confirmRequest(String token, int requestId) {
         return remoteRepo.confirmRequest(token, requestId);
     }
 
@@ -189,6 +189,11 @@ public class DataManagerImpl implements DataManager {
     @Override
     public Call<List<FileResponse>> getOrderFiles(String token, int orderId) {
         return remoteRepo.getOrderFiles(token, orderId);
+    }
+
+    @Override
+    public Call<StatusResponse> changeOrderStatus(String token, int orderId, String status) {
+        return remoteRepo.changeOrderStatus(token, orderId, status);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.foora.perevozkadev.ui.messages_info;
 
 import com.foora.perevozkadev.data.network.model.OrderRequest;
+import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.MvpView;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
@@ -14,4 +15,5 @@ public interface MessagesInfoMvpView extends MvpView {
     void onGetProfile(Profile profile);
     void onRejectRequest();
     void onConfirmRequest();
+    void onGetOrder(Order order);
 }

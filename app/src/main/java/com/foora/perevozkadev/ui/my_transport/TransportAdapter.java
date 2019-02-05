@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,7 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class TransportViewHolder extends BaseViewHolder {
 
+        private ImageView bgImage;
         private TextView transportName;
         private TextView transportNum;
         private TextView transportType;
@@ -105,6 +108,7 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public TransportViewHolder(View itemView) {
             super(itemView);
 
+            bgImage = itemView.findViewById(R.id.bg_image);
             transportName = itemView.findViewById(R.id.transport_name);
             transportNum = itemView.findViewById(R.id.transport_num);
             transportType = itemView.findViewById(R.id.transport_type);
@@ -125,6 +129,10 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (listener != null)
                 itemView.setOnClickListener(v -> listener.onClick(position, transport));
+
+            if (transport.getPhotos().size() >= 1)
+                Picasso.get().load("http://dev.perevozka.me" + transport.getPhotos().get(0))
+                        .into(bgImage);
 
             transportName.setText(transport.getModel());
             transportNum.setText(transport.getPassportNum());

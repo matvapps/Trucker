@@ -7,4 +7,5 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
  */
 public interface MyOrderInfoMvpPresenter<V extends MyOrderInfoMvpView> extends MvpPresenter<V> {
     void getOrderById(int id);
+    void changeOrderStatus(int orderId, String status);
 }

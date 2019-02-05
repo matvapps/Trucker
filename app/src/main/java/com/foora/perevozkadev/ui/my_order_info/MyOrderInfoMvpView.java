@@ -8,4 +8,5 @@ import com.foora.perevozkadev.ui.base.MvpView;
  */
 public interface MyOrderInfoMvpView extends MvpView {
     void onGetOrder(Order order);
+    void onChangeOrderStatus();
 }

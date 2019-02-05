@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,7 +64,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @BindView(R.id.add_transport)
     View addTransport;
     @BindView(R.id.edtxt_cost)
-    EditText costEdtxt;
+    AppEditText costEdtxt;
     @BindView(R.id.spinner_currency)
     CustomSpinner currencySpinner;
     @BindView(R.id.edtxt_car_quantity)

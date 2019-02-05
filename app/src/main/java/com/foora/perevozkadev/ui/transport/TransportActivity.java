@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
@@ -19,6 +20,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.github.matvapps.gallery.GalleryView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
 
     private int transportId;
 
+    private ImageView bgImage;
     private TextView transportCategory;
     private TextView tranportType;
     private TextView tranportAllowedWeight;
@@ -60,6 +63,7 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
 
         setUnBinder(ButterKnife.bind(this));
 
+        bgImage = findViewById(R.id.bg_image);
         transportCategory = findViewById(R.id.transport_category);
         tranportType = findViewById(R.id.transport_type);
         tranportAllowedWeight = findViewById(R.id.transport_allowed_weight);
@@ -113,9 +117,13 @@ public class TransportActivity extends BasePresenterActivity<TransportMvpPresent
 
         galleryView.setMaxItems(3);
 
+        if (transport.getPhotos().size() >= 1)
+            Picasso.get().load("http://dev.perevozka.me" + transport.getPhotos().get(0))
+                    .into(bgImage);
+
         List<String> photos = new ArrayList<>();
         for (String item : transport.getPhotos()) {
-            photos.add("http://dev.perevozka.me/api" + item);
+            photos.add("http://dev.perevozka.me" + item);
         }
 
 

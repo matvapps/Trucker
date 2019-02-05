@@ -2,16 +2,16 @@ package com.foora.perevozkadev.ui.docs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -23,11 +23,10 @@ import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
-import com.foora.perevozkadev.ui.add_order.AddOrderPresenter;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.GridSpacingItemDecoration;
-import com.github.clans.fab.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +81,9 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
         docsList = findViewById(R.id.docs_list);
         btnFromGallery = findViewById(R.id.btn_from_gallery);
         btnFromCamera = findViewById(R.id.btn_from_camera);
+        View btnBack = findViewById(R.id.btn_back);
 
+        btnBack.setOnClickListener(v -> finish());
         btnFromCamera.setOnClickListener(v -> takeImage());
         btnFromGallery.setOnClickListener(v -> takePhoto());
 
@@ -156,13 +157,29 @@ public class DocsActivity extends BasePresenterActivity<DocsMvpPresenter> implem
                 break;
             case PhotoPreviewActivity.PHOTO_PREVIEW_CODE:
                 if (imageReturnedIntent != null) {
-                    showMessage("Photo is choose");
+                    String imageUriStr = imageReturnedIntent.getStringExtra(PhotoPreviewActivity.IMAGE_URI_RESULT);
+                    Log.d(TAG, "onActivityResult: " + imageReturnedIntent.getStringExtra(PhotoPreviewActivity.IMAGE_URI_RESULT));
+                    Uri uri = Uri.parse(imageUriStr);
+                    getPresenter().addFileToOrder(orderId, new File(getRealPathFromURI(uri)));
                 } else {
-                    showMessage("Photo not choose");
+                    showMessage("Отменено пользователем");
                 }
-
                 break;
         }
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
     @Override

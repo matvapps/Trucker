@@ -7,11 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.text.InputType;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -31,6 +30,8 @@ public class AppEditText extends FrameLayout {
 
     private TextInputEditText editText;
     private TextInputLayout textInputLayout;
+
+    private String stringParam;
 
     public AppEditText(@NonNull Context context) {
         super(context);
@@ -56,6 +57,7 @@ public class AppEditText extends FrameLayout {
         text = a.getString(R.styleable.AppEditText_aet_text);
         inputType = InputType.fromId(a.getInt(R.styleable.AppEditText_aet_inputType, 3));
         imeOption = ImeOption.fromId(a.getInt(R.styleable.AppEditText_aet_imeOption, 7));
+        stringParam = a.getString(R.styleable.AppEditText_aet_postfix);
 
         a.recycle();
     }
@@ -70,6 +72,36 @@ public class AppEditText extends FrameLayout {
         setImeOption(imeOption);
         setHint(hint);
         setText(text);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (stringParam != null) {
+                    String prefix = stringParam;
+                    if (!s.toString().endsWith(prefix)) {
+                        String cleanString;
+                        String deletedPrefix = prefix.substring(0, prefix.length() - 1);
+                        if (s.toString().startsWith(deletedPrefix)) {
+                            cleanString = s.toString().replaceAll(deletedPrefix, "");
+                        } else {
+                            cleanString = s.toString().replaceAll(prefix, "");
+                        }
+                        editText.setText(String.format("%s%s", cleanString, prefix));
+                        editText.setSelection(cleanString.length());
+                    }
+                }
+            }
+        });
 
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
@@ -155,7 +187,10 @@ public class AppEditText extends FrameLayout {
     }
 
     public String getText() {
-        return editText.getText().toString();
+        if (stringParam == null)
+            return editText.getText().toString();
+        else
+            return editText.getText().toString().replace(stringParam, "");
     }
 
     public void setOnEditorActionListener(EditText.OnEditorActionListener listener) {

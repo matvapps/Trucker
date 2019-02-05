@@ -11,6 +11,7 @@
             <enum name="number" value="10"/>
             <enum name="textMultiline" value="4"/>
         </attr>
+        <attr name="aet_postfix" format="string"/>
         <attr name="aet_imeOption" format="enum">
             <enum name="actionDone" value="5"/>
             <enum name="actionNext" value="6"/>

@@ -29,7 +29,7 @@
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
                 <ImageView
-                    android:id="@+id/imageViewCollapsing"
+                    android:id="@+id/bg_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"

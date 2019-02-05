@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
@@ -22,6 +21,7 @@ public class PhotoPreviewActivity extends BaseActivity {
     public static final String TAG = PhotoPreviewActivity.class.getSimpleName();
     public static final int PHOTO_PREVIEW_CODE = 32;
     public static final String KEY_IMAGE_URI = "image_uri";
+    public static final String IMAGE_URI_RESULT = "image_uri_result";
 
     private String imageUri;
 
@@ -47,7 +47,7 @@ public class PhotoPreviewActivity extends BaseActivity {
         btnBack = findViewById(R.id.btn_back);
 
         btnBack.setOnClickListener(v -> {
-            setResult(PHOTO_PREVIEW_CODE, null);
+            setResult(RESULT_CANCELED, null);
             finish();
         });
 
@@ -55,7 +55,7 @@ public class PhotoPreviewActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.putExtra(KEY_IMAGE_URI, imageUri);
+                intent.putExtra(IMAGE_URI_RESULT, imageUri);
                 setResult(RESULT_OK, intent);
                 finish();
             }

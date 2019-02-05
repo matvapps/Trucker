@@ -13,7 +13,6 @@ import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class DocsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            String url = "http://dev.perevozka.me/api" + getItem(position).getFilePath();
+            String url = "http://dev.perevozka.me" + getItem(position).getFilePath();
 
             Log.d(TAG, "onBind: " + url);
 
