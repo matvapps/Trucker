@@ -59,7 +59,7 @@ public class DateRangePickerDialog extends BaseDialog {
         dateRangeCalendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
             @Override
             public void onFirstDateSelected(Calendar startDate) {
-
+                start = startDate;
             }
 
             @Override
@@ -72,11 +72,11 @@ public class DateRangePickerDialog extends BaseDialog {
 
     @OnClick(R.id.btn_choose)
     void onClick() {
-        if (start != null && end != null) {
+        if (start != null) {
             listener.onRangeSelected(start, end);
             dismiss();
         } else {
-            showErrorMessage("Нужно выбрать две даты");
+            showErrorMessage("Выберите хоть одну дату");
         }
 
         start = null; end = null;

@@ -54,6 +54,9 @@ public class ContactInfoFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contact_info, container, false);
         setUnBinder(ButterKnife.bind(this, rootView));
+
+        hideKeyboard();
+
         return rootView;
     }
 
@@ -61,18 +64,20 @@ public class ContactInfoFragment extends BaseFragment {
     void onClick() {
         if (listener != null) {
 
-            if (companyContactEdtxt.getText().isEmpty() ||
-                    personContactEdtxt.getText().isEmpty() ||
-                    emailContactEdtxt.getText().isEmpty() ||
-                    phoneContactEdtxt.getText().isEmpty() ||
-                    skypeContactEdtxt.getText().isEmpty() ||
-                    telegramContactEdtxt.getText().isEmpty() ||
-                    whatsappContactEdtxt.getText().isEmpty()) {
-
-                onError("Заполните все поля");
+            if (companyContactEdtxt.getText().isEmpty()) {
+                onError("Заполните поле Компания");
                 return;
             }
 
+            if (personContactEdtxt.getText().isEmpty()) {
+                onError("Заполните поле Контактное лицо");
+                return;
+            }
+
+            if (phoneContactEdtxt.getText().isEmpty()) {
+                onError("Заполните поле Телефон");
+                return;
+            }
 
             listener.onReceiveContactInfo(
                     companyContactEdtxt.getText(),

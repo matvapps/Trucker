@@ -2,6 +2,7 @@ package com.foora.perevozkadev.ui.search_order.orders;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,14 +126,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             Order item = getItem(position);
 
-            if (item.getCurrency() == null) {
-                List<RouteItem> routeItems = new ArrayList<>();
-                routeItems.add(new RouteItem("2018-11-12", "Запорожье", "UA"));
-                routeItems.add(new RouteItem("2018-11-12", "Киев", "UA"));
-                routeDisplayView.setRoutes(routeItems);
-
-                return;
-            }
+//            if (item.getCurrency() == null) {
+//                List<RouteItem> routeItems = new ArrayList<>();
+//                routeItems.add(new RouteItem("2018-11-12", "Запорожье", "UA"));
+//                routeItems.add(new RouteItem("2018-11-12", "Киев", "UA"));
+//                routeDisplayView.setRoutes(routeItems);
+//
+//                return;
+//            }
             routeDisplayView.setRoutes(getRouteItemsFromOrder(item));
 
             transportType.setText(item.getTransportType());
@@ -151,19 +152,36 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String[] secondPlace = order.getUnloadingPlaces().get(0).getName().split(",");
 
             String firstCity;
+            String firstCountry = "";
             String secondCity;
+            String secondCountry = "";
 
-            if (firstPlace.length <= 3) {
-                firstCity = firstPlace[0].replaceAll("\\s", "");
-                secondCity = secondPlace[0].replaceAll("\\s", "");
-            } else {
-                firstCity = firstPlace[2].replaceAll("\\s", "");
-                secondCity = secondPlace[2].replaceAll("\\s", "");
-            }
+            int fIndex = firstPlace.length - 1;
+            int sIndex = secondPlace.length - 1;
 
 
-            result.add(new RouteItem(order.getLoadingDate(), firstCity, ""));
-            result.add(new RouteItem(order.getUnloadingDate(), secondCity, ""));
+
+            firstCity = firstPlace[0].replaceAll("\\s", "");
+            secondCity = secondPlace[0].replaceAll("\\s", "");
+            firstCountry = firstPlace[fIndex].replaceAll("\\s", "");
+            secondCountry = secondPlace[sIndex].replaceAll("\\s", "");
+
+
+            Log.d("OrdersAdapter", "getRouteItemsFromOrder: first " + firstCountry);
+            Log.d("OrdersAdapter", "getRouteItemsFromOrder: second " + secondCountry);
+//            if (firstPlace.length < 3) {
+//                firstCity = firstPlace[0].replaceAll("\\s", "");
+//                secondCity = secondPlace[0].replaceAll("\\s", "");
+//            } else {
+//                firstCity = firstPlace[0].replaceAll("\\s", "");
+//                secondCity = secondPlace[0].replaceAll("\\s", "");
+//                firstCountry = firstPlace[2].replaceAll("\\s", "");
+//                secondCountry = secondPlace[2].replaceAll("\\s", "");
+//            }
+
+
+            result.add(new RouteItem(order.getLoadingDate(), firstCity, firstCountry));
+            result.add(new RouteItem("", secondCity, secondCountry));
 
             return result;
         }

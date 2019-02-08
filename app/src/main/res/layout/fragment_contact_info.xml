@@ -22,38 +22,26 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
             <com.github.matvapps.AppEditText
-                android:id="@+id/contact_whatsapp"
+                android:id="@+id/contact_person"
                 style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:aet_hint="Whatsapp" />
+                app:aet_hint="Контактное лицо" />
 
 
             <com.github.matvapps.AppEditText
-                android:id="@+id/contact_telegram"
-                style="@style/AppEditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                app:aet_hint="Telegram" />
-
-
-            <com.github.matvapps.AppEditText
-                android:id="@+id/contact_skype"
+                android:id="@+id/contact_company"
                 style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:aet_hint="Skype" />
-
+                app:aet_hint="Компания"
+                app:aet_imeOption="actionNext" />
 
             <com.github.matvapps.AppEditText
                 android:id="@+id/contact_phone"
@@ -80,27 +68,36 @@
 
 
             <com.github.matvapps.AppEditText
-                android:id="@+id/contact_person"
+                android:id="@+id/contact_whatsapp"
                 style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:aet_hint="Контактное лицо" />
+                app:aet_hint="Whatsapp" />
 
 
             <com.github.matvapps.AppEditText
-                android:id="@+id/contact_company"
+                android:id="@+id/contact_telegram"
                 style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:aet_hint="Компания"
-                app:aet_imeOption="actionNext" />
+                app:aet_hint="Telegram" />
 
+
+            <com.github.matvapps.AppEditText
+                android:id="@+id/contact_skype"
+                style="@style/AppEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="Skype" />
 
         </LinearLayout>
 

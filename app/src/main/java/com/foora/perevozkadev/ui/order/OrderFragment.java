@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     private TextView priceForKmTxtv;
     private TextView paymentType;
     private TextView costTxtv;
+    private TextView additionallyTxtv;
 
     private List<com.google.maps.model.LatLng> places;
 
@@ -141,6 +143,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         priceForKmTxtv = view.findViewById(R.id.km_cost_txtv);
         paymentType = view.findViewById(R.id.payment_txtv);
         costTxtv = view.findViewById(R.id.cost_txtv);
+        additionallyTxtv = view.findViewById(R.id.additonally_txtv);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -162,8 +165,10 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         routeDisplayView.setRoutes(getRouteItemsFromOrder(order));
         carQuantityTxtv.setText(String.format(Locale.getDefault(), "%d шт", order.getCarQuantity()));
         transportTypeTxtv.setText(order.getTransportType());
-        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f кг", order.getWeightTo()));
-        volumeTxtv.setText(String.format(Locale.getDefault(), "%.0f м³", order.getVolumeTo()));
+
+        additionallyTxtv.setText(order.getAdditionally());
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightTo()));
+        volumeTxtv.setText(String.format(Locale.getDefault(), "%.2f м³", order.getVolumeTo()));
 
         String[] size = order.getSize().split("x");
         widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));
@@ -310,25 +315,37 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         List<Place> loadingPlaces = order.getLoadingPlaces();
         List<Place> unloadingPlaces = order.getUnloadingPlaces();
 
+        Log.d(TAG, "getRouteItemsFromOrder: ");
+
         for (int i = 0; i < loadingPlaces.size(); i++) {
             Place place = loadingPlaces.get(i);
-            String name = place.getName().split(",")[0];
+            int index = place.getName().split(",").length - 1;
+
+            Log.d(TAG, "getRouteItemsFromOrder: " + place.getName());
+
+            String city = place.getName().split(",")[0];
+            String country = place.getName().split(",")[index].replaceAll("\\s", "");
+
+            Log.d(TAG, "getRouteItemsFromOrder: " + country);
 
             if (i == 0) {
-                result.add(new RouteItem(order.getLoadingDate(), name, ""));
+                result.add(new RouteItem(order.getLoadingDate(), city, country));
             } else {
-                result.add(new RouteItem("", name, ""));
+                result.add(new RouteItem("", city, country));
             }
         }
 
         for (int i = 0; i < unloadingPlaces.size(); i++) {
             Place place = unloadingPlaces.get(i);
-            String name = place.getName().split(",")[0];
+            int index = place.getName().split(",").length - 1;
+
+            String city = place.getName().split(",")[0];
+            String country = place.getName().split(",")[index].replaceAll("\\s", "");
 
             if (i == unloadingPlaces.size() - 1) {
-                result.add(new RouteItem(order.getUnloadingDate(), name, ""));
+                result.add(new RouteItem("", city, country));
             } else {
-                result.add(new RouteItem("", name, ""));
+                result.add(new RouteItem("", city, country));
             }
         }
 

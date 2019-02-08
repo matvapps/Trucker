@@ -177,7 +177,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="0dp"
@@ -198,7 +199,8 @@
                                 android:gravity="end"
                                 android:text="TIF, Санпаспорт"
                                 android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -220,6 +222,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/additonally_txtv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"

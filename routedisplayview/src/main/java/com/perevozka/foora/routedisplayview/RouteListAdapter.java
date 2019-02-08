@@ -96,9 +96,13 @@ public class RouteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 routeDrawable.setType(RouteDrawable.Type.BASE_ROUTE);
             }
 
-            textDate.setText(routeItem.getDate());
+            if (!routeItem.getDate().equals("")) {
+                textDate.setVisibility(View.VISIBLE);
+                textDate.setText(routeItem.getDate());
+            } else
+                textDate.setVisibility(View.GONE);
             textCity.setText(routeItem.getCity());
-            textCountry.setText(routeItem.getCountry());
+            textCountry.setText(Utils.getCountryCode(routeItem.getCountry()));
 
         }
 

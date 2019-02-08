@@ -1,9 +1,11 @@
 package com.foora.perevozkadev.ui.profile.profile_settings.general_info;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.foora.foora.perevozkadev.R;
@@ -50,6 +52,7 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
 
     private Profile profile;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,13 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
         btnDone.setOnClickListener(this);
         dateContainer.setOnClickListener(this);
         dateTxtv.setOnClickListener(this);
-
+        dateTxtv.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                onDateContainerClick();
+                return true;
+            }
+            return true;
+        });
         getPresenter().getProfile();
     }
 

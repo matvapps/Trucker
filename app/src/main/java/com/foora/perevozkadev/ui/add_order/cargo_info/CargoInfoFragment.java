@@ -49,12 +49,12 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     TextView datesTxtv;
     @BindView(R.id.spinner_mass_from)
     AppEditText massFrom;
-    @BindView(R.id.spinner_mass_to)
-    AppEditText massTo;
+//    @BindView(R.id.spinner_mass_to)
+//    AppEditText massTo;
     @BindView(R.id.spinner_volume_from)
     AppEditText volumeFrom;
-    @BindView(R.id.spinner_volume_to)
-    AppEditText volumeTo;
+//    @BindView(R.id.spinner_volume_to)
+//    AppEditText volumeTo;
     @BindView(R.id.spinner_container)
     LinearLayout spinnerContainer;
     @BindView(R.id.transport_spinner)
@@ -94,9 +94,9 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     private String dateStart;
     private String dateEnd;
     private float massFromNum;
-    private float massToNum;
+//    private float massToNum;
     private float volumeFromNum;
-    private float volumeToNum;
+//    private float volumeToNum;
     private List<String> transportType;
     private float cost;
     private String currency;
@@ -112,6 +112,8 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cargo_info, container, false);
         setUnBinder(ButterKnife.bind(this, rootView));
+
+        hideKeyboard();
 
         return rootView;
     }
@@ -169,19 +171,21 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
             //read dates
             dateStart = dates[0].replaceAll("\\.", "-");
-            dateEnd = dates[1].replaceAll("\\.", "-");
-
             dateStart = dateStart.replaceAll("\\s", "");
-            dateEnd = dateEnd.replaceAll("\\s", "");
+
+            if (dates.length > 1) {
+                dateEnd = dates[1].replaceAll("\\.", "-");
+                dateEnd = dateEnd.replaceAll("\\s", "");
+            }
 
             Log.d(TAG, "onClick: " + dateStart);
             Log.d(TAG, "onClick: " + dateEnd);
 
 
             if (massFrom.getText().isEmpty() ||
-                    massTo.getText().isEmpty() ||
+//                    massTo.getText().isEmpty() ||
                     volumeFrom.getText().isEmpty() ||
-                    volumeTo.getText().isEmpty() ||
+//                    volumeTo.getText().isEmpty() ||
                     costEdtxt.getText().toString().isEmpty() ||
                     carQuantEdtxt.getText().isEmpty() ||
                     widthEdtxt.getText().isEmpty() ||
@@ -194,11 +198,11 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
             // read mass
             massFromNum = Float.parseFloat(massFrom.getText());
-            massToNum = Float.parseFloat(massTo.getText());
+//            massToNum = Float.parseFloat(massTo.getText());
 
             // read volume
             volumeFromNum = Float.parseFloat(volumeFrom.getText());
-            volumeToNum = Float.parseFloat(volumeTo.getText());
+//            volumeToNum = Float.parseFloat(volumeTo.getText());
 
             // read transport types
             for (int i = 0; i < spinnerContainer.getChildCount(); i++) {
@@ -216,8 +220,11 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             height = Float.parseFloat(heightEdtxt.getText());
             depth = Float.parseFloat(depthEdtxt.getText());
 
+            if (dateEnd == null)
+                dateEnd = dateStart;
+
             listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
-                    massToNum, volumeFromNum, volumeToNum,
+                    0, volumeFromNum, 0,
                     transportType, cost, currency,
                     carQuant, width, height, depth, paymentType, addInfoEdtxt.getText());
 
@@ -335,8 +342,9 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         if (startDate != null && endDate != null) {
             datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
             datesTxtv.setActivated(true);
-        } else {
-
+        } else if (startDate != null) {
+            datesTxtv.setText(String.format("%s", format.format(startDate.getTime())));
+            datesTxtv.setActivated(true);
         }
     }
 

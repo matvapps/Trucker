@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -181,7 +182,7 @@ public class AppEditText extends FrameLayout {
                 editText.setSingleLine(false);
                 break;
             case NUMBER:
-                editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+                editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 break;
         }
     }
