@@ -24,6 +24,7 @@ import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -261,20 +262,8 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
         Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
 
         transports = new ArrayList<String>();
-        transports.add("Рефрижератор");
-        transports.add("Тент");
-        transports.add("Изотерм");
-        transports.add("Автосцепка");
-        transports.add("Jumbo");
-        transports.add("Контейнеровоз");
-        transports.add("Открытая бортовая платформа");
-        transports.add("Открытая платформа");
-        transports.add("Автоцистерна");
-        transports.add("Микроавтобус");
-        transports.add("Автовоз");
-        transports.add("Зерновоз");
-        transports.add("Самосвал");
-        transports.add("Лесовоз");
+        String[] transportArr = getContext().getResources().getStringArray(R.array.transport_types);
+        transports.addAll(Arrays.asList(transportArr));
 
         ArrayList<String> cost = new ArrayList<String>();
         cost.add("USD");

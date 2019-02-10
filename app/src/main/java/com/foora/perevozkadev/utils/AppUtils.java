@@ -19,6 +19,7 @@ public class AppUtils {
             countryMap.put(name, code);
         }
 
-        return countryMap.get(countryName);
+        return countryMap.get(countryName) == null? "  ": countryMap.get(countryName);
+//        return countryMap.get(countryName);
     }
 }

@@ -3,12 +3,17 @@ package com.foora.perevozkadev.ui.profile.profile_settings;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
+import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Scheduler;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -204,5 +209,68 @@ public class ProfileSettingsPresenter<V extends ProfileSettingsMvpView> extends 
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }
                 });
+    }
+
+    @Override
+    public void uploadPhoto(PhotoType type, File file) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "uploadPhoto: View isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        MultipartBody.Part image;
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+        image = MultipartBody.Part.createFormData("img", file.getName(), reqFile);
+
+        getDataManager().uploadPhoto(type.toString(), getDataManager().getUserToken(), image)
+                .enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.toString());
+                            getMvpView().onFileUploaded(type, file);
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string() );
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+
+    }
+
+    public enum PhotoType {
+
+        INTERNATIONAL_PASSPORT("international-passport"),
+        REGISTRATION_CERTIFICATE("registration-certificate"),
+        TRANSPORTAION_LICENSE("transportation-license");
+
+        private final String name;
+
+        PhotoType(String s) {
+            name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            // (otherName == null) check is not needed because name.equals(null) returns false
+            return name.equals(otherName);
+        }
+
+        public String toString() {
+            return this.name;
+        }
     }
 }

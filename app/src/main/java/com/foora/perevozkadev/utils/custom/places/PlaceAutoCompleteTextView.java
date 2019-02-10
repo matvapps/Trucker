@@ -1,23 +1,18 @@
 package com.foora.perevozkadev.utils.custom.places;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 
 import com.foora.foora.perevozkadev.R;
+import com.google.android.gms.location.places.AutocompleteFilter;
 
 
 /**
@@ -27,6 +22,8 @@ public class PlaceAutoCompleteTextView extends FrameLayout {
 
     private AutoCompleteTextView autoCompleteTextView;
     private TextInputLayout textInputLayout;
+    private PlaceArrayAdapter adapter;
+    private int filterType = AutocompleteFilter.TYPE_FILTER_CITIES;
 
     public PlaceAutoCompleteTextView(@NonNull Context context) {
         super(context);
@@ -50,8 +47,11 @@ public class PlaceAutoCompleteTextView extends FrameLayout {
         textInputLayout = view.findViewById(R.id.text_input_layout);
 
         autoCompleteTextView.setThreshold(2);
-        PlaceArrayAdapter adapter = new PlaceArrayAdapter(getContext());
+        adapter = new PlaceArrayAdapter(getContext());
+        adapter.setFilterType(filterType);
         autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         if (!autoCompleteTextView.getText().toString().isEmpty()) {
             setActivated(true);
@@ -59,13 +59,38 @@ public class PlaceAutoCompleteTextView extends FrameLayout {
 
         autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
             setActivated(true);
-            textInputLayout.setDefaultHintTextColor(ContextCompat.getColorStateList(getContext(), com.github.matvapps.R.color.orange_yellow));
+            textInputLayout.setDefaultHintTextColor(
+                    ContextCompat.getColorStateList(getContext(),
+                            R.color.orange_yellow));
 
             if (!hasFocus && autoCompleteTextView.getText().toString().isEmpty()) {
                 setActivated(false);
-                textInputLayout.setDefaultHintTextColor(ContextCompat.getColorStateList(getContext(), com.github.matvapps.R.color.colorTextHint));
+                textInputLayout.setDefaultHintTextColor(
+                        ContextCompat.getColorStateList(getContext(),
+                                R.color.colorTextHint));
             }
         });
+    }
+
+    public int getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(int filterType) {
+        this.filterType = filterType;
+        adapter.setFilterType(filterType);
+    }
+
+    public void setHint(String hint) {
+        textInputLayout.setHint(hint);
+    }
+
+    public void setText(String text) {
+        autoCompleteTextView.setText(text);
+        setActivated(true);
+        textInputLayout.setDefaultHintTextColor(
+                ContextCompat.getColorStateList(getContext(),
+                        R.color.orange_yellow));
     }
 
     public String getText() {

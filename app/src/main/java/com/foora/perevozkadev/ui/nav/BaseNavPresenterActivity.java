@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -17,9 +17,9 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 
 public abstract class BaseNavPresenterActivity<T extends MvpPresenter> extends BaseActivity {
 
-    DrawerLayout drawerLayout;
     Toolbar toolbar;
     FrameLayout frameLayout;
+    NestedScrollView nestedScrollView;
 
     private T presenter;
 
@@ -66,13 +66,15 @@ public abstract class BaseNavPresenterActivity<T extends MvpPresenter> extends B
 
     @Override
     protected void setUp() {
-        drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         frameLayout = findViewById(R.id.content_view);
+//        nestedScrollView = findViewById(R.id.nested_scroll_view);
 
 //        setUnBinder(ButterKnife.bind(this));
 
 //        setSupportActionBar((Toolbar) LayoutInflater.from(this).inflate(getToolbarLayoutId(), null, false));
+
+//        nestedScrollView.setNestedScrollingEnabled(false);
 
         setSupportActionBar(toolbar);
 

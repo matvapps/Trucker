@@ -101,6 +101,11 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
+    public Call<BaseResponse> uploadPhoto(String photoType, String token, MultipartBody.Part image) {
+        return getApi().uploadPhoto(photoType, token, image);
+    }
+
+    @Override
     public Call<GetOrderResponse> getUserOrders(String token) {
         return getApi().getUserOrders(token);
     }

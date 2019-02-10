@@ -97,8 +97,8 @@ public interface ApiService {
                              @NonNull @Field("new_phone") String newPhone,
                              @NonNull @Field("sms_code") String smsCode);
 
-    @FormUrlEncoded
-    @POST("user/photo/{photo_type}")
+    @Multipart
+    @POST("user/photo/{photo_type}/")
     Call<BaseResponse> uploadPhoto(@Path(value = "photo_type", encoded = true) String photoType,
                                    @Header("Authorization") String token,
                                    @Part MultipartBody.Part image);

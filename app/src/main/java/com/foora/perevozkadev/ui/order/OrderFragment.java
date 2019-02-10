@@ -172,8 +172,8 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         Toast.makeText(getContext(), order.getAdditionalInfo(), Toast.LENGTH_SHORT).show();
 
         additionallyTxtv.setText(order.getAdditionalInfo());
-        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightTo()));
-        volumeTxtv.setText(String.format(Locale.getDefault(), "%.2f м³", order.getVolumeTo()));
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightFrom()));
+        volumeTxtv.setText(String.format(Locale.getDefault(), "%.2f м³", order.getVolumeFrom()));
 
         String[] size = order.getSize().split("x");
         widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));

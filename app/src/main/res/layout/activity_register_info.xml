@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical"
     tools:context="com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -136,14 +136,13 @@
                 android:text="Добавить фото" />
 
 
-            <com.github.matvapps.AppEditText
-                android:id="@+id/country_register"
-                style="@style/AppEditTextStyle"
+            <com.foora.perevozkadev.utils.custom.places.PlaceAutoCompleteTextView
+                android:id="@+id/country_edtxt"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:aet_hint="Страна гос. регистрации" />
+                android:layout_marginEnd="16dp" />
 
             <com.github.matvapps.AppEditText
                 android:id="@+id/license_num"

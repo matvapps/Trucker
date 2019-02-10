@@ -56,11 +56,12 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
     SwipeRefreshLayout swipeRefreshLayout;
 
     private OrdersAdapter ordersAdapter;
+    private static Gson gson = new Gson();
 
     public static OrdersFragment newInstance(Filter filter) {
         Bundle args = new Bundle();
         OrdersFragment fragment = new OrdersFragment();
-        args.putSerializable(FILTER_KEY, filter);
+        args.putSerializable(FILTER_KEY, gson.toJson(filter));
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,9 +72,9 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
         View rootView = inflater.inflate(R.layout.fragment_orders, container, false);
         setUnBinder(ButterKnife.bind(this, rootView));
 
-        if (getArguments() != null)
-            filter = (Filter) getArguments().getSerializable(FILTER_KEY);
-
+        if (getArguments() != null) {
+            filter = gson.fromJson(getArguments().getString(FILTER_KEY), Filter.class);
+        }
         return rootView;
     }
 

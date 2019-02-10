@@ -16,15 +16,19 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.ui.profile.profile_settings.ProfileEditCloseFragment;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.general_info.GeneralInfoActivity;
 import com.github.matvapps.AppEditText;
 
+import java.io.File;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMvpPresenter> implements ProfileSettingsMvpView, View.OnClickListener {
+public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMvpPresenter>
+        implements ProfileSettingsMvpView, View.OnClickListener, ProfileEditCloseFragment.Callback {
 
     public static final String TAG = GeneralInfoActivity.class.getSimpleName();
 
@@ -52,7 +56,7 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
         profileName = findViewById(R.id.name_edtxt);
         descriptionTxtv = findViewById(R.id.description_profile);
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> ProfileEditCloseFragment.newInstance().show(getSupportFragmentManager()));
         btnDone.setOnClickListener(this);
 
         getPresenter().getProfile();
@@ -125,4 +129,26 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
     public void onChangePhone() {
 
     }
+
+    @Override
+    public void onFileUploaded(ProfileSettingsPresenter.PhotoType type, File file) {
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        ProfileEditCloseFragment.newInstance().show(getSupportFragmentManager());
+    }
+
+    @Override
+    public void onSaveAndExit() {
+        finish();
+    }
+
+    @Override
+    public void onDiscardAndExit() {
+        done();
+    }
+
 }

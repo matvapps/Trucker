@@ -28,6 +28,7 @@ public class PlaceArrayAdapter extends ArrayAdapter {
     private List<Place> dataList;
     private Context mContext;
     private GeoDataClient geoDataClient;
+    private int filterType = AutocompleteFilter.TYPE_FILTER_CITIES;
 
     private PlaceArrayAdapter.CustomAutoCompleteFilter listFilter =
             new PlaceArrayAdapter.CustomAutoCompleteFilter();
@@ -40,7 +41,7 @@ public class PlaceArrayAdapter extends ArrayAdapter {
         super(context, android.R.layout.simple_dropdown_item_1line,
                 new ArrayList<Place>());
         mContext = context;
-
+        dataList = new ArrayList<>();
         //get GeoDataClient
         geoDataClient = Places.getGeoDataClient(mContext, null);
 
@@ -78,6 +79,15 @@ public class PlaceArrayAdapter extends ArrayAdapter {
         textOne.setText(dataList.get(position).getPlaceText());
 
         return view;
+    }
+
+    public int getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(int filterType) {
+        this.filterType = filterType;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -168,7 +178,7 @@ public class PlaceArrayAdapter extends ArrayAdapter {
             //create autocomplete filter using data from filter Views
             AutocompleteFilter.Builder filterBuilder = new AutocompleteFilter.Builder();
 //            filterBuilder.setCountry(country.getText().toString());
-            filterBuilder.setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
+            filterBuilder.setTypeFilter(filterType);
 
             Task<AutocompletePredictionBufferResponse> results =
                     geoDataClient.getAutocompletePredictions(query, null,

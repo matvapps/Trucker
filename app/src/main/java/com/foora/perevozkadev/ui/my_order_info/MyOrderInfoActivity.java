@@ -204,8 +204,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         carQuantityTxtv.setText(String.format(Locale.getDefault(), "%d шт", order.getCarQuantity()));
         transportTypeTxtv.setText(order.getTransportType());
         additionalInfo.setText(order.getAdditionalInfo());
-        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f кг", order.getWeightTo()));
-        volumeTxtv.setText(String.format(Locale.getDefault(), "%.0f м³", order.getVolumeTo()));
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f кг", order.getWeightFrom()));
+        volumeTxtv.setText(String.format(Locale.getDefault(), "%.0f м³", order.getVolumeFrom()));
 
         String[] size = order.getSize().split("x");
         widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));

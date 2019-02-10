@@ -4,13 +4,12 @@ import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Alexandr.
  */
-public class Filter implements Serializable {
+public class Filter {
 
     @SerializedName("loading_places")
     @Expose

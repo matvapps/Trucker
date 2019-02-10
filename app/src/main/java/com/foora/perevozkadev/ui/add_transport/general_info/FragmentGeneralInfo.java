@@ -25,6 +25,7 @@ import com.github.matvapps.AppEditText;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,33 +84,23 @@ public class FragmentGeneralInfo extends BaseFragment {
         photoList.setAdapter(photoListAdapter);
         photoList.setNestedScrollingEnabled(false);
 
-        List<String> types = new ArrayList<String>();
-        types.add("Тип ТС");
-        types.add("Рефрижератор");
-        types.add("Тент");
-        types.add("Изотерм");
-        types.add("Автосцепка");
-        types.add("Jumbo");
-        types.add("Контейнеровоз");
-        types.add("Открытая бортовая платформа");
-        types.add("Открытая платформа");
-        types.add("Автоцистерна");
-        types.add("Микроавтобус");
-        types.add("Автовоз");
-        types.add("Зерновоз");
-        types.add("Самосвал");
-        types.add("Лесовоз");
+        List<String> transports = new ArrayList<String>();
+        String[] transportArr = getContext().getResources().getStringArray(R.array.transport_types);
+        transports.add("Тип транспорта");
+        transports.addAll(Arrays.asList(transportArr));
 
         List<String> categories = new ArrayList<>();
         categories.add("Категория ТС");
-        categories.add("категория 1");
-        categories.add("категория 2");
-        categories.add("категория 3");
-        categories.add("категория 4");
-        categories.add("категория 5");
+        categories.add("C");
+        categories.add("C1");
+        categories.add("CE");
+        categories.add("C1E");
+        categories.add("D");
+        categories.add("D1");
+        categories.add("DE");
+        categories.add("D1E");
 
-
-        typesAdapter = new SpinnerArrayAdapter(getContext(), types, true);
+        typesAdapter = new SpinnerArrayAdapter(getContext(), transports, true);
         categoriesAdapter = new SpinnerArrayAdapter(getContext(), categories, true);
 
         transportTypeSpinner.setAdapter(typesAdapter);

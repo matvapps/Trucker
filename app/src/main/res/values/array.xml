@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="transport_types">
+
+        <item>тент</item>
+        <item>крытая</item>
+        <item>изотерм</item>
+        <item>цельномет.</item>
+        <item>рефрижератор</item>
+        <item>автобус грузопас.</item>
+        <item>автобус люкс</item>
+        <item>автовоз</item>
+        <item>автокран</item>
+        <item>бензовоз</item>
+        <item>бетоносмеситель</item>
+        <item>битумовоз</item>
+        <item>бортовая</item>
+        <item>зерновоз</item>
+        <item>изотерм</item>
+        <item>контейнер пустой</item>
+        <item>контейнеровоз</item>
+        <item>кормовоз</item>
+        <item>крытая</item>
+        <item>лесовоз</item>
+        <item>любой</item>
+        <item>масловоз</item>
+        <item>меблевоз</item>
+        <item>микроавтобус</item>
+        <item>муковоз</item>
+        <item>негабарит</item>
+        <item>открытая</item>
+        <item>панелевоз</item>
+        <item>платформа</item>
+        <item>птицевоз</item>
+        <item>рефрижератор</item>
+        <item>самосвал</item>
+        <item>скотовоз</item>
+        <item>спецмашина</item>
+        <item>стекловоз</item>
+        <item>тент</item>
+        <item>трал</item>
+        <item>трубовоз</item>
+        <item>тягач</item>
+        <item>тандем</item>
+        <item>цельномет.</item>
+        <item>цельнопластик</item>
+        <item>цементовоз</item>
+        <item>цистерна газовая</item>
+        <item>цистерна изотерм.</item>
+        <item>цистерна пищ.</item>
+        <item>цистерна хим.</item>
+        <item>эвакуатор</item>
+        <item>экскаватор</item>
+    </string-array>
+
+</resources>

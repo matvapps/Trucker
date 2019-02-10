@@ -29,6 +29,7 @@ import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -148,10 +149,13 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
 
                 //read dates
                 String dateStart = dates[0].replaceAll("\\.", "-");
-                String dateEnd = dates[1].replaceAll("\\.", "-");
+
+                String dateEnd = "";
+
+                if (dates.length > 1)
+                    dateEnd = dates[1].replaceAll("\\.", "-");
 
                 dateStart = dateStart.replaceAll("\\s", "");
-                dateEnd = dateEnd.replaceAll("\\s", "");
 
                 filter.setLoadingDate(dateStart);
                 filter.setUnloadingDate(dateEnd);
@@ -221,23 +225,10 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
         transportType = new ArrayList<>();
         loadingPlaces = new ArrayList<>();
         unloadingPlaces = new ArrayList<>();
-        transports = new ArrayList<String>();
 
-        transports.add("Любой");
-        transports.add("Рефрижератор");
-        transports.add("Тент");
-        transports.add("Изотерм");
-        transports.add("Автосцепка");
-        transports.add("Jumbo");
-        transports.add("Контейнеровоз");
-        transports.add("Открытая бортовая платформа");
-        transports.add("Открытая платформа");
-        transports.add("Автоцистерна");
-        transports.add("Микроавтобус");
-        transports.add("Автовоз");
-        transports.add("Зерновоз");
-        transports.add("Самосвал");
-        transports.add("Лесовоз");
+        transports = new ArrayList<String>();
+        String[] transportArr = getContext().getResources().getStringArray(R.array.transport_types);
+        transports.addAll(Arrays.asList(transportArr));
 
         filter = new Filter();
 
@@ -282,7 +273,13 @@ public class FilterFragment extends BaseFragment implements DateRangePickerDialo
     @Override
     public void onRangeSelected(Calendar startDate, Calendar endDate) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
-        datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
+        if (startDate != null && endDate != null) {
+            datesTxtv.setText(String.format("%s - %s", format.format(startDate.getTime()), format.format(endDate.getTime())));
+            datesTxtv.setActivated(true);
+        } else if (startDate != null) {
+            datesTxtv.setText(String.format("%s", format.format(startDate.getTime())));
+            datesTxtv.setActivated(true);
+        }
     }
 
 

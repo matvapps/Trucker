@@ -19,19 +19,24 @@ import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.ui.profile.profile_settings.ProfileEditCloseFragment;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpPresenter;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
 import com.foora.perevozkadev.utils.custom.MyDatePickerFragment;
+import com.foora.perevozkadev.utils.custom.places.PlaceAutoCompleteTextView;
 import com.github.matvapps.AppEditText;
+import com.google.android.gms.location.places.Place;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMvpPresenter> implements ProfileSettingsMvpView, View.OnClickListener {
+public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMvpPresenter>
+        implements ProfileSettingsMvpView, View.OnClickListener, ProfileEditCloseFragment.Callback {
 
     public static final String TAG = GeneralInfoActivity.class.getSimpleName();
 
@@ -45,7 +50,7 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
 
     private AppEditText nameEdtxt;
     private AppEditText surnameEdtxt;
-    private AppEditText countryEdtxt;
+    private PlaceAutoCompleteTextView countryEdtxt;
     private AppEditText passportNumEdtxt;
     private AppEditText dateTxtv;
     private View dateContainer;
@@ -65,10 +70,13 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
         dateTxtv = findViewById(R.id.date);
         dateContainer = findViewById(R.id.date_expired);
 
+        countryEdtxt.setHint("Страна");
+        countryEdtxt.setFilterType(Place.TYPE_COUNTRY);
+
         btnBack = findViewById(R.id.btn_back);
         btnDone = findViewById(R.id.action_done);
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> ProfileEditCloseFragment.newInstance().show(getSupportFragmentManager()));
         btnDone.setOnClickListener(this);
         dateContainer.setOnClickListener(this);
         dateTxtv.setOnClickListener(this);
@@ -180,6 +188,11 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
     }
 
     @Override
+    public void onBackPressed() {
+        ProfileEditCloseFragment.newInstance().show(getSupportFragmentManager());
+    }
+
+    @Override
     public void onChangeProfile() {
         showMessage("Профиль успешно изменен");
         finish();
@@ -200,4 +213,19 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
 
     }
 
+    @Override
+    public void onFileUploaded(ProfileSettingsPresenter.PhotoType type, File file) {
+
+    }
+
+
+    @Override
+    public void onSaveAndExit() {
+        finish();
+    }
+
+    @Override
+    public void onDiscardAndExit() {
+        done();
+    }
 }

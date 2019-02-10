@@ -78,6 +78,11 @@ public interface RemoteRepo {
                              @NonNull String newPhone,
                              @NonNull String smsCode);
 
+    Call<BaseResponse> uploadPhoto(@NonNull String photoType,
+                                   @NonNull String token,
+                                   @NonNull MultipartBody.Part image);
+
+
     Call<GetOrderResponse> getUserOrders(@NonNull String token);
 
     Call<TransportResponse> getUserTransport(@NonNull String token);

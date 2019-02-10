@@ -24,6 +24,8 @@ import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
 import com.github.matvapps.AppEditText;
 
+import java.io.File;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ChangePhoneActivity  extends BasePresenterActivity<ProfileSettingsMvpPresenter> implements ProfileSettingsMvpView, View.OnClickListener {
@@ -171,5 +173,11 @@ public class ChangePhoneActivity  extends BasePresenterActivity<ProfileSettingsM
         showMessage("Телефон успешно изменен");
         finish();
     }
+
+    @Override
+    public void onFileUploaded(ProfileSettingsPresenter.PhotoType type, File file) {
+
+    }
+
 
 }

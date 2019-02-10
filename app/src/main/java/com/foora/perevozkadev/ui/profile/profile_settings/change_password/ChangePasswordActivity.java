@@ -22,6 +22,8 @@ import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsMvpView
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsPresenter;
 import com.github.matvapps.AppEditText;
 
+import java.io.File;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ChangePasswordActivity extends BasePresenterActivity<ProfileSettingsMvpPresenter> implements ProfileSettingsMvpView, View.OnClickListener {
@@ -141,6 +143,11 @@ public class ChangePasswordActivity extends BasePresenterActivity<ProfileSetting
 
     @Override
     public void onChangePhone() {
+
+    }
+
+    @Override
+    public void onFileUploaded(ProfileSettingsPresenter.PhotoType type, File file) {
 
     }
 

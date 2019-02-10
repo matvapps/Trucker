@@ -118,6 +118,11 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<BaseResponse> uploadPhoto(String photoType, String token, MultipartBody.Part image) {
+        return remoteRepo.uploadPhoto(photoType, token, image);
+    }
+
+    @Override
     public Call<GetOrderResponse> getUserOrders(String token) {
         return remoteRepo.getUserOrders(token);
     }
