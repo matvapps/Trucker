@@ -216,9 +216,12 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
 
     @Override
     public void onChangeProfile() {
-//        showMessage("Профиль успешно изменен");
+        if (certificatePhotos.size() == 0 && licensePhotos.size() == 0) {
+            Toast.makeText(this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         uploadPhotos();
-//        finish();
     }
 
     @Override

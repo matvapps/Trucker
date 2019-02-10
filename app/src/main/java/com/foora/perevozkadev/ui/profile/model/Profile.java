@@ -89,8 +89,18 @@ public class Profile implements Serializable {
     @SerializedName("location_longitude")
     @Expose
     private double longitude;
+    @SerializedName("profile_name")
+    @Expose
+    private String profileName;
 
 
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
+    }
 
     public Integer getUserId() {
         return userId;

@@ -65,10 +65,14 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
 
     public void done() {
         String description = descriptionTxtv.getText().toString();
+        String name = profileName.getText();
 
         if (!description.isEmpty()) {
             profile.setDescription(description);
         }
+
+        if (!name.isEmpty())
+            profile.setProfileName(name);
 
         getPresenter().changeProfile(profile);
     }
@@ -103,6 +107,7 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
     @Override
     public void onGetProfile(Profile profile) {
         descriptionTxtv.setText(profile.getDescription());
+        profileName.setText(profile.getProfileName());
 
         profile.setUserType(null);
 
