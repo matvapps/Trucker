@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -210,6 +211,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));
         heightTxtv.setText(String.format(Locale.getDefault(), "%s м", size[1]));
         depthTxtv.setText(String.format(Locale.getDefault(), "%s м", size[2]));
+
+        Log.d(TAG, "onGetOrder: " + order.toString());
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -222,15 +222,14 @@
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/additonally_txtv"
+                                android:id="@+id/additional_info"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
-                                android:ellipsize="end"
                                 android:gravity="end"
-                                android:text="Крюки, Догруз, Срочно"
                                 android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                tools:text="df  dfds dsaf sadf sda asdf adsf asdf asdf sadf sdf sdf asdf sadf Крюки, Догруз, Срочно" />
 
                         </LinearLayout>
 

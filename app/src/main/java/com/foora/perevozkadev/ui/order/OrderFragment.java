@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -143,7 +144,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         priceForKmTxtv = view.findViewById(R.id.km_cost_txtv);
         paymentType = view.findViewById(R.id.payment_txtv);
         costTxtv = view.findViewById(R.id.cost_txtv);
-        additionallyTxtv = view.findViewById(R.id.additonally_txtv);
+        additionallyTxtv = view.findViewById(R.id.additional_info);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -166,7 +167,11 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         carQuantityTxtv.setText(String.format(Locale.getDefault(), "%d шт", order.getCarQuantity()));
         transportTypeTxtv.setText(order.getTransportType());
 
-        additionallyTxtv.setText(order.getAdditionally());
+        Log.d(TAG, "onCreateView: " + order.toString());
+
+        Toast.makeText(getContext(), order.getAdditionalInfo(), Toast.LENGTH_SHORT).show();
+
+        additionallyTxtv.setText(order.getAdditionalInfo());
         cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightTo()));
         volumeTxtv.setText(String.format(Locale.getDefault(), "%.2f м³", order.getVolumeTo()));
 
