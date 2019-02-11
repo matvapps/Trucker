@@ -41,6 +41,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         updateVisibleItems();
     }
 
+    public void addItem(Order order) {
+        this.items.add(order);
+        if (visibleCount == -1)
+            visibleCount = this.items.size();
+        updateVisibleItems();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

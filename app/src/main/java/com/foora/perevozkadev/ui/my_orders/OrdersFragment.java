@@ -113,5 +113,13 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
         Log.d(TAG, "onGetUserOrders: " + orders);
 
         ordersAdapter.setItems(orders);
+        getPresenter().getExecutorOrders();
+    }
+
+    @Override
+    public void onGetExecutorOrders(List<Order> orders) {
+        for (Order order: orders) {
+            ordersAdapter.addItem(order);
+        }
     }
 }

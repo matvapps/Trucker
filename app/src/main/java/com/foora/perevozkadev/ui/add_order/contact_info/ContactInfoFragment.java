@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.foora.perevozkadev.utils.CommonUtils;
 import com.github.matvapps.AppEditText;
+import com.google.android.gms.common.internal.service.Common;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,6 +79,12 @@ public class ContactInfoFragment extends BaseFragment {
             if (phoneContactEdtxt.getText().isEmpty()) {
                 onError("Заполните поле Телефон");
                 return;
+            }
+
+            if (!emailContactEdtxt.getText().isEmpty()) {
+                if (!CommonUtils.isEmailValid(emailContactEdtxt.getText())) {
+                    onError("Введите корректный email");
+                }
             }
 
             listener.onReceiveContactInfo(

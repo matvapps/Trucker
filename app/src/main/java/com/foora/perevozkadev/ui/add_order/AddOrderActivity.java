@@ -185,7 +185,7 @@ public class AddOrderActivity extends BaseNavPresenterActivity<AddOrderMvpPresen
 //        Order order = gson.fromJson(jsonStr, Order.class);
 //        Log.d(TAG, "onReceiveRoutes: " + order.toString());
 //
-//        getPresenter().addOrder(order);
+//        getPresenter().addItem(order);
 
     }
 

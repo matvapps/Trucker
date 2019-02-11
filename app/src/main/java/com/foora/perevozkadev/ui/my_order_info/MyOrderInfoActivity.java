@@ -239,27 +239,55 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         List<Place> loadingPlaces = order.getLoadingPlaces();
         List<Place> unloadingPlaces = order.getUnloadingPlaces();
 
+//        for (int i = 0; i < loadingPlaces.size(); i++) {
+//            Place place = loadingPlaces.get(i);
+//            String name = place.getName().split(",")[0];
+//
+//            if (i == 0) {
+//                result.add(new RouteItem(order.getLoadingDate(), name, ""));
+//            } else {
+//                result.add(new RouteItem("", name, ""));
+//            }
+//        }
+
         for (int i = 0; i < loadingPlaces.size(); i++) {
             Place place = loadingPlaces.get(i);
-            String name = place.getName().split(",")[0];
+            int index = place.getName().split(",").length - 1;
 
-            if (i == 0) {
-                result.add(new RouteItem(order.getLoadingDate(), name, ""));
+            String city = place.getName().split(",")[0];
+            String country = place.getName().split(",")[index].replaceAll("\\s", "");
+
+            if (i == loadingPlaces.size() - 1) {
+                result.add(new RouteItem("", city, country));
             } else {
-                result.add(new RouteItem("", name, ""));
+                result.add(new RouteItem("", city, country));
             }
         }
 
         for (int i = 0; i < unloadingPlaces.size(); i++) {
             Place place = unloadingPlaces.get(i);
-            String name = place.getName().split(",")[0];
+            int index = place.getName().split(",").length - 1;
+
+            String city = place.getName().split(",")[0];
+            String country = place.getName().split(",")[index].replaceAll("\\s", "");
 
             if (i == unloadingPlaces.size() - 1) {
-                result.add(new RouteItem(order.getUnloadingDate(), name, ""));
+                result.add(new RouteItem("", city, country));
             } else {
-                result.add(new RouteItem("", name, ""));
+                result.add(new RouteItem("", city, country));
             }
         }
+
+//        for (int i = 0; i < unloadingPlaces.size(); i++) {
+//            Place place = unloadingPlaces.get(i);
+//            String name = place.getName().split(",")[0];
+//
+//            if (i == unloadingPlaces.size() - 1) {
+//                result.add(new RouteItem(order.getUnloadingDate(), name, ""));
+//            } else {
+//                result.add(new RouteItem("", name, ""));
+//            }
+//        }
 
 
         return result;

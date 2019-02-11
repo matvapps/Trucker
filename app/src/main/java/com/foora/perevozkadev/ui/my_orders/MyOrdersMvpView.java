@@ -11,5 +11,6 @@ import java.util.List;
 public interface MyOrdersMvpView extends MvpView {
 
     void onGetUserOrders(List<Order> orders);
+    void onGetExecutorOrders(List<Order> orders);
 
 }

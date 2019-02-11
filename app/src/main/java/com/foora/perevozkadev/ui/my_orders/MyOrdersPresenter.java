@@ -68,4 +68,49 @@ public class MyOrdersPresenter<V extends MyOrdersMvpView> extends BasePresenter<
                     }
                 });
     }
+
+    @Override
+    public void getExecutorOrders() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getExecutorOrders: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().getExecutorOrders(getDataManager().getUserToken())
+                .enqueue(new Callback<GetOrderResponse>() {
+                    @Override
+                    public void onResponse(Call<GetOrderResponse> call, Response<GetOrderResponse> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: getExecutorOrders response code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                Log.d(TAG, "onResponse: " + response.body().toString());
+                                getMvpView().onGetExecutorOrders(response.body().getOrders());
+                            } else
+                                Log.e(TAG, "onResponse: body is null");
+                        } else {
+
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            getMvpView().onError("Не удалось получить ваши заказы");
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetOrderResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                        getMvpView().onError("Не удалось получить ваши заказы");
+                    }
+                });
+    }
 }

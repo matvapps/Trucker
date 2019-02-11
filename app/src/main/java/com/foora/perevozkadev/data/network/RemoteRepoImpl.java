@@ -111,6 +111,11 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
+    public Call<GetOrderResponse> getExecutorOrders(String token) {
+        return getApi().getExecutorOrders(token);
+    }
+
+    @Override
     public Call<TransportResponse> getUserTransport(String token) {
         return getApi().getTransport(token);
     }

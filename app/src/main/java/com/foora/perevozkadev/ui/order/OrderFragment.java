@@ -24,7 +24,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -35,6 +34,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -85,6 +85,8 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
 
     private List<com.google.maps.model.LatLng> places;
 
+    private SupportMapFragment mapFragment;
+
     private Gson gson;
     private GoogleMap googleMap;
     private Order order;
@@ -122,7 +124,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
             order = gson.fromJson(getArguments().getString(ORDER_KEY), Order.class);
 
         //Set the custom view
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order_route, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order, null);
 
         routeDisplayView = view.findViewById(R.id.routeDisplayView);
         rootView = view.findViewById(R.id.root_view);
@@ -147,7 +149,26 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         additionallyTxtv = view.findViewById(R.id.additional_info);
 
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        mapView.onCreate(null);
+        if (googleMap == null)
+            mapView.getMapAsync(this);
+
+//        Fragment fragment = getFragmentManager().findFragmentById(R.id.map_con)
+
+//
+//        if (googleMap == null) {
+//            final OnMapReadyCallback listener = this;
+//            new Handler().postDelayed(() -> {
+//                mapFragment = new SupportMapFragment();
+////                FragmentManager fm = getChildFragmentManager();
+//                Log.d(TAG, "Resume: ");
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.map_container, mapFragment).commit();
+//                mapFragment.getMapAsync(listener);
+//            }, 200);
+//        }
+//
+
 
         btnBack.setOnClickListener(v1 -> dismiss());
         btnRespond.setOnClickListener(v1 -> {
@@ -168,8 +189,6 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         transportTypeTxtv.setText(order.getTransportType());
 
         Log.d(TAG, "onCreateView: " + order.toString());
-
-        Toast.makeText(getContext(), order.getAdditionalInfo(), Toast.LENGTH_SHORT).show();
 
         additionallyTxtv.setText(order.getAdditionalInfo());
         cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightFrom()));
@@ -245,8 +264,13 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
             });
         }
 
+        onViewCreated(view, savedInstanceState);
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
     }
 
@@ -268,41 +292,6 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         show(transaction, tag);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
 
     @Override
     public void onStart() {
@@ -492,6 +481,42 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         line.width(com.foora.perevozkadev.utils.ViewUtils.dpToPx(4)).color(ContextCompat.getColor(getContext(), R.color.color_map_route));
 
         return line;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
     }
 
 

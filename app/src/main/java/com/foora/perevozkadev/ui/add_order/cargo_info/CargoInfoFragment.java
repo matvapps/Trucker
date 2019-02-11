@@ -50,11 +50,11 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     TextView datesTxtv;
     @BindView(R.id.spinner_mass_from)
     AppEditText massFrom;
-//    @BindView(R.id.spinner_mass_to)
+    //    @BindView(R.id.spinner_mass_to)
 //    AppEditText massTo;
     @BindView(R.id.spinner_volume_from)
     AppEditText volumeFrom;
-//    @BindView(R.id.spinner_volume_to)
+    //    @BindView(R.id.spinner_volume_to)
 //    AppEditText volumeTo;
     @BindView(R.id.spinner_container)
     LinearLayout spinnerContainer;
@@ -71,11 +71,11 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     @BindView(R.id.edtxt_car_quantity)
     AppEditText carQuantEdtxt;
     @BindView(R.id.edtxt_width)
-    AppEditText  widthEdtxt;
+    AppEditText widthEdtxt;
     @BindView(R.id.edtxt_height)
-    AppEditText  heightEdtxt;
+    AppEditText heightEdtxt;
     @BindView(R.id.edtxt_depth)
-    AppEditText  depthEdtxt;
+    AppEditText depthEdtxt;
     @BindView(R.id.additional_info)
     AppEditText addInfoEdtxt;
 
@@ -95,9 +95,9 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     private String dateStart;
     private String dateEnd;
     private float massFromNum;
-//    private float massToNum;
+    //    private float massToNum;
     private float volumeFromNum;
-//    private float volumeToNum;
+    //    private float volumeToNum;
     private List<String> transportType;
     private float cost;
     private String currency;
@@ -133,7 +133,7 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewUtils.dpToPx(60));
-        layoutParams.setMargins(0,ViewUtils.dpToPx(8),0,0);
+        layoutParams.setMargins(0, ViewUtils.dpToPx(8), 0, 0);
 
         spinner.setLayoutParams(layoutParams);
 
@@ -184,14 +184,13 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
 
 
             if (massFrom.getText().isEmpty() ||
-//                    massTo.getText().isEmpty() ||
                     volumeFrom.getText().isEmpty() ||
-//                    volumeTo.getText().isEmpty() ||
-                    costEdtxt.getText().toString().isEmpty() ||
+                    costEdtxt.getText().isEmpty() ||
                     carQuantEdtxt.getText().isEmpty() ||
                     widthEdtxt.getText().isEmpty() ||
                     heightEdtxt.getText().isEmpty() ||
-                    depthEdtxt.getText().isEmpty()) {
+                    depthEdtxt.getText().isEmpty() ||
+                    addInfoEdtxt.getText().isEmpty()) {
 
                 onError("Заполните все поля");
                 return;

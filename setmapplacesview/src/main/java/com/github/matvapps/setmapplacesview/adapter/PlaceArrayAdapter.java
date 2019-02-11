@@ -122,17 +122,28 @@ public class PlaceArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     notifyDataSetChanged();
                     return;
                 }
-                items.remove(i);
                 if (listener != null)
                     listener.onItemRemoved(i, getItem(i));
+                items.remove(i);
                 notifyDataSetChanged();
             });
-        } else if (i == getItemCount() - 1) {
+        }
+        else if (i == getItemCount() - 1) {
             placeViewHolder.drawableRoute.setType(DrawableRoute.Type.LAST_ROUTE);
-            placeViewHolder.placeImage.setImageResource(R.drawable.ic_vice_versa);
-            placeViewHolder.placeImage.setOnClickListener(v -> reverseList());
-
-        } else {
+            placeViewHolder.placeImage.setImageResource(R.drawable.ic_action_clear);
+            placeViewHolder.placeImage.setOnClickListener(v -> {
+                if (getItemCount() == 1) {
+                    items.set(0, new Place());
+                    notifyDataSetChanged();
+                    return;
+                }
+                if (listener != null)
+                    listener.onItemRemoved(i, getItem(i));
+                items.remove(i);
+                notifyDataSetChanged();
+            });
+        }
+        else {
             placeViewHolder.drawableRoute.setType(DrawableRoute.Type.BASE_ROUTE);
             placeViewHolder.placeImage.setImageResource(R.drawable.ic_action_clear);
             placeViewHolder.placeImage.setOnClickListener(v -> {
@@ -141,9 +152,9 @@ public class PlaceArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     notifyDataSetChanged();
                     return;
                 }
-                items.remove(i);
                 if (listener != null)
                     listener.onItemRemoved(i, getItem(i));
+                items.remove(i);
                 notifyDataSetChanged();
             });
         }

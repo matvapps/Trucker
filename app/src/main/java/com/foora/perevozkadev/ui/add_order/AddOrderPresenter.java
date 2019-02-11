@@ -28,13 +28,13 @@ public class AddOrderPresenter <V extends AddOrderMvpView> extends BasePresenter
     @Override
     public void addOrder(Order order) {
         if (!isViewAttached()) {
-            Log.e(TAG, "addOrder: View isn't attached" );
+            Log.e(TAG, "addItem: View isn't attached" );
             return;
         }
 
         getMvpView().showLoading();
 
-        Log.d(TAG, "addOrder: " + getDataManager().getUserToken());
+        Log.d(TAG, "addItem: " + getDataManager().getUserToken());
         
         getDataManager()
                 .addOrder(getDataManager().getUserToken(), order)

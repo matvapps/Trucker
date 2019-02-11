@@ -78,4 +78,9 @@ public class MyOrdersActivity extends BaseNavPresenterActivity<MyOrdersMvpPresen
     public void onGetUserOrders(List<Order> orders) {
 
     }
+
+    @Override
+    public void onGetExecutorOrders(List<Order> orders) {
+
+    }
 }

@@ -128,6 +128,11 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<GetOrderResponse> getExecutorOrders(String token) {
+        return remoteRepo.getExecutorOrders(token);
+    }
+
+    @Override
     public Call<TransportResponse> getUserTransport(String token) {
         return remoteRepo.getUserTransport(token);
     }

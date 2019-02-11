@@ -8,5 +8,6 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 public interface MyOrdersMvpPresenter<V extends MyOrdersMvpView> extends MvpPresenter<V> {
 
     void getUserOrders();
+    void getExecutorOrders();
 
 }

@@ -109,6 +109,9 @@ public interface ApiService {
     @GET("user/order/")
     Call<GetOrderResponse> getUserOrders(@Header("Authorization") String token);
 
+    @GET("user/order/executor/")
+    Call<GetOrderResponse> getExecutorOrders(@Header("Authorization") String token);
+
     @Headers({"Accept: application/json"})
     @POST("user/order/")
     Call<BaseResponse> addOrder(@Header("Authorization") String token,
