@@ -439,6 +439,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
 
     @Override
     public void onChangeStatus(String status) {
+        if (status.equals("Груз доставлен"))
+            status = "finished";
         getPresenter().changeOrderStatus(orderId, status);
     }
 

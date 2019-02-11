@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,6 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
     FloatingActionButton btnAdd;
 
     private EmployeesAdapter employeesAdapter;
-
 
     public static EmployeesFragment newInstance(int type) {
         EmployeesFragment fragment = new EmployeesFragment();
@@ -113,6 +113,7 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
         getPresenter().getEmployees();
     }
 
@@ -120,25 +121,25 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
     public void onReceiveEmployees(List<Profile> profiles) {
         List<Profile> sortProfiles = new ArrayList<>();
 
-//        switch (type) {
-//            case MANAGER:
-//                for (Profile profile: profiles) {
-//                    if (!profile.getUserGroup().equals("driver")) {
-//                        sortProfiles.add(profile);
-//                    }
-//                }
-//                break;
-//            case DRIVER:
-//                for (Profile profile: profiles) {
-//                    if (profile.getUserGroup().equals("driver")) {
-//                        sortProfiles.add(profile);
-//                    }
-//                }
-//                break;
-//        }
+        switch (type) {
+            case MANAGER:
+                for (Profile profile: profiles) {
+                    if (!profile.getGroups().contains("driver")) {
+                        sortProfiles.add(profile);
+                    }
+                }
+                break;
+            case DRIVER:
+                for (Profile profile: profiles) {
+                    if (profile.getGroups().contains("driver")) {
+                        sortProfiles.add(profile);
+                    }
+                }
+                break;
+        }
 
 
-        employeesAdapter.setItems(profiles);
+        employeesAdapter.setItems(sortProfiles);
 
 
     }

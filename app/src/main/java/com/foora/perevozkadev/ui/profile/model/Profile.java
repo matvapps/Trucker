@@ -92,7 +92,18 @@ public class Profile implements Serializable {
     @SerializedName("profile_name")
     @Expose
     private String profileName;
+    @SerializedName("groups")
+    @Expose
+    private List<String> groups;
 
+
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
+    }
 
     public String getProfileName() {
         return profileName;

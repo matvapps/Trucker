@@ -41,6 +41,7 @@ public class TransportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (visibleCount == -1) {
             visibleCount = transports.size();
         }
+        
         updateVisibleItems();
     }
 

@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.foora.perevozkadev.ui.my_transport.TransportsFragment;
-
 public class MyOrdersPagerAdapter extends FragmentPagerAdapter {
     public MyOrdersPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -14,7 +12,13 @@ public class MyOrdersPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return OrdersFragment.newInstance();
+        switch (i) {
+            case 1:
+                return MyOrderFragment.newInstance(MyOrderFragment.TYPE_FINISHED);
+            default:
+                return MyOrderFragment.newInstance(MyOrderFragment.TYPE_ACTIVE);
+
+        }
     }
 
     @Override

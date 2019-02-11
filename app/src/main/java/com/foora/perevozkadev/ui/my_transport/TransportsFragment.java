@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+import static android.view.View.GONE;
+
 public class TransportsFragment extends BasePresenterFragment<MyTransportPresenter> implements MyTransportMvpView {
+
+    private static final String TAG = TransportsFragment.class.getSimpleName();
 
     private static final String TYPE_KEY = "transport_type";
 
@@ -89,7 +94,7 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
 
         setUnBinder(ButterKnife.bind(this, view));
 
-        screenType = getArguments().getString(TYPE_KEY, GARAGE_TYPE);
+        screenType = getArguments().getString(TYPE_KEY);
 
         transportAdapter = new TransportAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -102,21 +107,27 @@ public class TransportsFragment extends BasePresenterFragment<MyTransportPresent
 
             case ARCHIVE_TYPE: {
                 btnAddTransport.hide();
+                recyclerView.setVisibility(GONE);
                 break;
             }
         }
 
+        getPresenter().getUserTransport();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (screenType.equals(GARAGE_TYPE))
-            getPresenter().getUserTransport();
+        Log.d(TAG, "onResume: ");
+        getPresenter().getUserTransport();
     }
 
     @Override
     public void onGetTransports(List<Transport> transports) {
-        transportAdapter.setItems(transports);
+        Log.d(TAG, "onGetTransports: ");
+//        if (screenType.equals(GARAGE_TYPE)) {
+            transportAdapter.setItems(transports);
+            Log.d(TAG, "onGetTransports: " + transports);
+//        }
     }
 }

@@ -24,6 +24,7 @@ import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -50,8 +51,28 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void setOrderRequest(OrderRequest requestInfo) {
         this.requestInfo = requestInfo;
-        this.actions = requestInfo.getActions();
-        this.actions.remove(actions.size() - 1);
+
+        List<Action> actions = requestInfo.getActions();
+        actions.remove(actions.size() - 1);
+        Collections.sort(actions, (lhs, rhs) -> {
+            SimpleDateFormat formatIn = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault());
+            try {
+                Date date1 = formatIn.parse(lhs.getTime());
+                Date date2 = formatIn.parse(rhs.getTime());
+
+                return date1.after(date2) ? 1 : date1.before(date2) ? -1 : 0;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return 0;
+            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+//                return lhs.getId() > rhs.getId() ? -1 : (lhs.customInt < rhs.customInt ) ? 1 : 0;
+        });
+
+        this.actions.clear();
+        this.actions.addAll(actions);
         notifyDataSetChanged();
     }
 
@@ -87,6 +108,11 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_request_accepted, viewGroup, false);
                 return new ActionAcceptedViewHolder(rootView);
             default:
+                if (getItem(i).getAction().equals("finished")
+                        || getItem(i).getAction().equals("Груз доставлен")) {
+                    rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_order_finish, viewGroup, false);
+                    return new ActionFinishedViewHolder(rootView);
+                }
                 rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_base, viewGroup, false);
                 return new ActionBaseViewHolder(rootView);
         }
@@ -231,7 +257,7 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (requestInfo.getStatus() == 2) {
                 titleTxtv.setTextColor(R.color.red_error);
-                titleTxtv.setText("аш запрос отклонен");
+                titleTxtv.setText("Ваш запрос отклонен");
             } else
                 titleTxtv.setText(getItem(position).getAction());
 
@@ -269,6 +295,7 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+
         }
     }
 

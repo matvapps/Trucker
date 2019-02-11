@@ -11,8 +11,13 @@ import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
 import com.foora.perevozkadev.ui.messages.model.Message;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Alexandr.
@@ -28,12 +33,42 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setItems(List<Message> items) {
         this.items.clear();
+
+        Collections.sort(items, (lhs, rhs) -> {
+            SimpleDateFormat formatIn = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault());
+            try {
+                Date date1 = formatIn.parse(lhs.getDate());
+                Date date2 = formatIn.parse(rhs.getDate());
+
+                return date1.after(date2) ? 1 : date1.before(date2) ? -1 : 0;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return 0;
+        });
+
         this.items.addAll(items);
         notifyDataSetChanged();
     }
 
     public void clear() {
         this.items.clear();
+        Collections.sort(items, (lhs, rhs) -> {
+            SimpleDateFormat formatIn = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault());
+            try {
+                Date date1 = formatIn.parse(lhs.getDate());
+                Date date2 = formatIn.parse(rhs.getDate());
+
+                return date1.after(date2) ? 1 : date1.before(date2) ? -1 : 0;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return 0;
+        });
         notifyDataSetChanged();
     }
 

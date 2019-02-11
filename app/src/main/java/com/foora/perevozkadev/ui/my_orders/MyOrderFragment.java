@@ -28,6 +28,7 @@ import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,21 +38,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 /**
  * Created by Alexandr.
  */
-public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> implements MyOrdersMvpView {
+public class MyOrderFragment extends BasePresenterFragment<MyOrdersPresenter> implements MyOrdersMvpView {
 
-    public static final String TAG = OrdersFragment.class.getSimpleName();
+    public static final String TAG = MyOrderFragment.class.getSimpleName();
 
     @BindView(R.id.order_list)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_to_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    public static final String TYPE_ACTIVE = "active";
+    public static final String TYPE_FINISHED = "finished";
+
+    private static final String TYPE_KEY = "type_key";
 
     private OrdersAdapter ordersAdapter;
+    private String fragmentType;
 
-    public static OrdersFragment newInstance() {
+    public static MyOrderFragment newInstance(String type) {
         Bundle args = new Bundle();
-        OrdersFragment fragment = new OrdersFragment();
+        MyOrderFragment fragment = new MyOrderFragment();
+        args.putString(TYPE_KEY, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +76,6 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,6 +87,8 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
     @Override
     protected void setUp(View view) {
         super.setUp(view);
+
+        fragmentType = getArguments().getString(TYPE_KEY);
 
         setUnBinder(ButterKnife.bind(this, view));
 
@@ -111,15 +119,37 @@ public class OrdersFragment extends BasePresenterFragment<MyOrdersPresenter> imp
     @Override
     public void onGetUserOrders(List<Order> orders) {
         Log.d(TAG, "onGetUserOrders: " + orders);
+        ordersAdapter.setItems(new ArrayList<>());
+        for (Order order : orders) {
+            if (fragmentType.equals(TYPE_FINISHED)) {
+                if (order.getStatus().equals("finished")
+                        || order.getStatus().equals("Груз доставлен")) {
+                    ordersAdapter.addItem(order);
+                }
+                } else {
+                    if (!order.getStatus().equals("finished")
+                        || order.getStatus().equals("Груз доставлен")) {
+                        ordersAdapter.addItem(order);
+                    }
+                }
+            }
+            getPresenter().getExecutorOrders();
+        }
 
-        ordersAdapter.setItems(orders);
-        getPresenter().getExecutorOrders();
-    }
-
-    @Override
-    public void onGetExecutorOrders(List<Order> orders) {
-        for (Order order: orders) {
-            ordersAdapter.addItem(order);
+        @Override
+        public void onGetExecutorOrders (List < Order > orders) {
+            for (Order order : orders) {
+                if (fragmentType.equals(TYPE_FINISHED)) {
+                    if (order.getStatus().equals("finished")
+                        || order.getStatus().equals("Груз доставлен")) {
+                        ordersAdapter.addItem(order);
+                    }
+                } else {
+                    if (!order.getStatus().equals("finished")
+                        || order.getStatus().equals("Груз доставлен")) {
+                        ordersAdapter.addItem(order);
+                    }
+                }
+            }
         }
     }
-}
