@@ -217,12 +217,13 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
     @Override
     public void onChangeProfile() {
 
-        if ((certificatePhotos == null || certificatePhotos.size() == 0)
-                && (licensePhotos == null || licensePhotos.size() == 0)) {
-            Toast.makeText(this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+//        if ((certificatePhotos == null || certificatePhotos.size() == 0)
+//                && (licensePhotos == null || licensePhotos.size() == 0)) {
+//            Toast.makeText(this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+//            finish();
+//            return;
+//        }
+//
         uploadPhotos();
     }
 
@@ -262,6 +263,8 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
         certificatePhotos = new ArrayList<>();
         licensePhotos = new ArrayList<>();
 
+        Log.d(TAG, "uploadPhotos: ");
+        
         for (String item : photoCertificateGallery.getLinks()) {
             if (!item.contains("http")) {
                 certificatePhotos.add(item);
@@ -279,6 +282,13 @@ public class RegisterInfoActivity extends BasePresenterActivity<ProfileSettingsM
 
             }
         }
+
+
+        if (certificatePhotos.isEmpty() && licensePhotos.isEmpty()) {
+            Toast.makeText(this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 
     @Override
