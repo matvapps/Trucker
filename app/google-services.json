@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "741096897132",
+    "firebase_url": "https://perevozkafoora-1548796649948.firebaseio.com",
+    "project_id": "perevozkafoora-1548796649948",
+    "storage_bucket": "perevozkafoora-1548796649948.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741096897132:android:b7c42539dbc9702d",
+        "android_client_info": {
+          "package_name": "com.foora.perevozkadev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741096897132-fl5mrblt581heo0i0brplpnk16qcmq33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMxLDldPk034xf-6espDTO77FiGPIx4hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741096897132-fl5mrblt581heo0i0brplpnk16qcmq33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

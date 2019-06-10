@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.TabLayout;
@@ -38,12 +39,28 @@ import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.ui.search_order.filter_dialog.FilterDialogFragment;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvpPresenter>
         implements SearchOrderMvpView, FilterFragment.Callback {
@@ -254,6 +271,8 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
     @Override
     public void onGetProfile(Profile profile) {
 
+        subscribeToNotifications(profile.getUserId());
+
         if (profile.getGroups().contains("driver")) {
             final Intent intent = new Intent(this.getApplication(), DriverLocationService.class);
             this.getApplication().startService(intent);
@@ -292,4 +311,43 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
         searchOrderPagerAdapter.add(filter);
         viewPager.setCurrentItem(searchOrderPagerAdapter.getCount() - 1, true);
     }
+
+    public void subscribeToNotifications(int userId) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        // Create okhttp3 form body builder.
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+
+// Add form parameters
+        formBodyBuilder.add("app_id", "a92ce8f9-6f05-435b-a7bb-5253c607dfdd");
+        formBodyBuilder.add("device_type", "1");
+;       formBodyBuilder.add("external_user_id", String.valueOf(userId));
+
+// Build form body.
+        FormBody formBody = formBodyBuilder.build();
+
+// Create a http request object.
+        Request.Builder builder = new Request.Builder();
+        builder = builder.url("https://onesignal.com/api/v1/players");
+        builder = builder.post(formBody);
+        Request request = builder.build();
+
+// Create a new Call object with post method.
+        Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "onFailure: ");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d(TAG, "onResponse subscribeToNotification: " + response.toString() + "\n" + call.request().toString());
+                Log.d(TAG, "onResponse subscribeToNotification: " + call.request().headers() + "\n" );
+
+            }
+        });
+    }
+
 }

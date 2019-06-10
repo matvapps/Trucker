@@ -100,6 +100,12 @@ public class MyOrderFragment extends BasePresenterFragment<MyOrdersPresenter> im
 
         ordersAdapter.setListener(order -> MyOrderInfoActivity.start(getActivity(), order.getId()));
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPresenter().getUserOrders();
+            }
+        });
 //        ordersAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 
 //        getPresenter().getUserOrders();
@@ -132,6 +138,11 @@ public class MyOrderFragment extends BasePresenterFragment<MyOrdersPresenter> im
             }
         }
         getPresenter().getExecutorOrders();
+
+        if (swipeRefreshLayout != null) {
+            Log.d(TAG, "onGetUserOrders: try to remove refreshing");
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

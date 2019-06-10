@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
@@ -20,6 +21,7 @@ public class MyOrdersActivity extends BaseNavPresenterActivity<MyOrdersMvpPresen
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private MyOrdersPagerAdapter pagerAdapter;
 
@@ -57,6 +59,7 @@ public class MyOrdersActivity extends BaseNavPresenterActivity<MyOrdersMvpPresen
     protected void setUp() {
         super.setUp();
 
+        swipeRefreshLayout = findViewById(R.id.swipe_to_refresh);
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);

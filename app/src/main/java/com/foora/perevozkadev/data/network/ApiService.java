@@ -43,7 +43,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-
     // Registration
     @FormUrlEncoded
     @POST("user/registration/")
