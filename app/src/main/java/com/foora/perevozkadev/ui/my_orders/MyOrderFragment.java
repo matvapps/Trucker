@@ -98,16 +98,11 @@ public class MyOrderFragment extends BasePresenterFragment<MyOrdersPresenter> im
         recyclerView.setAdapter(ordersAdapter);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
-        ordersAdapter.setListener(new OrdersAdapter.Callback() {
-            @Override
-            public void onClick(Order order) {
-                MyOrderInfoActivity.start(getActivity(), order.getId());
-            }
-        });
+        ordersAdapter.setListener(order -> MyOrderInfoActivity.start(getActivity(), order.getId()));
 
 //        ordersAdapter.setListener((pos, transport) -> TransportActivity.start(getActivity(), transport.getId()));
 
-        getPresenter().getUserOrders();
+//        getPresenter().getUserOrders();
     }
 
     @Override
@@ -120,36 +115,43 @@ public class MyOrderFragment extends BasePresenterFragment<MyOrdersPresenter> im
     public void onGetUserOrders(List<Order> orders) {
         Log.d(TAG, "onGetUserOrders: " + orders);
         ordersAdapter.setItems(new ArrayList<>());
+
         for (Order order : orders) {
             if (fragmentType.equals(TYPE_FINISHED)) {
                 if (order.getStatus().equals("finished")
                         || order.getStatus().equals("Груз доставлен")) {
-                    ordersAdapter.addItem(order);
-                }
-                } else {
-                    if (!order.getStatus().equals("finished")
-                        || order.getStatus().equals("Груз доставлен")) {
+                    if (!ordersAdapter.getItems().contains(order))
                         ordersAdapter.addItem(order);
-                    }
+                }
+            } else {
+                if (!order.getStatus().equals("finished")
+                        || order.getStatus().equals("Груз доставлен")) {
+                    if (!ordersAdapter.getItems().contains(order))
+                        ordersAdapter.addItem(order);
                 }
             }
-            getPresenter().getExecutorOrders();
         }
+        getPresenter().getExecutorOrders();
+    }
 
-        @Override
-        public void onGetExecutorOrders (List < Order > orders) {
-            for (Order order : orders) {
-                if (fragmentType.equals(TYPE_FINISHED)) {
-                    if (order.getStatus().equals("finished")
+    @Override
+    public void onGetExecutorOrders(List<Order> orders) {
+        Log.d(TAG, "onGetExecutorOrders: " + orders);
+
+        for (Order order : orders) {
+            if (fragmentType.equals(TYPE_FINISHED)) {
+                if (order.getStatus().equals("finished")
                         || order.getStatus().equals("Груз доставлен")) {
+                    if (!ordersAdapter.getItems().contains(order))
                         ordersAdapter.addItem(order);
-                    }
-                } else {
-                    if (!order.getStatus().equals("finished")
+                }
+            } else {
+                if (!order.getStatus().equals("finished")
                         || order.getStatus().equals("Груз доставлен")) {
+                    if (!ordersAdapter.getItems().contains(order))
                         ordersAdapter.addItem(order);
-                    }
                 }
             }
         }
     }
+}

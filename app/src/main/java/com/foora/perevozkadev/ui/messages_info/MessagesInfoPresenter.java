@@ -34,8 +34,6 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
             return;
         }
 
-        getMvpView().showLoading();
-
         getDataManager()
                 .getRequestInfo(getDataManager().getUserToken(), requestId)
                 .enqueue(new Callback<OrderRequest>() {
@@ -72,8 +70,6 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
             return;
         }
 
-        getMvpView().showLoading();
-
         getDataManager().getUserTransport(transportId, getDataManager().getUserToken())
                 .enqueue(new Callback<Transport>() {
                     @Override
@@ -106,8 +102,6 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
             Log.e(TAG, "getProfile: View isn't attach");
             return;
         }
-
-        getMvpView().showLoading();
 
         Log.d(TAG, "token " + getDataManager().getUserToken());
 
@@ -217,8 +211,6 @@ public class MessagesInfoPresenter<V extends MessagesInfoMvpView> extends BasePr
             Log.e(TAG, "getOrderById: view isn't attach");
             return;
         }
-
-        getMvpView().showLoading();
 
         getDataManager().getOrderById(getDataManager().getUserToken(), id)
                 .enqueue(new Callback<Order>() {

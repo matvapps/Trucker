@@ -12,5 +12,6 @@ public interface AddTransportMvpPresenter<V extends AddTransportMvpView> extends
 
     void addTransport(Transport transport);
     void addPhotoToTransport(File photo, int transportId);
+    void changeTransport(int transportId, Transport transport);
 
 }

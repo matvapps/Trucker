@@ -110,6 +110,7 @@ public class YourProfileActivity extends BasePresenterActivity<ProfileSettingsMv
         profileName.setText(profile.getProfileName());
 
         profile.setUserType(null);
+        profile.setCurrency("USD");
 
         this.profile = profile;
     }

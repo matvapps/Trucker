@@ -6,6 +6,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/color_background"
     tools:context="com.foora.perevozkadev.ui.profile.ProfileActivity">
 
 
@@ -113,18 +114,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/verify_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_add_container"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="4dp"
-                    android:text="Подтвержден"
+                    android:background="@drawable/rouded_rect_orange_light"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Не подтвержден"
                     android:textAllCaps="true"
-                    android:textColor="@color/color_app_blue"
+                    android:textColor="@color/orange_yellow"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/user_type"
                     app:layout_constraintTop_toBottomOf="@+id/user_type" />
@@ -141,7 +142,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/verify_user"
                     expandableTextView:animAlphaStart="1"
                     expandableTextView:maxCollapsedLines="4">
 

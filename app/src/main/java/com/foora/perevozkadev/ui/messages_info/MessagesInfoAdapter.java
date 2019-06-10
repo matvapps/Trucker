@@ -52,8 +52,17 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void setOrderRequest(OrderRequest requestInfo) {
         this.requestInfo = requestInfo;
 
+        Action actionForRemove = null;
+
         List<Action> actions = requestInfo.getActions();
-        actions.remove(actions.size() - 1);
+        for (Action action: actions) {
+            if (action.getAction().equals("Request accepted"))
+                actionForRemove = action;
+        }
+
+        if (actionForRemove != null)
+            actions.remove(actionForRemove);
+//        actions.remove(actions.size() - 1);
         Collections.sort(actions, (lhs, rhs) -> {
             SimpleDateFormat formatIn = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault());
             try {
@@ -147,6 +156,12 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             btnAccept = itemView.findViewById(R.id.btn_accept);
 
             transportAdapter = new ProfileTransportAdapter();
+            transportAdapter.setListener(new ProfileTransportAdapter.Callback() {
+                @Override
+                public void onClick(int pos, Transport transport) {
+                    listener.onOpenTransport(transport.getId());
+                }
+            });
             transportList.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             transportList.addItemDecoration(new ItemSpacingDecoration(0, ViewUtils.dpToPx(4), 0, 0));
             transportList.setAdapter(transportAdapter);
@@ -296,6 +311,11 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
+            itemView.setOnClickListener(v -> {
+                if (listener != null)
+                    listener.onOpenOrder(requestInfo.getOrderId());
+            });
+
         }
     }
 
@@ -346,6 +366,11 @@ public class MessagesInfoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onRefuseRequest(int requestId);
 
         void onRequestOrder(int orderId);
+
+        void onOpenOrder(int orderId);
+
+        void onOpenTransport(int trasportId);
+
     }
 
 }

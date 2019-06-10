@@ -61,13 +61,20 @@ public class MyTransportActivity extends BaseNavPresenterActivity<MyTransportMvp
         tabLayout.setupWithViewPager(viewPager);
 
         pagerAdapter = new MyTransportPagerAdapter(getSupportFragmentManager());
-
         viewPager.setAdapter(pagerAdapter);
-
-
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pagerAdapter = new MyTransportPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+    }
+
+    public void refresh() {
+        onResume();
+    }
 
     @Override
     protected MyTransportMvpPresenter createPresenter() {
@@ -77,6 +84,21 @@ public class MyTransportActivity extends BaseNavPresenterActivity<MyTransportMvp
 
     @Override
     public void onGetTransports(List<Transport> transports) {
+
+    }
+
+    @Override
+    public void onGetTransportArchive(List<Transport> transports) {
+
+    }
+
+    @Override
+    public void onAddTransportToArchive(int transportId) {
+
+    }
+
+    @Override
+    public void onRemoveTransportFromArchive(int transportId) {
 
     }
 }

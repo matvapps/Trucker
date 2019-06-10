@@ -2,12 +2,17 @@ package com.foora.perevozkadev.ui.search_order;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,8 +29,10 @@ import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
+import com.foora.perevozkadev.service.location.DriverLocationService;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.ui.search_order.filter.FilterFragment;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
 import com.foora.perevozkadev.ui.search_order.filter_dialog.FilterDialogFragment;
@@ -52,6 +59,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
 
     private SearchOrderPagerAdapter searchOrderPagerAdapter;
     private List<FilterJson> savedFilters;
+    public DriverLocationService gpsService;
     private Gson gson;
 
     int PERMISSION_ALL = 1;
@@ -61,11 +69,13 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.INTERNET,
+            Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.ACCESS_NETWORK_STATE
     };
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, SearchOrderActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
     }
 
@@ -92,6 +102,8 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
     protected void setUp() {
         super.setUp();
 
+        getPresenter().getProfile();
+
         gson = new Gson();
         savedFilters = new ArrayList<>();
 
@@ -109,7 +121,6 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
         tabLayout.setupWithViewPager(viewPager);
 //        View v = LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabLayout.getTabAt(0).setCustomView(R.layout.custom_tab);
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -139,6 +150,7 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
         });
 
         getPresenter().getFilters();
+        hideLoading();
     }
 
     @Override
@@ -160,6 +172,8 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
 
         SearchOrderPresenter searchOrderPresenter = new SearchOrderPresenter<>(dataManager, AndroidSchedulers.mainThread());
         searchOrderPresenter.onAttach(this);
+
+        Log.d(TAG, "createPresenter: token " + preferencesHelper.getUserToken());
 
         return searchOrderPresenter;
     }
@@ -236,6 +250,37 @@ public class SearchOrderActivity extends BaseNavPresenterActivity<SearchOrderMvp
         }
 
     }
+
+    @Override
+    public void onGetProfile(Profile profile) {
+
+        if (profile.getGroups().contains("driver")) {
+            final Intent intent = new Intent(this.getApplication(), DriverLocationService.class);
+            this.getApplication().startService(intent);
+//        this.getApplication().startForegroundService(intent);
+            this.getApplication().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            String name = className.getClassName();
+            if (name.endsWith("DriverLocationService")) {
+//                gpsService = ((DriverLocationService.LocationServiceBinder) service).getService();
+//                gpsService.startTracking();
+
+
+//                btnStartTracking.setEnabled(true);
+//                txtStatus.setText("GPS Ready");
+            }
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            if (className.getClassName().equals("DriverLocationService")) {
+                gpsService = null;
+            }
+        }
+    };
 
     @Override
     public void onCreateNewFilter(Filter filter) {

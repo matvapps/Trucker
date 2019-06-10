@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="SmallSp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="5dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        tools:layout_editor_absoluteX="3dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.perevozka.foora.routedisplayview.RouteDisplayView
                 android:id="@+id/route_display_view"
@@ -28,48 +31,76 @@
                 app:rd_type="first_route"
                 app:rdv_useFullView="false" />
 
+
+            <TextView
+                android:id="@+id/txt_add_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="2"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/route_display_view"
+                tools:text="Additional info" />
+
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="8dp"
                 android:background="#e0e0e0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/route_display_view" />
 
-
             <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/transport_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Тент"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="Тент" />
 
                     <TextView
                         android:id="@+id/cargo_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Палеты"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="Палеты" />
 
 
                 </LinearLayout>
@@ -79,34 +110,43 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
                     android:background="#e0e0e0" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:paddingStart="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/transport_quantity"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="4 авто"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="13sp"
+                        tools:text="4 авто" />
 
                     <TextView
                         android:id="@+id/cargo_size"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="15 т / 86 м^3"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="15 т / 86 м^3" />
 
 
                 </LinearLayout>
@@ -116,34 +156,43 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
                     android:background="#e0e0e0" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingStart="16dp"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/cost"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="28 299руб"
                         android:textColor="@color/orange_yellow"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="28 299руб" />
 
                     <TextView
                         android:id="@+id/cost_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="На карту"
                         android:textColor="@color/colorVioletLight"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="На карту" />
 
 
                 </LinearLayout>
@@ -165,13 +214,60 @@
                 android:paddingTop="4dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="4dp"
-                android:text="CMR"
                 android:textAllCaps="true"
                 android:textColor="@color/orange_yellow"
                 android:textSize="10sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="CMR" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rouded_rect_blue_light"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="3dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_add_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_add_info">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_my_transport"
+                    android:tint="@color/color_app_blue"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/car_quant_txtv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_app_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="2" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/docs_list"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+                app:layout_constraintTop_toTopOf="@+id/route_display_view" />
 
 
         </android.support.constraint.ConstraintLayout>
@@ -179,4 +275,4 @@
 
     </android.support.v7.widget.CardView>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

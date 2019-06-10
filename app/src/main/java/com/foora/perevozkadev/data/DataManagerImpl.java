@@ -7,18 +7,22 @@ import com.foora.perevozkadev.data.network.model.ActivateResponse;
 import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.DriverResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
+import com.foora.perevozkadev.data.network.model.Location;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
+import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.utils.custom.tnvd.Cargo;
 
 import java.util.List;
 
@@ -103,6 +107,11 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<Profile> getProfile(int userId, String token) {
+        return remoteRepo.getProfile(userId, token);
+    }
+
+    @Override
     public Call<Profile> changeProfile(String token, Profile profile) {
         return remoteRepo.changeProfile(token, profile);
     }
@@ -118,8 +127,18 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<BaseResponse> setUse2Fa(String token, int use_2Fa) {
+        return remoteRepo.setUse2Fa(token, use_2Fa);
+    }
+
+    @Override
     public Call<BaseResponse> uploadPhoto(String photoType, String token, MultipartBody.Part image) {
         return remoteRepo.uploadPhoto(photoType, token, image);
+    }
+
+    @Override
+    public Call<BaseResponse> verifyUser(String token, MultipartBody.Part image) {
+        return remoteRepo.verifyUser(token, image);
     }
 
     @Override
@@ -138,8 +157,28 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<TransportResponse> getTransportArchive(String token) {
+        return remoteRepo.getTransportArchive(token);
+    }
+
+    @Override
     public Call<Transport> getUserTransport(int transportId, String token) {
         return remoteRepo.getUserTransport(transportId, token);
+    }
+
+    @Override
+    public Call<Transport> changeTransport(int transportId, String token, Transport transport) {
+        return remoteRepo.changeTransport(transportId, token, transport);
+    }
+
+    @Override
+    public Call<BaseResponse> addTransportToArchive(int transportId, String token) {
+        return remoteRepo.addTransportToArchive(transportId, token);
+    }
+
+    @Override
+    public Call<BaseResponse> removeTransportFromArchive(int transportId, String token) {
+        return remoteRepo.removeTransportFromArchive(transportId, token);
     }
 
     @Override
@@ -157,8 +196,23 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<String> deleteUserFromStaff(int userId, String token) {
+    public Call<Profile> deleteUserFromStaff(int userId, String token) {
         return remoteRepo.deleteUserFromStaff(userId, token);
+    }
+
+    @Override
+    public Call<Profile> restoreUserFromArchive(int userId, String token) {
+        return remoteRepo.restoreUserFromArchive(userId, token);
+    }
+
+    @Override
+    public Call<List<Profile>> getStaffArchive(String token) {
+        return remoteRepo.getStaffArchive(token);
+    }
+
+    @Override
+    public Call<BaseResponse> changeStaffProfile(int userId, String token, Profile profile) {
+        return remoteRepo.changeStaffProfile(userId, token, profile);
     }
 
     @Override
@@ -207,6 +261,56 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Call<List<Cargo>> searchCargoTypes(String query) {
+        return remoteRepo.searchCargoTypes(query);
+    }
+
+    @Override
+    public Call<DriverResponse> getOrderDrivers(String token, int orderId) {
+        return remoteRepo.getOrderDrivers(token, orderId);
+    }
+
+    @Override
+    public Call<BaseResponse> addDriversToOrder(String token, int orderId, DriverResponse drivers) {
+        return remoteRepo.addDriversToOrder(token, orderId, drivers);
+    }
+
+    @Override
+    public Call<BaseResponse> removeDriversFromOrder(String token, int orderId, DriverResponse drivers) {
+        return remoteRepo.removeDriversFromOrder(token, orderId, drivers);
+    }
+
+    @Override
+    public Call<BaseResponse> addUserLocation(String token, Location location) {
+        return remoteRepo.addUserLocation(token, location);
+    }
+
+    @Override
+    public Call<List<TrackResponse>> trackOrder(String token, int orderId) {
+        return remoteRepo.trackOrder(token, orderId);
+    }
+
+    @Override
+    public Call<BaseResponse> callSos(String token, double latitude, double longitude) {
+        return remoteRepo.callSos(token, latitude, longitude);
+    }
+
+    @Override
+    public Call<BaseResponse> acceptSos(String token, int sos_id) {
+        return remoteRepo.acceptSos(token, sos_id);
+    }
+
+    @Override
+    public Call<BaseResponse> rejectSos(String token, int sos_id) {
+        return remoteRepo.rejectSos(token, sos_id);
+    }
+
+    @Override
+    public Call<List<TrackResponse>> getLastUserLoc(String token, int userId) {
+        return remoteRepo.getLastUserLoc(token, userId);
+    }
+
+    @Override
     public boolean getUserLogged() {
         return sharedPrefs.getUserLogged();
     }
@@ -237,6 +341,26 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public void setUserRole(String role) {
+        sharedPrefs.setUserRole(role);
+    }
+
+    @Override
+    public String getUserRole() {
+        return sharedPrefs.getUserRole();
+    }
+
+    @Override
+    public boolean getIs2FaEnabled() {
+        return sharedPrefs.getIs2FaEnabled();
+    }
+
+    @Override
+    public void set2FaEnabled(boolean enabled) {
+        sharedPrefs.set2FaEnabled(enabled);
+    }
+
+    @Override
     public Flowable<List<FilterJson>> getFilters() {
         return localRepo.getFilters();
     }
@@ -252,7 +376,6 @@ public class DataManagerImpl implements DataManager {
     public void updateFilterJson(FilterJson filterJson) {
         localRepo.updateFilterJson(filterJson);
     }
-
 
     @Override
     public void clear() {

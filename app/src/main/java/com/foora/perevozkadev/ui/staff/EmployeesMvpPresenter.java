@@ -8,5 +8,7 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 public interface EmployeesMvpPresenter<V extends EmployeesMvpView> extends MvpPresenter<V> {
 
     void getEmployees();
+    void getEmployeesArchive();
+    void restoreFromArchive(int profileId);
 
 }

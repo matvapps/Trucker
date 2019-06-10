@@ -15,12 +15,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.add_transport.AddTransportActivity;
 import com.foora.perevozkadev.ui.add_transport.PhotoListAdapter;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.utils.custom.MyDatePickerFragment;
 import com.github.matvapps.AppEditText;
 
@@ -54,10 +55,16 @@ public class FragmentRegisterInfo extends BaseFragment {
     RecyclerView photoList;
     @BindView(R.id.date)
     AppEditText dateTxtv;
+    @BindView(R.id.btn_choose_photo)
+    Button btnChoosePhoto;
+    @BindView(R.id.choose_photo_txt)
+    View txtChoosePhoto;
+    @BindView(R.id.btn_add)
+    Button btnAddTransport;
 
 
     private Callback listener;
-
+    private Transport transportForEdit;
     private PhotoListAdapter photoListAdapter;
 
     public static FragmentRegisterInfo newInstance() {
@@ -93,6 +100,21 @@ public class FragmentRegisterInfo extends BaseFragment {
             }
             return true;
         });
+
+        if (((AddTransportActivity) getActivity()).getTransportForEdit() != null) {
+            transportForEdit = ((AddTransportActivity) getActivity()).getTransportForEdit();
+            registerNumberEdtxt.setText(transportForEdit.getRegistrationNum());
+            registerPlaceEdtxt.setText(transportForEdit.getRegistrationPlace());
+            vinEdtxt.setText(transportForEdit.getVin());
+            passportNumEdtxt.setText(transportForEdit.getPassportNum());
+            dateTxtv.setText(transportForEdit.getRegistrationDate());
+
+            btnChoosePhoto.setVisibility(View.GONE);
+            txtChoosePhoto.setVisibility(View.GONE);
+
+            ((Button) view.findViewById(R.id.btn_add)).setText("Редактировать транспорт");
+        }
+
     }
 
     @Override
@@ -147,7 +169,7 @@ public class FragmentRegisterInfo extends BaseFragment {
             calendar.set(Calendar.MONTH, datePicker.getMonth());
             calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 
-            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd", Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String dateStr = format.format(calendar.getTime());
             dateTxtv.setText(dateStr);
         });
@@ -155,6 +177,8 @@ public class FragmentRegisterInfo extends BaseFragment {
 
     @OnClick(R.id.btn_add)
     void onAddTransport() {
+        btnAddTransport.setEnabled(false);
+
         String registerNum = registerNumberEdtxt.getText();
         String vin = vinEdtxt.getText();
         String pssportNum = passportNumEdtxt.getText();
@@ -168,12 +192,19 @@ public class FragmentRegisterInfo extends BaseFragment {
                 if (!pssportNum.isEmpty()) {
                     if (!registerPlace.isEmpty()) {
                         if (!registerDate.isEmpty()) {
-                            if (photos.size() >= 2) {
+
+                            if (transportForEdit != null) {
                                 if (listener != null)
                                     listener.onReceiveRegisterInfo(registerNum, vin,
                                             pssportNum, registerPlace, registerDate, photos);
                             } else {
-                                onError("Фотографий должно быть не меньше 2");
+                                if (photos.size() >= 2) {
+                                    if (listener != null)
+                                        listener.onReceiveRegisterInfo(registerNum, vin,
+                                                pssportNum, registerPlace, registerDate, photos);
+                                } else {
+                                    onError("Фотографий должно быть не меньше 2");
+                                }
                             }
                         } else {
                             onError("Заполните поле Дата регистрации");

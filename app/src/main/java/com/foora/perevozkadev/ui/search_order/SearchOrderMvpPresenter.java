@@ -12,4 +12,5 @@ public interface SearchOrderMvpPresenter<V extends SearchOrderMvpView> extends M
     void deleteFilter(FilterJson filterJson);
     void updateFilter(FilterJson filterJson);
     void getFilters();
+    void  getProfile();
 }

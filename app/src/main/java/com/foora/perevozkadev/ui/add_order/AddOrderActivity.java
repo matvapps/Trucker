@@ -211,7 +211,8 @@ public class AddOrderActivity extends BaseNavPresenterActivity<AddOrderMvpPresen
                                    List<String> transportTypes,
                                    float cost, String currency,
                                    int carQuant, float width,
-                                   float height, float depth, String paymentType, String additionalInfo) {
+                                   float height, float depth,
+                                   String paymentType, String additionalInfo, long cargoId, String docs) {
         viewPager.setCurrentItem(2, true);
 
         Log.d(TAG, "onReceiveCargoInfo: " + dateStart + " " + dateEnd);
@@ -230,7 +231,7 @@ public class AddOrderActivity extends BaseNavPresenterActivity<AddOrderMvpPresen
 
         Log.d(TAG, "onReceiveCargoInfo: " + cost + " " + currency);
 
-
+        order.setDocs(docs);
         order.setLoadingDate(dateStart);
         order.setUnloadingDate(dateEnd);
         order.setWeightTo((double) massTo);
@@ -242,11 +243,12 @@ public class AddOrderActivity extends BaseNavPresenterActivity<AddOrderMvpPresen
         order.setCurrency(currency);
         order.setCarQuantity(carQuant);
         order.setSize(String.format("%sx%sx%s", width, height, depth));
+        order.setCargoType(cargoId);
         // TODO: remove hardcoded
         order.setPaymentType1(paymentType);
         order.setPaymentType2("123");
         order.setDistance(0d);
-        order.setCargo("Тип груза");
+        order.setCargo(Long.toString(cargoId));
         order.setStatus("0");
         order.setAdditionalInfo(additionalInfo);
 

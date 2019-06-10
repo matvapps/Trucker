@@ -68,6 +68,29 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
+            android:id="@+id/add_drivers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="8sp"
+            android:padding="16dp"
+            android:text="Добавить водителей"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.25"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
             android:id="@+id/order_change_state"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

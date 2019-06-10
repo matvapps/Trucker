@@ -25,6 +25,10 @@
     <color name="color_map_route">#AD14A2E4</color>
     <color name="color_info_light">#47263074</color>
 
+    <color name="color_map_route_light">#7714A2E4</color>
+    <color name="color_map_route_ready">#104561</color>
+
+
 
     <color name="colorTextHint">#84000000</color>
     <color name="colorText">#000000</color>

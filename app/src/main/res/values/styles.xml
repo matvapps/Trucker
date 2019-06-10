@@ -9,7 +9,7 @@
 
         <!--<item name="android:windowAnimationStyle">@null</item>-->
 
-        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/darker_gray</item>
         <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
 
         <item name="cardViewStyle">@style/CardView</item>
@@ -18,7 +18,20 @@
         <item name="floatingActionButtonStyle">@style/Widget.Design.FloatingActionButton</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
 
+        <!--<item name="android:popupMenuStyle">@style/PopupMenu</item>-->
     </style>
+
+
+    <!--<style name="PopupMenu" parent="Theme.AppCompat.">-->
+        <!--<item name="android:popupBackground">@android:color/darker_gray</item>-->
+        <!--<item name="android:textSize">12sp</item>-->
+        <!--<item name="android:actionMenuTextColor">#000000</item>-->
+        <!--<item name="android:textColor">#000000</item>-->
+        <!--<item name="textColor"-->
+        <!--<item name="android:itemTextAppearance">@style/MenuTextAppearance.Dark</item>-->
+
+
+    <!--</style>-->
 
     <style name="AppTheme.White" parent="AppTheme">
         <item name="colorPrimary">@android:color/white</item>
@@ -116,6 +129,10 @@
 
     <style name="MenuTextAppearance">
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MenuTextAppearance.Dark">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>

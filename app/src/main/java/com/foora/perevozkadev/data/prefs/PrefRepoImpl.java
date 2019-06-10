@@ -9,6 +9,8 @@ public class PrefRepoImpl implements PrefRepo {
     private static final String PREF_KEY_USER_LOGGED = "PREF_KEY_USER_LOGGED";
     private static final String PREF_USER_TOKEN = "PREF_USER_TOKEN";
     private static final String PREF_USER_NAME = "PREF_USER_NAME";
+    private static final String PREF_USER_ROLE = "PREF_USER_ROLE";
+    private static final String PREF_IS2FAENABLED = "PREF_IS2FAENABLED";
 
     private final SharedPreferences prefs;
 
@@ -46,6 +48,27 @@ public class PrefRepoImpl implements PrefRepo {
     public String getUserName() {
         return prefs.getString(PREF_USER_NAME, "");
 
+    }
+
+    @Override
+    public void setUserRole(String role) {
+        prefs.edit().putString(PREF_USER_ROLE, role).apply();
+
+    }
+
+    @Override
+    public String getUserRole() {
+        return prefs.getString(PREF_USER_ROLE, "");
+    }
+
+    @Override
+    public boolean getIs2FaEnabled() {
+        return prefs.getBoolean(PREF_IS2FAENABLED, true);
+    }
+
+    @Override
+    public void set2FaEnabled(boolean enabled) {
+        prefs.edit().putBoolean(PREF_IS2FAENABLED, enabled).apply();
     }
 
     @Override

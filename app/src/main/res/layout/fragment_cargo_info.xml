@@ -18,6 +18,23 @@
             android:layout_height="wrap_content">
 
 
+            <com.github.matvapps.AppEditText
+                android:id="@+id/edtxt_car_quantity"
+                style="@style/AppEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:aet_hint="К-во"
+                app:aet_imeOption="actionNext"
+                app:aet_inputType="number"
+                app:aet_postfix=" шт"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_container"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text3"
+                app:layout_constraintTop_toBottomOf="@+id/text4" />
+
             <com.foora.perevozkadev.utils.custom.CustomSpinner
                 android:id="@+id/payment_type"
                 android:layout_width="0dp"
@@ -29,20 +46,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <com.github.matvapps.AppEditText
+                android:id="@+id/edtxt_docs"
                 style="@style/AppEditTextStyle"
-                android:id="@+id/edtxt_car_quantity"
                 android:layout_width="0dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:aet_inputType="number"
-                app:aet_hint="К-во"
-                app:aet_postfix=" шт"
+                app:aet_hint="CMR, TIR, ..."
                 app:aet_imeOption="actionNext"
+                app:aet_inputType="textMultiline"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_container"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text3"
-                app:layout_constraintTop_toBottomOf="@+id/text4" />
+                app:layout_constraintStart_toStartOf="@+id/spinner_container"
+                app:layout_constraintTop_toBottomOf="@+id/text58">
+
+            </com.github.matvapps.AppEditText>
 
 
             <TextView
@@ -111,7 +130,7 @@
                         android:layout_marginTop="8dp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        app:aet_hint="Масса"
+                        app:aet_hint="Максимальная масса груза, т."
                         app:aet_inputType="phone"
                         app:aet_postfix=" т"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -172,6 +191,15 @@
 
             </FrameLayout>
 
+            <com.foora.perevozkadev.utils.custom.tnvd.CargoAutoCompleteTextView
+                android:id="@+id/cargo_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/cardView2"
+                app:layout_constraintStart_toStartOf="@+id/cardView2"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
             <TextView
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
@@ -182,7 +210,7 @@
                 android:textColor="@color/color_app_blue"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+                app:layout_constraintTop_toBottomOf="@+id/cargo_type" />
 
             <LinearLayout
                 android:id="@+id/spinner_container"
@@ -243,6 +271,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Стоимость"
+                android:textAllCaps="true"
+                android:textColor="@color/color_app_blue"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/spinner_container"
+                app:layout_constraintTop_toBottomOf="@+id/edtxt_docs" />
+
+            <TextView
+                android:id="@+id/text58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Введите документы через запятую"
                 android:textAllCaps="true"
                 android:textColor="@color/color_app_blue"
                 android:textSize="12sp"

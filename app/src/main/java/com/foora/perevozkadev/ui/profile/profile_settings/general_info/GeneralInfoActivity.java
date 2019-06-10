@@ -107,7 +107,7 @@ public class GeneralInfoActivity extends BasePresenterActivity<ProfileSettingsMv
             calendar.set(Calendar.MONTH, datePicker.getMonth());
             calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 
-            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd", Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String dateStr = format.format(calendar.getTime());
             dateTxtv.setText(dateStr);
         });

@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.add_employee;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.ui.base.BasePresenter;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
@@ -64,6 +65,45 @@ public class AddEmployeePresenter<V extends AddEmployeeMvpView> extends BasePres
                     }
                 });
 
+    }
+
+    @Override
+    public void changeEmployee(Profile profile) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "changeEmployee: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().changeStaffProfile(profile.getUserId(), getDataManager().getUserToken(), profile)
+                .enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        getMvpView().hideLoading();
+
+                        Log.e(TAG, "onResponse: " + call.request().toString());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body());
+                            getMvpView().onChangeEmployee();
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                        getMvpView().onError("Ошибка редактирования сотрудника");
+                    }
+                });
     }
 
 }

@@ -15,10 +15,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.add_transport.AddTransportActivity;
 import com.foora.perevozkadev.ui.add_transport.PhotoListAdapter;
 import com.foora.perevozkadev.ui.base.BaseFragment;
+import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
 import com.github.matvapps.AppEditText;
@@ -52,6 +55,10 @@ public class FragmentGeneralInfo extends BaseFragment {
     AppEditText transportMassPlacedEdtxt;
     @BindView(R.id.transport_no_load_mass)
     AppEditText transportNoLoadMassEdtxt;
+    @BindView(R.id.btn_choose_photo)
+    View btnChoosePhoto;
+    @BindView(R.id.transport_photo_txt)
+    TextView txtTransportPhoto;
 
 
     private Callback listener;
@@ -59,6 +66,7 @@ public class FragmentGeneralInfo extends BaseFragment {
 
     private SpinnerArrayAdapter typesAdapter;
     private SpinnerArrayAdapter categoriesAdapter;
+    private Transport transportForEdit;
 
     public static FragmentGeneralInfo newInstance() {
         Bundle args = new Bundle();
@@ -79,6 +87,8 @@ public class FragmentGeneralInfo extends BaseFragment {
 
     @Override
     protected void setUp(View view) {
+
+
         photoListAdapter = new PhotoListAdapter();
         photoList.setLayoutManager(new LinearLayoutManager(getContext()));
         photoList.setAdapter(photoListAdapter);
@@ -108,6 +118,19 @@ public class FragmentGeneralInfo extends BaseFragment {
 
         transportCategorySpinner.setGravity(Gravity.BOTTOM);
         transportTypeSpinner.setGravity(Gravity.BOTTOM);
+
+        if (((AddTransportActivity) getActivity()).getTransportForEdit() != null) {
+            transportForEdit = ((AddTransportActivity) getActivity()).getTransportForEdit();
+            transportNoLoadMassEdtxt.setText(String.valueOf(transportForEdit.getNoLoadMass()));
+            transportMassPlacedEdtxt.setText(String.valueOf(transportForEdit.getAllowedWeight()));
+            transportModelEdtxt.setText(transportForEdit.getModel());
+
+            transportCategorySpinner.setSelection(categories.indexOf(transportForEdit.getCategory()));
+            transportTypeSpinner.setSelection(Arrays.asList(transportArr).indexOf(transportForEdit.getType()));
+
+            btnChoosePhoto.setVisibility(View.GONE);
+            txtTransportPhoto.setVisibility(View.GONE);
+        }
 
     }
 
@@ -167,17 +190,24 @@ public class FragmentGeneralInfo extends BaseFragment {
                         if (!transportNoLoadMassEdtxt.getText().toString().isEmpty()) {
                             noLoadMass = Float.parseFloat(transportNoLoadMassEdtxt.getText().toString());
 
-                            if (photos.size() >= 2) {
+                            if (transportForEdit != null) {
                                 if (listener != null) {
                                     listener.onReceiveGeneralInfo(model, category, type,
                                             massPlaced, noLoadMass, photos);
                                 }
-
                             } else {
-                                onError("Фотографий должно быть не меньше 2");
+                                if (photos.size() >= 2) {
+                                    if (listener != null) {
+                                        listener.onReceiveGeneralInfo(model, category, type,
+                                                massPlaced, noLoadMass, photos);
+                                    }
+
+                                } else {
+                                    onError("Фотографий должно быть не меньше 2");
+                                }
                             }
                         } else {
-                            onError("Заполните поле Масса без нагрузки");
+                            onError("Заполните поле Масса без нагрузки (тара)");
                         }
                     } else {
                         onError("Заполните поле Размещаемая масса");

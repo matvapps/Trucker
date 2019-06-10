@@ -60,7 +60,7 @@
         android:fontFamily="sans-serif"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="6sp"
-        android:text="Перейти к заказу"
+        android:text="Оценить заказ"
         android:textColor="#575757"
         android:textSize="14sp"
         android:textStyle="normal"

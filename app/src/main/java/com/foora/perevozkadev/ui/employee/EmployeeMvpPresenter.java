@@ -8,5 +8,6 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 public interface EmployeeMvpPresenter<V extends EmployeeMvpView> extends MvpPresenter<V> {
 
     void removeUser(int userId);
+    void getProfile(int userId);
 
 }

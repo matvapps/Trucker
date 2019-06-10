@@ -12,6 +12,13 @@ public interface PrefRepo {
     void setUserName(String name);
     String getUserName();
 
+    void setUserRole(String role);
+    String getUserRole();
+
+
+    boolean getIs2FaEnabled();
+    void set2FaEnabled(boolean enabled);
+
     void clear();
 
 }

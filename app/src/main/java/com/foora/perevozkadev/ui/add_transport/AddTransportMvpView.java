@@ -8,5 +8,6 @@ import com.foora.perevozkadev.ui.my_transport.model.Transport;
  */
 public interface AddTransportMvpView extends MvpView {
     void onAddTransport(Transport transport);
+    void onChangeTransport(Transport transport);
     void onAddPhoto();
 }

@@ -169,6 +169,12 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
     }
 
     private LatLngBounds getLatLngBounds(DirectionsResult result) {
+
+        if (result.routes.length == 0) {
+            showErrorMessage("Не удалось найти маршрут");
+            return null;
+        }
+
         List<LatLng> path = result.routes[0].overviewPolyline.decodePath();
 
         LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
@@ -208,22 +214,27 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
                     .waypoints(latLngs)
                     .await();
 
-            CameraUpdate track =
-                    CameraUpdateFactory.newLatLngBounds(
-                            getLatLngBounds(result),
-                            ScreenUtils.getScreenWidth(getContext()),
-                            ScreenUtils.getScreenWidth(getContext()), 8);
+            if (getLatLngBounds(result) == null) {
+                return;
+            } else {
 
-            if (((MapActivity) getActivity()).getGoogleMap() != null) {
-                ((MapActivity) getActivity()).getGoogleMap().moveCamera(track);
-                ((MapActivity) getActivity()).getGoogleMap().addPolyline(getLine(result));
+                CameraUpdate track =
+                        CameraUpdateFactory.newLatLngBounds(
+                                getLatLngBounds(result),
+                                ScreenUtils.getScreenWidth(getContext()),
+                                ScreenUtils.getScreenWidth(getContext()), 8);
 
-                distanceTxtv.setText(getDistance(result));
-                timeTxtv.setText(getTime(result));
+                if (((MapActivity) getActivity()).getGoogleMap() != null) {
+                    ((MapActivity) getActivity()).getGoogleMap().moveCamera(track);
+                    ((MapActivity) getActivity()).getGoogleMap().addPolyline(getLine(result));
 
-                showResultContainer();
+                    distanceTxtv.setText(getDistance(result));
+                    timeTxtv.setText(getTime(result));
+
+                    showResultContainer();
 
 
+                }
             }
 
 
@@ -280,9 +291,12 @@ public class CalcDistanceFragment extends BasePresenterFragment<CalcDistanceMvpP
     public void onItemRemoved(int pos, Place place) {
         hideKeyboard();
 //        hideResultContainer();
-        places.remove(pos);
-        if (pos != 0)
-            initRoute();
+        if (places.size() > pos) {
+            places.remove(pos);
+            if (pos != 0)
+                initRoute();
+        }
+
     }
 
     @Override

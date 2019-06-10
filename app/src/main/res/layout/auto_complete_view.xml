@@ -29,8 +29,7 @@
             android:paddingTop="5dp"
             android:textColor="@color/colorText"
             android:textColorHint="@color/colorTextHint"
-            android:textSize="16sp"
-            tools:hint="Введите адрес" />
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 

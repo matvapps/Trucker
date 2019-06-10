@@ -1,6 +1,7 @@
 package com.foora.perevozkadev.ui.add_employee;
 
 import com.foora.perevozkadev.ui.base.MvpPresenter;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 
 /**
  * Created by Alexandr.
@@ -14,4 +15,6 @@ public interface AddEmployeeMvpPresenter<V extends AddEmployeeMvpView> extends M
                      String firstName,
                      String lastName,
                      String group);
+
+    void changeEmployee(Profile profile);
 }

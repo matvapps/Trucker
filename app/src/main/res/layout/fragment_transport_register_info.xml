@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -40,7 +40,7 @@
                 style="@style/AppEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
-                app:aet_hint="Номер транспорта ТС" />
+                app:aet_hint="гос. Номер" />
 
             <com.github.matvapps.AppEditText
                 android:id="@+id/transport_register_place"
@@ -49,7 +49,7 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="8dp"
                 android:gravity="top|start"
-                app:aet_hint="Место регистрации"
+                app:aet_hint="Страна регистрации"
                 app:aet_imeOption="actionDone"
                 app:aet_inputType="textMultiline"/>
 
@@ -76,6 +76,7 @@
             </FrameLayout>
 
             <TextView
+                android:id="@+id/choose_photo_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

@@ -26,6 +26,12 @@ public class Order implements Serializable {
     @SerializedName("unloading_date")
     @Expose
     private String unloadingDate;
+    @SerializedName("cargo_category")
+    @Expose
+    private long cargoType;
+    @SerializedName("cargo_category_name")
+    @Expose
+    private String cargoTypeName;
     @SerializedName("cargo")
     @Expose
     private String cargo;
@@ -101,6 +107,9 @@ public class Order implements Serializable {
     @SerializedName("add_info")
     @Expose
     private String additionalInfo;
+    @SerializedName("user")
+    @Expose
+    private int user;
 //    @SerializedName("status")
 //    @Expose
 //    private String status;
@@ -393,6 +402,30 @@ public class Order implements Serializable {
         this.additionalInfo = additionalInfo;
     }
 
+    public long getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(long cargoType) {
+        this.cargoType = cargoType;
+    }
+
+    public String getCargoTypeName() {
+        return cargoTypeName;
+    }
+
+    public void setCargoTypeName(String cargoTypeName) {
+        this.cargoTypeName = cargoTypeName;
+    }
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -402,6 +435,8 @@ public class Order implements Serializable {
                 ", status='" + status + '\'' +
                 ", loadingDate='" + loadingDate + '\'' +
                 ", unloadingDate='" + unloadingDate + '\'' +
+                ", cargoType='" + cargoType + '\'' +
+                ", cargoTypeName='" + cargoTypeName + '\'' +
                 ", cargo='" + cargo + '\'' +
                 ", weightFrom=" + weightFrom +
                 ", weightTo=" + weightTo +

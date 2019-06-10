@@ -194,7 +194,7 @@ public class PlaceArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            placeAutoCompleteView = itemView.findViewById(R.id.place_autocomplete);
+            placeAutoCompleteView = itemView.findViewById(R.id.order_id_edtxt);
             drawableRoute = itemView.findViewById(R.id.route_drawable);
             placeImage = itemView.findViewById(R.id.place_image);
             divider = itemView.findViewById(R.id.divider);

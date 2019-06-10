@@ -2,11 +2,14 @@ package com.foora.perevozkadev.ui.profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,18 +25,18 @@ import com.foora.perevozkadev.data.db.LocalRepo;
 import com.foora.perevozkadev.data.db.LocalRepoImpl;
 import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
-import com.foora.perevozkadev.ui.my_order_info.MyOrderInfoActivity;
-import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
-import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
+import com.foora.perevozkadev.ui.my_order_info.MyOrderInfoActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
+import com.foora.perevozkadev.ui.nav.BaseNavPresenterActivity;
 import com.foora.perevozkadev.ui.profile.adapter.PartnersAdapter;
 import com.foora.perevozkadev.ui.profile.adapter.ProfileTransportAdapter;
 import com.foora.perevozkadev.ui.profile.model.Partner;
-import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.ui.profile.profile_settings.ProfileSettingsActivity;
+import com.foora.perevozkadev.ui.search_order.orders.OrdersAdapter;
 import com.foora.perevozkadev.ui.transport.TransportActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -47,6 +50,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +63,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
     public static final String TAG = ProfileActivity.class.getSimpleName();
 
+    static final int REQUEST_IMAGE_CAPTURE = 34;
     private final int PLACE_PICKER_REQUEST = 1;
 
     private NestedScrollView nestedScrollView;
@@ -74,6 +80,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     private TextView orderTxtv;
     private ImageView userImageView;
     private MapView userLocMapView;
+    private TextView verifyUserTxtv;
 
     private Button seeAllPartners;
     private Button seeAllTransport;
@@ -101,7 +108,6 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
         userLocMapView = findViewById(R.id.map_image_view);
         userLocMapView.onCreate(savedInstanceState);
-        userLocMapView.getMapAsync(this);
     }
 
     private void openMap() {
@@ -143,6 +149,7 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         userShortNameTxtv = findViewById(R.id.short_name);
         userTypeTxtv = findViewById(R.id.user_type);
         userImageView = findViewById(R.id.user_image);
+        verifyUserTxtv = findViewById(R.id.verify_user);
 
         seeAllTransport.setOnClickListener(this);
         seeAllPartners.setOnClickListener(this);
@@ -191,6 +198,13 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         getPresenter().getProfile();
 
         preferencesHelper = new PrefRepoImpl(this);
+
+        verifyUserTxtv.setOnClickListener(v -> {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        });
 
     }
 
@@ -285,10 +299,16 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         this.googleMap = googleMap;
         this.googleMap.setMinZoomPreference(12);
 
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+//        LatLng ny = new LatLng(40.7143528, -74.0059731);
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         googleMap.setOnMapClickListener(latLng -> openMap());
+
+        if (profile != null) {
+            LatLng lat = new LatLng(profile.getLatitude(), profile.getLongitude());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lat));
+        }
+
     }
 
     @Override
@@ -299,6 +319,30 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
     @Override
     public void onGetProfile(Profile profile) {
         this.profile = profile;
+
+        PrefRepo prefRepo = new PrefRepoImpl(this);
+        prefRepo.setUserName(profile.getFirstName() + " " + profile.getLastName());
+        prefRepo.setUserRole(profile.getGroups().get(0));
+
+//        getPresenter().saveProfile(profile);
+
+        String userType = "";
+        String userRole = profile.getGroups().get(0);
+
+        if (userRole.equals("owner")) {
+            userType = "Владелец аккаунта";
+        } else if (userRole.equals("manager_1")) {
+            userType = "Менеджер 1 ур.";
+        } else if (userRole.equals("manager_2")) {
+            userType = "Менеджер 2 ур.";
+        } else if (userRole.equals("manager_3")) {
+            userType = "Менеджер 3 ур.";
+        } else if (userRole.equals("driver")) {
+            userType = "Водитель";
+        }
+
+
+        userTypeTxtv.setText(userType);
 
         if (profile.getFirstName() != null && !profile.getFirstName().equals("")) {
             String userName = String.format("%s %s", profile.getFirstName(), profile.getLastName());
@@ -326,6 +370,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         }
         if (profile.getDescription() != null)
             expandableTextView.setText(profile.getDescription());
+
+        userLocMapView.getMapAsync(this);
     }
 
     @Override
@@ -350,8 +396,8 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PLACE_PICKER_REQUEST) {
                 Place place = PlacePicker.getPlace(this, data);
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(place.getLatLng());
@@ -360,9 +406,31 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
 
                 profile.setLatitude(place.getLatLng().latitude);
                 profile.setLongitude(place.getLatLng().longitude);
+                profile.setCurrency("USD");
+
+                Log.d(TAG, "onActivityResult: " + profile);
 
                 getPresenter().changeProfile(profile);
+            } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
 
+                File outputDir = getCacheDir();
+                File outputFile = null;
+
+                try {
+                    outputFile = File.createTempFile("file" + System.currentTimeMillis(), ".png", outputDir);
+
+                    FileOutputStream out = new FileOutputStream(outputFile);
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                    out.flush();
+                    out.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                getPresenter().verifyUser(outputFile);
             }
         }
     }

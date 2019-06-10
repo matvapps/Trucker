@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="43dp"
+        android:layout_height="22dp"
+        android:background="@drawable/rouded_rect_orange_light"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="30dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="4dp"
+        android:textAllCaps="true"
+        android:textColor="@color/orange_yellow"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        tools:text="CMR" />
+</FrameLayout>

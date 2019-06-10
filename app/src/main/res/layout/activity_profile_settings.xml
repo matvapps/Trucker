@@ -153,6 +153,7 @@
                 android:id="@+id/your_pocket"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:visibility="gone"
                 android:background="?android:attr/selectableItemBackground">
 
                 <TextView
@@ -178,6 +179,7 @@
                 android:id="@+id/lang_and_currency"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:visibility="gone"
                 android:background="?android:attr/selectableItemBackground">
 
                 <TextView
@@ -211,7 +213,7 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:text="СМС уведомления"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
                 <ImageView

@@ -8,5 +8,8 @@ import com.foora.perevozkadev.ui.base.MvpPresenter;
 public interface MyTransportMvpPresenter<V extends MyTransportMvpView> extends MvpPresenter<V> {
 
     void getUserTransport();
+    void addTransportToArchive(int transportId);
+    void removeTransportFromArchive(int transportId);
+    void getTransportArchive();
 
 }

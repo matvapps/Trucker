@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.foora.perevozkadev.ui.my_transport.transport.TransportsFragment;
+
 public class MyTransportPagerAdapter extends FragmentPagerAdapter {
     public MyTransportPagerAdapter(FragmentManager fm) {
         super(fm);

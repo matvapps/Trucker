@@ -83,7 +83,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             Profile profile = getItem(position);
 
             if (listener != null)
-                itemView.setOnClickListener(v -> listener.onClick(profile));
+                itemView.setOnClickListener(v -> listener.onClick(itemView, profile));
 
             String name = String.format("%s %s", profile.getFirstName(), profile.getLastName());
 
@@ -119,7 +119,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public interface Callback {
-        void onClick(Profile profile);
+        void onClick(View view, Profile profile);
     }
 
 }

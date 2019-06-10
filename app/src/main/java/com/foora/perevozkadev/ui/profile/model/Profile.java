@@ -55,13 +55,13 @@ public class Profile implements Serializable {
     private String registerCountry;
     @SerializedName("international_passport_photos")
     @Expose
-    private List<String> internationalPassportPhotos = null;
+    private List<String> internationalPassportPhotos;
     @SerializedName("registration_certificate_photos")
     @Expose
-    private List<String> registrationCertificatePhotos = null;
+    private List<String> registrationCertificatePhotos;
     @SerializedName("transportation_license_photos")
     @Expose
-    private List<String> transportationLicensePhotos = null;
+    private List<String> transportationLicensePhotos;
     @SerializedName("lang")
     @Expose
     private String lang;
@@ -350,6 +350,8 @@ public class Profile implements Serializable {
                 ", userGroup='" + userGroup + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", profileName='" + profileName + '\'' +
+                ", groups=" + groups +
                 '}';
     }
 }

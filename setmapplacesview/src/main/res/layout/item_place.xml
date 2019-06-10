@@ -28,7 +28,7 @@
         <!--app:layout_constraintTop_toTopOf="@+id/place_image" />-->
 
     <com.github.matvapps.setmapplacesview.PlaceAutoCompleteView
-        android:id="@+id/place_autocomplete"
+        android:id="@+id/order_id_edtxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
@@ -56,9 +56,9 @@
         android:layout_marginTop="9dp"
         android:alpha="0.15"
         android:background="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/place_autocomplete"
-        app:layout_constraintStart_toStartOf="@+id/place_autocomplete"
-        app:layout_constraintTop_toBottomOf="@+id/place_autocomplete" />
+        app:layout_constraintEnd_toEndOf="@+id/order_id_edtxt"
+        app:layout_constraintStart_toStartOf="@+id/order_id_edtxt"
+        app:layout_constraintTop_toBottomOf="@+id/order_id_edtxt" />
 
     <ImageView
         android:id="@+id/place_image"

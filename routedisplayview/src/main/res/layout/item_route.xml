@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusableInTouchMode="false"
+    android:focusable="false"
+    android:clickable="false"
     android:layout_height="60dp">
 
     <com.perevozka.foora.routedisplayview.RouteDrawable

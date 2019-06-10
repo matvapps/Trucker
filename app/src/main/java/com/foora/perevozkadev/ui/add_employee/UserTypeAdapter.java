@@ -59,6 +59,11 @@ public class UserTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return selectedPos;
     }
 
+    public void setSelected(int pos) {
+        selectedPos = pos;
+        notifyDataSetChanged();
+    }
+
     private class UserTypeViewHolder extends BaseViewHolder {
 
         private TextView textView;
@@ -80,6 +85,8 @@ public class UserTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             if (position != selectedPos)
                 itemView.setSelected(false);
+            else
+                itemView.setSelected(true);
 
             textView.setText(getItem(position));
             itemView.setOnClickListener(v -> {

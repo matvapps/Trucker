@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -21,6 +23,7 @@ import com.foora.perevozkadev.ui.add_transport.register_info.FragmentRegisterInf
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.utils.custom.ViewPagerNoScroll;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.List;
@@ -33,11 +36,15 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
 
     public static final String TAG = AddTransportActivity.class.getSimpleName();
 
+    private static final String TRANSPORT_KEY = "order_key";
+
     private ViewPagerNoScroll viewPager;
     private TabLayout tabLayout;
+    private TextView titleTxtv;
 
     private AddTransportPagerAdapter addTransportPagerAdapter;
 
+    private Transport transportForEdit;
     private Transport transport;
     private int transportId;
 
@@ -58,6 +65,13 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         activity.startActivity(intent);
     }
 
+    public static void start(Activity activity, Transport transport) {
+        Intent intent = new Intent(activity, AddTransportActivity.class);
+        Gson gson = new Gson();
+        intent.putExtra(TRANSPORT_KEY, gson.toJson(transport));
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +79,15 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
 
         setUnBinder(ButterKnife.bind(this));
 
+        transportForEdit = new Gson().fromJson(getIntent().getStringExtra(TRANSPORT_KEY), Transport.class);
+
+
         transport = new Transport();
 
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+        titleTxtv = findViewById(R.id.title);
 
         View btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(v -> finish());
@@ -85,6 +103,14 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         }
 
         requestPermissionsSafely(PERMISSIONS, PERMISSION_ALL);
+
+        if (transportForEdit != null)
+            titleTxtv.setText("Редактировать транспорт");
+    }
+
+    public Transport getTransportForEdit() {
+        Log.d(TAG, "onCreate: TransportForEdit: " + transportForEdit);
+        return transportForEdit;
     }
 
     @Override
@@ -128,13 +154,16 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         transport.setPassportNum(carNum);
         transport.setRegistrationPlace(regPlace);
         transport.setRegistrationDate(regDate);
-        //TODO:
         transport.setVehicleCondition("good");
-        //TODO:
         transport.setLocation("Current location");
         passportPhotos = photos;
 
-        getPresenter().addTransport(transport);
+        if (transportForEdit != null) {
+            getPresenter().changeTransport(transportForEdit.getId(), transport);
+        } else {
+            getPresenter().addTransport(transport);
+        }
+
 //        finish();
     }
 
@@ -147,6 +176,11 @@ public class AddTransportActivity extends BasePresenterActivity<AddTransportMvpP
         }
 
 //        finish();
+    }
+
+    @Override
+    public void onChangeTransport(Transport transport) {
+        finish();
     }
 
     @Override

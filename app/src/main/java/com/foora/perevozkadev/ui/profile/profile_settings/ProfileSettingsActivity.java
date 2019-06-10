@@ -11,6 +11,7 @@ import com.foora.perevozkadev.ui.profile.profile_settings.change_password.Change
 import com.foora.perevozkadev.ui.profile.profile_settings.change_phone.ChangePhoneActivity;
 import com.foora.perevozkadev.ui.profile.profile_settings.general_info.GeneralInfoActivity;
 import com.foora.perevozkadev.ui.profile.profile_settings.register_info.RegisterInfoActivity;
+import com.foora.perevozkadev.ui.profile.profile_settings.use_2fa.EnableSmsActivity;
 import com.foora.perevozkadev.ui.profile.profile_settings.your_profile.YourProfileActivity;
 
 public class ProfileSettingsActivity extends BaseActivity implements View.OnClickListener{
@@ -86,7 +87,7 @@ public class ProfileSettingsActivity extends BaseActivity implements View.OnClic
 
                 break;
             case R.id.sms_notification:
-
+                EnableSmsActivity.start(this);
                 break;
             case R.id.change_password:
                 ChangePasswordActivity.start(this);

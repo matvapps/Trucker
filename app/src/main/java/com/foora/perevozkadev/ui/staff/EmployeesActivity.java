@@ -66,6 +66,16 @@ public class EmployeesActivity extends BaseNavPresenterActivity<EmployeesMvpPres
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pagerAdapter = new EmployeesPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+    }
+
+    public void refresh(){
+        onResume();
+    }
 
     @Override
     protected EmployeesMvpPresenter createPresenter() {
@@ -75,6 +85,16 @@ public class EmployeesActivity extends BaseNavPresenterActivity<EmployeesMvpPres
 
     @Override
     public void onReceiveEmployees(List<Profile> profiles) {
+
+    }
+
+    @Override
+    public void onGetEmployeesArchive(List<Profile> profiles) {
+
+    }
+
+    @Override
+    public void onRestoreFromArchive() {
 
     }
 }

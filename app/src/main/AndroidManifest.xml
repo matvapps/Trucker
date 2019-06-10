@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -26,24 +27,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.foora.perevozkadev.ui.rate.RateActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
         <service android:name="com.foora.perevozkadev.service.SyncService" />
+        <service android:name="com.foora.perevozkadev.service.location.DriverLocationService" />
 
         <activity
             android:name="com.foora.perevozkadev.ui.entry.EntryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.foora.perevozkadev.ui.add_order.AddOrderActivity"
@@ -123,39 +124,34 @@
             android:name="com.foora.perevozkadev.ui.messages.MessagesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name="com.foora.perevozkadev.ui.map.MapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Map"
-            android:windowSoftInputMode="stateAlwaysHidden">
-
-        </activity>
-
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name="com.foora.perevozkadev.ui.choose_transport.ChooseTransportActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.messages_info.MessagesInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
-        <activity android:name="com.foora.perevozkadev.ui.docs.DocsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.foora.perevozkadev.ui.docs.DocsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.docs.PhotoPreviewActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.foora.perevozkadev.ui.my_order_info.MyOrderInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name="com.foora.perevozkadev.ui.profile.profile_settings.use_2fa.EnableSmsActivity" />
+        <activity android:name="com.foora.perevozkadev.ui.add_drivers_to_order.AddDriversToOrderActivity" />
+        <activity android:name="com.foora.perevozkadev.ui.add_drivers_to_order.order_drivers.OrderDriversActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -164,9 +160,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

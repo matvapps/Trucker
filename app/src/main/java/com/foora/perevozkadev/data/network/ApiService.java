@@ -5,17 +5,21 @@ import com.foora.perevozkadev.data.network.model.ActivateResponse;
 import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.DriverResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
+import com.foora.perevozkadev.data.network.model.Location;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
+import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.utils.custom.tnvd.Cargo;
 
 import java.util.List;
 
@@ -27,6 +31,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -78,6 +83,10 @@ public interface ApiService {
     Call<Profile> getProfile(@Header("Authorization") String token);
 
 
+    @GET("user/{user_id}/")
+    Call<Profile> getProfile(@Path(value = "user_id", encoded = true) int userId,
+                             @Header("Authorization") String token);
+
     @Headers({"Accept: application/json"})
     @PATCH("user/")
     Call<Profile> changeProfile(@Header("Authorization") String token,
@@ -102,6 +111,16 @@ public interface ApiService {
     Call<BaseResponse> uploadPhoto(@Path(value = "photo_type", encoded = true) String photoType,
                                    @Header("Authorization") String token,
                                    @Part MultipartBody.Part image);
+
+    @FormUrlEncoded
+    @POST("user/use-2fa/")
+    Call<BaseResponse> setUse2Fa(@Header("Authorization") String token,
+                                 @Field("is_2fa_enabled") int use_2Fa);
+
+    @Multipart
+    @PATCH("user/verify/add-photo/")
+    Call<BaseResponse> verifyUser(@Header("Authorization") String token,
+                                  @Part MultipartBody.Part image);
     // ----------------------------------------------------------------------------------------
 
 
@@ -127,6 +146,7 @@ public interface ApiService {
     @GET("order/{order_id}/")
     Call<Order> getOrderById(@Header("Authorization") String token,
                              @Path("order_id") int orderId);
+
     // ----------------------------------------------------------------------------------------
 
     // Employees
@@ -146,9 +166,21 @@ public interface ApiService {
                                  @NonNull @Field("group") String group);
 
 
-    @DELETE("user/staff/{user_id}/delete/")
-    Call<String> deleteUserFromStaff(@Path(value = "user_id", encoded = true) int userId,
+    @POST("user/staff/{user_id}/archive/")
+    Call<Profile> deleteUserFromStaff(@Path(value = "user_id", encoded = true) int userId,
                                      @Header("Authorization") String token);
+
+    @DELETE("user/staff/{user_id}/archive/")
+    Call<Profile> restoreUserFromArchive(@Path(value = "user_id", encoded = true) int userId,
+                                         @Header("Authorization") String token);
+
+    @GET("user/staff/archive/")
+    Call<List<Profile>> getStaffArchive(@Header("Authorization") String token);
+
+    @PATCH("user/{user_id}/")
+    Call<BaseResponse> changeStaffProfile(@Path(value = "user_id", encoded = true) int userId,
+                                          @Header("Authorization") String token,
+                                          @Body Profile profile);
 
     // ----------------------------------------------------------------------------------------
 
@@ -168,9 +200,29 @@ public interface ApiService {
     @GET("transport/")
     Call<TransportResponse> getTransport(@Header("Authorization") String token);
 
+    @Headers({"Accept: application/json"})
+    @PATCH("transport/{transport_id}/")
+    Call<Transport> changeTransport(@Path(value = "transport_id", encoded = true) int transportId,
+                                    @Header("Authorization") String token,
+                                    @Body Transport transport);
+
+
+    @GET("transport/archive/")
+    Call<TransportResponse> getTransportArchive(@Header("Authorization") String token);
+
     @GET("transport/{transport_id}/")
     Call<Transport> getTransport(@Path(value = "transport_id", encoded = true) int transportId,
                                  @Header("Authorization") String token);
+
+
+    @POST("transport/{transport_id}/archive/")
+    Call<BaseResponse> addTransportToArchive(@Path(value = "transport_id", encoded = true) int transportId,
+                                             @Header("Authorization") String token);
+
+    @DELETE("transport/{transport_id}/archive/")
+    Call<BaseResponse> removeTransportFromArchive(@Path(value = "transport_id", encoded = true) int transportId,
+                                                  @Header("Authorization") String token);
+
     // ----------------------------------------------------------------------------------------
 
 
@@ -193,11 +245,11 @@ public interface ApiService {
 
     @GET("order/request/{request_id}/reject/")
     Call<OrderRequest> rejectRequest(@Header("Authorization") String token,
-                                           @Path(value = "request_id", encoded = true) int requestId);
+                                     @Path(value = "request_id", encoded = true) int requestId);
 
     @PATCH("order/request/{request_id}/confirm/")
     Call<OrderRequest> confirmRequest(@Header("Authorization") String token,
-                                            @Path(value = "request_id", encoded = true) int requestId);
+                                      @Path(value = "request_id", encoded = true) int requestId);
     // ----------------------------------------------------------------------------------------
 
 
@@ -210,7 +262,7 @@ public interface ApiService {
 
     @GET("order/{order_id}/files/")
     Call<List<FileResponse>> getOrderFiles(@Header("Authorization") String token,
-                                     @Path(value = "order_id", encoded = true) int orderId);
+                                           @Path(value = "order_id", encoded = true) int orderId);
 
     // ----------------------------------------------------------------------------------------
 
@@ -223,6 +275,63 @@ public interface ApiService {
 
     // ----------------------------------------------------------------------------------------
 
+    // Get cargo types
+    @GET("cargo-category/")
+    Call<List<Cargo>> searchCargoTypes(@Query("q") String query);
+
+    // ----------------------------------------------------------------------------------------
+
+    // Order drivers
+    @GET("order/{order_id}/drivers/")
+    Call<DriverResponse> getOrderDrivers(@Header("Authorization") String token,
+                                         @Path(value = "order_id", encoded = true) int orderId);
+
+    @POST("order/{order_id}/drivers/")
+    Call<BaseResponse> addDriversToOrder(@Header("Authorization") String token,
+                                         @Path(value = "order_id", encoded = true) int orderId,
+                                         @Body DriverResponse drivers);
+
+    //    @DELETE("order/{order_id}/drivers/")
+    @HTTP(method = "DELETE", path = "order/{order_id}/drivers/", hasBody = true)
+    Call<BaseResponse> removeDriversFromOrder(@Header("Authorization") String token,
+                                              @Path(value = "order_id", encoded = true) int orderId,
+                                              @Body DriverResponse drivers);
+    // ----------------------------------------------------------------------------------------
+
+
+    // Tracking
+    @POST("location/")
+    Call<BaseResponse> addUserLocation(@Header("Authorization") String token,
+                                       @Body Location location);
+
+    @GET("user/order/{order_id}/track/")
+    Call<List<TrackResponse>> trackOrder(@Header("Authorization") String token,
+                                         @Path(value = "order_id", encoded = true) int orderId);
+
+    // ----------------------------------------------------------------------------------------
+
+    // SOS
+    @FormUrlEncoded
+    @POST("sos/")
+    Call<BaseResponse> callSos(@Header("Authorization") String token,
+                               @Field("latitude") double latitude,
+                               @Field("longitude") double longitude);
+
+    @FormUrlEncoded
+    @POST("sos/{sos_id}/accept/")
+    Call<BaseResponse> acceptSos(@Header("Authorization") String token,
+                                 @Path(value = "sos_id", encoded = true) int sos_id);
+
+
+    @FormUrlEncoded
+    @DELETE("sos/{sos_id}/reject/")
+    Call<BaseResponse> rejectSos(@Header("Authorization") String token,
+                                 @Path(value = "sos_id", encoded = true) int sos_id);
+
+    @GET("user/{user_id}/location/")
+    Call<List<TrackResponse>> getLastUserLoc(@Header("Authorization") String token,
+                                             @Path(value = "userId", encoded = true) int userId);
+    // ----------------------------------------------------------------------------------------
 
 
 }

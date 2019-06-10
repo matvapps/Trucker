@@ -1,11 +1,16 @@
 package com.foora.perevozkadev.ui.my_order_info;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
@@ -26,6 +31,8 @@ import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.add_order.model.Place;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.change_status.ChangeStatusFragment;
+import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.ui.search_order.SearchOrderActivity;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -60,6 +67,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
 
     int orderId;
 
+    private Profile profile;
+
     public static void start(Activity activity, int orderId) {
         Intent intent = new Intent(activity, MyOrderInfoActivity.class);
         intent.putExtra(KEY_ORDER_ID, orderId);
@@ -85,6 +94,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
     private TextView depthTxtv;
     private TextView paymentType;
     private TextView costTxtv;
+    private TextView cargoTypeTxtv;
+    private TextView btnSos;
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -121,6 +132,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         costTxtv = findViewById(R.id.cost_txtv);
         additionalInfo = findViewById(R.id.additional_info);
         nestedScrollView = findViewById(R.id.scrollView);
+        cargoTypeTxtv = findViewById(R.id.cargo_txtv);
+        btnSos = findViewById(R.id.btn_sos);
 
         LinearLayout llBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet);
 
@@ -128,12 +141,28 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
+        btnSos.setOnClickListener(v -> {
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(MyOrderInfoActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(MyOrderInfoActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null) {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    getPresenter().sendSOS(latitude, longitude);
+                }
+            }
+        });
+
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        btnBack.setOnClickListener(v1 -> finish());
+        btnBack.setOnClickListener(v1 -> SearchOrderActivity.start(this));
 
-
+        getPresenter().getProfile();
     }
 
     @Override
@@ -204,7 +233,7 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         carQuantityTxtv.setText(String.format(Locale.getDefault(), "%d шт", order.getCarQuantity()));
         transportTypeTxtv.setText(order.getTransportType());
         additionalInfo.setText(order.getAdditionalInfo());
-        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f кг", order.getWeightFrom()));
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.0f т", order.getWeightFrom()));
         volumeTxtv.setText(String.format(Locale.getDefault(), "%.0f м³", order.getVolumeFrom()));
 
         String[] size = order.getSize().split("x");
@@ -212,14 +241,12 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         heightTxtv.setText(String.format(Locale.getDefault(), "%s м", size[1]));
         depthTxtv.setText(String.format(Locale.getDefault(), "%s м", size[2]));
 
+        cargoTypeTxtv.setText(order.getCargoTypeName());
+
+
         Log.d(TAG, "onGetOrder: " + order.toString());
 
-        btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MenuFragment.newInstance(new Gson().toJson(order)).show(getSupportFragmentManager(), MenuFragment.TAG);
-            }
-        });
+        btnMenu.setOnClickListener(v -> MenuFragment.newInstance(new Gson().toJson(order), profile.getUserId()).show(getSupportFragmentManager(), MenuFragment.TAG));
 
 //        paymentType.setText(order.getPaymentType1());
 //        costTxtv.setText(String.format(Locale.getDefault(),
@@ -232,6 +259,15 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
     public void onChangeOrderStatus() {
         showMessage("Статус заказа успешно изменен");
         getPresenter().getOrderById(orderId);
+    }
+
+    @Override
+    public void onGetProfile(Profile profile) {
+        this.profile = profile;
+
+        if (profile.getGroups().contains("driver"))
+            btnSos.setVisibility(View.VISIBLE);
+
     }
 
     private List<RouteItem> getRouteItemsFromOrder(@NonNull Order order) {
@@ -302,6 +338,9 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
             e.printStackTrace();
         }
 
+        if (addresses.size() == 0) {
+            return null;
+        }
         android.location.Address add = addresses.get(0);
         double lat = add.getLatitude();
         double lng = add.getLongitude();
@@ -311,11 +350,17 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
 
     private void initMapRoute(Order order) {
         for (Place place : order.getLoadingPlaces()) {
-            places.add(getLatLngFromAddress(place.getName()));
+            com.google.maps.model.LatLng latLng = getLatLngFromAddress(place.getName());
+            if (latLng != null) {
+                places.add(latLng);
+            }
         }
 
         for (Place place : order.getUnloadingPlaces()) {
-            places.add(getLatLngFromAddress(place.getName()));
+            com.google.maps.model.LatLng latLng = getLatLngFromAddress(place.getName());
+            if (latLng != null) {
+                places.add(latLng);
+            }
         }
 
         for (int i = 0; i < places.size(); i++) {
@@ -330,6 +375,9 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
             for (int i = 0; i < places.size(); i++) {
                 latLngs[i] = places.get(i);
             }
+
+            if (places.size() < 1)
+                return;
 
             result = DirectionsApi.newRequest(getGeoContext())
                     .mode(TravelMode.DRIVING)

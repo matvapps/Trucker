@@ -54,6 +54,23 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
+                <TextView
+                    android:id="@+id/btn_sos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:padding="8dp"
+                    android:text="SOS"
+                    android:background="?attr/selectableItemBackground"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_menu"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/btn_menu"
                     android:layout_width="40dp"
@@ -322,6 +339,37 @@
                         android:gravity="end"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:text="Тип груза"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/cargo_txtv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="Морковь, сушеная, целая, нарезанная кусками, ломтиками, измельченная или в виде порошка, но не подвергнутая дальнейшей обработке" />
 
                 </LinearLayout>
 

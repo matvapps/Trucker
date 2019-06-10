@@ -113,4 +113,44 @@ public class AddTransportPresenter<V extends AddTransportMvpView> extends BasePr
         });
 
     }
+
+    @Override
+    public void changeTransport(int transportId, Transport transport) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "changeTransport(): view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().changeTransport(transportId, getDataManager().getUserToken(), transport)
+                .enqueue(new Callback<Transport>() {
+                    @Override
+                    public void onResponse(Call<Transport> call, Response<Transport> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: received: " + response.body().toString());
+                            getMvpView().onChangeTransport(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            getMvpView().showErrorMessage("Не удалось редактировать транспорт");
+//                            getMvpView().onError("Не удалось редактировать транспорт");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Transport> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                        getMvpView().showErrorMessage("Не удалось редактировать транспорт");
+                    }
+                });
+    }
 }

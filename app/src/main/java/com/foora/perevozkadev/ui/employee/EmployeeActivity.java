@@ -16,6 +16,7 @@ import com.foora.perevozkadev.data.network.RemoteRepo;
 import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
+import com.foora.perevozkadev.ui.add_employee.AddEmployeeActivity;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.profile.model.Profile;
 
@@ -39,6 +40,7 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
     private TextView userPhone;
     private TextView userLogin;
     private TextView userPassword;
+    private View btnEdit;
 
     private Profile profile;
 
@@ -46,6 +48,12 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
         Intent intent = new Intent(activity, EmployeeActivity.class);
         intent.putExtra(PROFILE_KEY, profile);
         activity.startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPresenter().getProfile(profile.getUserId());
     }
 
     @Override
@@ -70,7 +78,38 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
         userPhone = findViewById(R.id.phone);
         userLogin = findViewById(R.id.login);
         userPassword = findViewById(R.id.password);
+        btnEdit = findViewById(R.id.btn_edit);
+    }
 
+    @Override
+    protected void setUp() {
+
+    }
+
+
+    @Override
+    protected EmployeeMvpPresenter createPresenter() {
+        RemoteRepo remoteRepo = new RemoteRepoImpl();
+        PrefRepo prefs = new PrefRepoImpl(this);
+        LocalRepo localRepo = new LocalRepoImpl(this);
+        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
+
+
+        EmployeeMvpPresenter presenter = new EmployeePresenter(dataManager, AndroidSchedulers.mainThread());
+        presenter.onAttach(this);
+
+        return presenter;
+    }
+
+
+    @Override
+    public void onRemoveUser() {
+        showMessage("Пользователь успешно удален");
+        finish();
+    }
+
+    @Override
+    public void onGetProfile(Profile profile) {
         String name = String.format("%s %s", profile.getFirstName(), profile.getLastName());
 
         userName.setText(name);
@@ -93,35 +132,10 @@ public class EmployeeActivity extends BasePresenterActivity<EmployeeMvpPresenter
 
         }
 
+        btnEdit.setOnClickListener(v -> AddEmployeeActivity.start(EmployeeActivity.this, profile));
+
         userType.setText(profile.getUserGroup());
-        userPhone.setText(profile.getPhone());
+        userPhone.setText(this.profile.getPhone());
         userLogin.setText(profile.getUsername());
-
-    }
-
-    @Override
-    protected void setUp() {
-
-    }
-
-
-    @Override
-    protected EmployeeMvpPresenter createPresenter() {
-        RemoteRepo remoteRepo = new RemoteRepoImpl();
-        PrefRepo prefs = new PrefRepoImpl(this);
-        LocalRepo localRepo = new LocalRepoImpl(this);
-        DataManager dataManager = new DataManagerImpl(remoteRepo, prefs, localRepo);
-
-        EmployeeMvpPresenter presenter = new EmployeePresenter(dataManager, AndroidSchedulers.mainThread());
-        presenter.onAttach(this);
-
-        return presenter;
-    }
-
-
-    @Override
-    public void onRemoveUser() {
-        showMessage("Пользователь успешно удален");
-        finish();
     }
 }

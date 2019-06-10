@@ -11,16 +11,23 @@ import android.widget.TextView;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BaseViewHolder;
+import com.foora.perevozkadev.utils.ViewUtils;
+import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
+import com.foora.perevozkadev.utils.custom.RtlGridLayoutManager;
 import com.perevozka.foora.routedisplayview.RouteDisplayView;
 import com.perevozka.foora.routedisplayview.RouteItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Alexandr.
  */
 public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String TAG = OrdersAdapter.class.getSimpleName();
 
     private List<Order> items;
     private List<Order> visibleItems;
@@ -103,9 +110,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private TextView transportType;
         private TextView cargoType;
         private TextView carQuant;
+        private TextView carQuantTxtv;
         private TextView cargoParam;
         private TextView cost;
         private TextView costType;
+        private TextView addInfo;
+        private RecyclerView docList;
 
 
         public OrderViewHolder(View itemView) {
@@ -114,9 +124,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             transportType = itemView.findViewById(R.id.transport_type);
             cargoType = itemView.findViewById(R.id.cargo_type);
             carQuant = itemView.findViewById(R.id.transport_quantity);
+            carQuantTxtv = itemView.findViewById(R.id.car_quant_txtv);
             cargoParam = itemView.findViewById(R.id.cargo_size);
             cost = itemView.findViewById(R.id.cost);
             costType = itemView.findViewById(R.id.cost_type);
+            addInfo = itemView.findViewById(R.id.txt_add_info);
+            docList = itemView.findViewById(R.id.docs_list);
         }
 
         @Override
@@ -131,8 +144,19 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (listener != null)
                 itemView.setOnClickListener(v -> listener.onClick(getItem(position)));
 
-            Order item = getItem(position);
+            if (listener != null)
+                routeDisplayView.setOnClickListener(v -> itemView.performClick());
 
+            docList.setLayoutManager(new RtlGridLayoutManager(itemView.getContext(), 2));
+            docList.addItemDecoration(new ItemSpacingDecoration(ViewUtils.dpToPx(4), 0, 0, ViewUtils.dpToPx(4)));
+            DocsAdapter docsAdapter = new DocsAdapter();
+            docList.setAdapter(docsAdapter);
+
+            Order item = getItem(position);
+            if (item.getDocs() != null) {
+                List<String> docList = Arrays.asList(item.getDocs().split(","));
+                docsAdapter.setItems(docList);
+            }
 //            if (item.getCurrency() == null) {
 //                List<RouteItem> routeItems = new ArrayList<>();
 //                routeItems.add(new RouteItem("2018-11-12", "Запорожье", "UA"));
@@ -144,11 +168,33 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             routeDisplayView.setRoutes(getRouteItemsFromOrder(item));
 
             transportType.setText(item.getTransportType());
-            cargoType.setText(item.getCargo());
-            carQuant.setText(String.valueOf(item.getCarQuantity()));
-            cargoParam.setText(item.getSize());
+            cargoType.setText(item.getCargoTypeName());
+            addInfo.setText(item.getAdditionalInfo());
+//            Log.d(TAG, "onBind: " + item.getCargoTypeName());
+
+            carQuantTxtv.setText(String.format(Locale.getDefault(), "%d", item.getCarQuantity()));
+            carQuant.setText(String.format(Locale.getDefault(), "%.2f т / %.2f м³", item.getWeightFrom(), item.getVolumeFrom()).replace(",", "."));
+
+            String[] size = item.getSize().split("x");
+            StringBuilder sizeParam = new StringBuilder();
+
+            for (int i = 0; i < size.length; i++) {
+                switch (i) {
+                    case 0:
+                        sizeParam.append(size[i]).append("Ш ");
+                        break;
+                    case 1:
+                        sizeParam.append(size[i]).append("В ");
+                        break;
+                    case 2:
+                        sizeParam.append(size[i]).append("Д");
+                        break;
+                }
+            }
+
+            cargoParam.setText(sizeParam);
             cost.setText(String.format("%s%s", String.valueOf(item.getCost()), item.getCurrency()));
-            costType.setText(String.format("%s %s", item.getPaymentType1(), item.getPaymentType2()));
+            costType.setText(String.format("%s", item.getPaymentType1()));
 
         }
 
@@ -205,6 +251,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void setListener(Callback listener) {
         this.listener = listener;
+    }
+
+    public List<Order> getItems() {
+        return items;
     }
 
     public interface Callback {

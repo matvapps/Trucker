@@ -3,11 +3,19 @@
 
     <string-array name="transport_types">
 
+        <item>полуприцеп</item>
+
         <item>тент</item>
-        <item>крытая</item>
-        <item>изотерм</item>
-        <item>цельномет.</item>
+        <item>сцепка грузовик</item>
+        <item>без прицепа</item>
+        <item>тент</item>
         <item>рефрижератор</item>
+        <item>цельнометаллический</item>
+        <item>изотерм</item>
+        <item>платформа</item>
+        <item>трал</item>
+        <item>цистерна</item>
+
         <item>автобус грузопас.</item>
         <item>автобус люкс</item>
         <item>автовоз</item>
@@ -17,7 +25,6 @@
         <item>битумовоз</item>
         <item>бортовая</item>
         <item>зерновоз</item>
-        <item>изотерм</item>
         <item>контейнер пустой</item>
         <item>контейнеровоз</item>
         <item>кормовоз</item>
@@ -38,11 +45,10 @@
         <item>скотовоз</item>
         <item>спецмашина</item>
         <item>стекловоз</item>
-        <item>тент</item>
-        <item>трал</item>
         <item>трубовоз</item>
         <item>тягач</item>
         <item>тандем</item>
+        <item>крытая</item>
         <item>цельномет.</item>
         <item>цельнопластик</item>
         <item>цементовоз</item>

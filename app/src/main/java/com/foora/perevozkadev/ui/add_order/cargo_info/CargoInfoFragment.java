@@ -20,6 +20,7 @@ import com.foora.perevozkadev.ui.base.BaseFragment;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.CustomSpinner;
 import com.foora.perevozkadev.utils.custom.SpinnerArrayAdapter;
+import com.foora.perevozkadev.utils.custom.tnvd.CargoAutoCompleteTextView;
 import com.github.matvapps.AppEditText;
 
 import java.text.SimpleDateFormat;
@@ -78,6 +79,10 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
     AppEditText depthEdtxt;
     @BindView(R.id.additional_info)
     AppEditText addInfoEdtxt;
+    @BindView(R.id.edtxt_docs)
+    AppEditText edtxtDocs;
+    @BindView(R.id.cargo_type)
+    CargoAutoCompleteTextView cargoAutoCompleteTextView;
 
 
     private SpinnerArrayAdapter transportArrayAdapter;
@@ -170,6 +175,8 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             }
             String[] dates = datesTxtv.getText().toString().split("-");
 
+            String docsString = edtxtDocs.getText();
+
             //read dates
             dateStart = dates[0].replaceAll("\\.", "-");
             dateStart = dateStart.replaceAll("\\s", "");
@@ -196,13 +203,14 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
                 return;
             }
 
-            // read mass
-            massFromNum = Float.parseFloat(massFrom.getText());
-//            massToNum = Float.parseFloat(massTo.getText());
+            if (cargoAutoCompleteTextView.getText().isEmpty()) {
+                onError("Заполните все поля");
+                return;
+            }
 
-            // read volume
+            massFromNum = Float.parseFloat(massFrom.getText());
+
             volumeFromNum = Float.parseFloat(volumeFrom.getText());
-//            volumeToNum = Float.parseFloat(volumeTo.getText());
 
             // read transport types
             for (int i = 0; i < spinnerContainer.getChildCount(); i++) {
@@ -220,13 +228,17 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
             height = Float.parseFloat(heightEdtxt.getText());
             depth = Float.parseFloat(depthEdtxt.getText());
 
+            long cargoId = cargoAutoCompleteTextView.getSelectedItem().getCargoId();
+
             if (dateEnd == null)
                 dateEnd = dateStart;
 
             listener.onReceiveCargoInfo(dateStart, dateEnd, massFromNum,
                     0, volumeFromNum, 0,
                     transportType, cost, currency,
-                    carQuant, width, height, depth, paymentType, addInfoEdtxt.getText());
+                    carQuant, width, height,
+                    depth, paymentType,
+                    addInfoEdtxt.getText(), cargoId, docsString);
 
         }
     }
@@ -343,7 +355,9 @@ public class CargoInfoFragment extends BaseFragment implements DateRangePickerDi
                                 List<String> transportTypes,
                                 float cost, String currency,
                                 int carQuant, float width,
-                                float height, float depth, String paymentType, String additionalInfo);
+                                float height, float depth,
+                                String paymentType, String additionalInfo,
+                                long cargoId, String docs);
     }
 
 }

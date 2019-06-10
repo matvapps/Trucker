@@ -82,6 +82,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
     private TextView paymentType;
     private TextView costTxtv;
     private TextView additionallyTxtv;
+    private TextView cargoTypeTxtv;
 
     private List<com.google.maps.model.LatLng> places;
 
@@ -136,6 +137,7 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         distanceTxtv = view.findViewById(R.id.distance_txtv);
         btnRespond = view.findViewById(R.id.btn_respond);
         timeTxtv = view.findViewById(R.id.time_txtv);
+        cargoTypeTxtv = view.findViewById(R.id.cargo_txtv);
         carQuantityTxtv = view.findViewById(R.id.car_quantity_txtv);
         transportTypeTxtv = view.findViewById(R.id.transport_type_txtv);
         cargoMassTxtv = view.findViewById(R.id.mass_txtv);
@@ -191,13 +193,15 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
         Log.d(TAG, "onCreateView: " + order.toString());
 
         additionallyTxtv.setText(order.getAdditionalInfo());
-        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f кг", order.getWeightFrom()));
+        cargoMassTxtv.setText(String.format(Locale.getDefault(), "%.2f т", order.getWeightFrom()));
         volumeTxtv.setText(String.format(Locale.getDefault(), "%.2f м³", order.getVolumeFrom()));
 
         String[] size = order.getSize().split("x");
         widthTextv.setText(String.format(Locale.getDefault(), "%s м", size[0]));
         heightTxtv.setText(String.format(Locale.getDefault(), "%s м", size[1]));
         depthTxtv.setText(String.format(Locale.getDefault(), "%s м", size[2]));
+
+        cargoTypeTxtv.setText(order.getCargoTypeName());
 
         paymentType.setText(order.getPaymentType1());
         costTxtv.setText(String.format(Locale.getDefault(), "%d %s", Math.round(order.getCost()), order.getCurrency().toLowerCase()));
@@ -356,6 +360,9 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
             e.printStackTrace();
         }
 
+        if (addresses.size() == 0)
+            return null;
+
         android.location.Address add = addresses.get(0);
         double lat = add.getLatitude();
         double lng = add.getLongitude();
@@ -365,11 +372,17 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
 
     private void initMapRoute() {
         for (Place place : order.getLoadingPlaces()) {
-            places.add(getLatLngFromAddress(place.getName()));
+            com.google.maps.model.LatLng latLng = getLatLngFromAddress(place.getName());
+            if (latLng != null) {
+                places.add(latLng);
+            }
         }
 
         for (Place place : order.getUnloadingPlaces()) {
-            places.add(getLatLngFromAddress(place.getName()));
+            com.google.maps.model.LatLng latLng = getLatLngFromAddress(place.getName());
+            if (latLng != null) {
+                places.add(latLng);
+            }
         }
 
         for (int i = 0; i < places.size(); i++) {
@@ -385,6 +398,9 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
                 latLngs[i] = places.get(i);
             }
 
+            if (places.size() < 1)
+                return;
+
             result = DirectionsApi.newRequest(getGeoContext())
                     .mode(TravelMode.DRIVING)
                     .language("ru")
@@ -393,19 +409,21 @@ public class OrderFragment extends BottomSheetDialogFragment implements OnMapRea
                     .waypoints(latLngs)
                     .await();
 
-            CameraUpdate track =
-                    CameraUpdateFactory.newLatLngBounds(
-                            getLatLngBounds(result), 100);
+            if (result.routes != null && result.routes.length > 0) {
 
-            if (googleMap != null) {
-                googleMap.moveCamera(track);
+                CameraUpdate track =
+                        CameraUpdateFactory.newLatLngBounds(
+                                getLatLngBounds(result), 100);
+
+                if (googleMap != null) {
+                    googleMap.moveCamera(track);
 //                googleMap.setMaxZoomPreference(4);
-                googleMap.addPolyline(getLine(result));
+                    googleMap.addPolyline(getLine(result));
 
-                distanceTxtv.setText(getDistance(result));
-                timeTxtv.setText(getTime(result));
+                    distanceTxtv.setText(getDistance(result));
+                    timeTxtv.setText(getTime(result));
 
-
+                }
             }
 
 

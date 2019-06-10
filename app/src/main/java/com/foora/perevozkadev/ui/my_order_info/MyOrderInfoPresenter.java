@@ -3,9 +3,11 @@ package com.foora.perevozkadev.ui.my_order_info;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
+import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenter;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 
 import java.io.IOException;
 
@@ -90,6 +92,82 @@ public class MyOrderInfoPresenter<V extends MyOrderInfoMvpView> extends BasePres
 
                     @Override
                     public void onFailure(Call<StatusResponse> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+    }
+
+    @Override
+    public void getProfile() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getProfile: View isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        Log.d(TAG, "token " + getDataManager().getUserToken());
+
+        getDataManager().getProfile(getDataManager().getUserToken())
+                .enqueue(new Callback<Profile>() {
+                    @Override
+                    public void onResponse(Call<Profile> call, Response<Profile> response) {
+                        getMvpView().hideLoading();
+
+                        Log.d(TAG, "onResponse: getProfile end with code: " + response.code());
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetProfile(response.body());
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Profile> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        getMvpView().onError("Не удалось получить ваш профиль");
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                    }
+                });
+    }
+
+    @Override
+    public void sendSOS(double latitude, double longitude) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().callSos(getDataManager().getUserToken(), latitude, longitude)
+                .enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
                         getMvpView().hideLoading();
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }

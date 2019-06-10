@@ -1,15 +1,22 @@
 package com.foora.perevozkadev.ui.staff;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -46,6 +53,7 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
 
     public static final int MANAGER = 221;
     public static final int DRIVER = 222;
+    public static final int ARCHIVE = 223;
 
     private int type = MANAGER;
 
@@ -94,6 +102,7 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
         return view;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void setUp(View view) {
         super.setUp(view);
@@ -101,20 +110,58 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
         setUnBinder(ButterKnife.bind(this, view));
 
         employeesAdapter = new EmployeesAdapter();
-        employeesAdapter.setListener(profile -> EmployeeActivity.start(getActivity(), profile));
+        employeesAdapter.setListener((view1, profile) -> {
+
+            if (type == ARCHIVE) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), view1, Gravity.END);
+                int menuId = R.menu.archive_context_menu;
+                popupMenu.getMenuInflater().inflate(menuId, popupMenu.getMenu());
+
+                for (int i = 0; i < popupMenu.getMenu().size(); i++) {
+                    MenuItem item = popupMenu.getMenu().getItem(i);
+
+                    SpannableString s = new SpannableString("Восстановить из архива");
+                    s.setSpan(new ForegroundColorSpan(Color.DKGRAY), 0, s.length(), 0);
+                    item.setTitle(s);
+                }
+
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.action_restore_from_archive:
+                            getPresenter().restoreFromArchive(profile.getUserId());
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+
+                popupMenu.show();
+            } else {
+                EmployeeActivity.start(getActivity(), profile);
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(employeesAdapter);
-        recyclerView.addItemDecoration(new ItemSpacingDecoration(0, 0, 0,0));
+        recyclerView.addItemDecoration(new ItemSpacingDecoration(0, 0, 0, 0));
 
-        getPresenter().getEmployees();
+        if (type == ARCHIVE) {
+            getPresenter().getEmployeesArchive();
+            btnAdd.setVisibility(View.GONE);
+        } else {
+            getPresenter().getEmployees();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-        getPresenter().getEmployees();
+        if (type == ARCHIVE) {
+            getPresenter().getEmployeesArchive();
+        } else {
+            getPresenter().getEmployees();
+        }
     }
 
     @Override
@@ -123,14 +170,14 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
 
         switch (type) {
             case MANAGER:
-                for (Profile profile: profiles) {
+                for (Profile profile : profiles) {
                     if (!profile.getGroups().contains("driver")) {
                         sortProfiles.add(profile);
                     }
                 }
                 break;
             case DRIVER:
-                for (Profile profile: profiles) {
+                for (Profile profile : profiles) {
                     if (profile.getGroups().contains("driver")) {
                         sortProfiles.add(profile);
                     }
@@ -142,5 +189,16 @@ public class EmployeesFragment extends BasePresenterFragment<EmployeesPresenter>
         employeesAdapter.setItems(sortProfiles);
 
 
+    }
+
+    @Override
+    public void onGetEmployeesArchive(List<Profile> profiles) {
+        Log.d(TAG, "onGetEmployeesArchive: " + profiles);
+        employeesAdapter.setItems(profiles);
+    }
+
+    @Override
+    public void onRestoreFromArchive() {
+        ((EmployeesActivity) getActivity()).refresh();
     }
 }

@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.foora.foora.perevozkadev.R;
+import com.foora.perevozkadev.ui.add_drivers_to_order.order_drivers.OrderDriversActivity;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.change_status.ChangeStatusFragment;
 import com.foora.perevozkadev.ui.docs.DocsActivity;
@@ -31,8 +32,10 @@ public class MenuFragment extends BottomSheetDialogFragment {
     public static final String TAG = MenuFragment.class.getSimpleName();
 
     private static final String ORDER_KEY = "order_key";
+    private static final String USER_ID_KEY = "user_id_key";
 
-    Order order;
+    private Order order;
+    private int userId;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -41,10 +44,11 @@ public class MenuFragment extends BottomSheetDialogFragment {
     }
 
 
-    public static MenuFragment newInstance(String orderJson) {
+    public static MenuFragment newInstance(String orderJson, int userId) {
         Bundle args = new Bundle();
         MenuFragment fragment = new MenuFragment();
         args.putString(ORDER_KEY, orderJson);
+        args.putInt(USER_ID_KEY, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +59,7 @@ public class MenuFragment extends BottomSheetDialogFragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order_menu, null);
 
         String orderJson = getArguments().getString(ORDER_KEY);
+        userId = getArguments().getInt(USER_ID_KEY);
 
         Gson gson = new Gson();
         order = gson.fromJson(orderJson, Order.class);
@@ -62,6 +67,13 @@ public class MenuFragment extends BottomSheetDialogFragment {
         View orderTrack = view.findViewById(R.id.order_track);
         View orderFiles = view.findViewById(R.id.order_files);
         View orderChangeState = view.findViewById(R.id.order_change_state);
+        View addDrivers = view.findViewById(R.id.add_drivers);
+
+        orderTrack.setVisibility(View.GONE);
+
+        if (userId == order.getUser()) {
+            addDrivers.setVisibility(View.GONE);
+        }
 
         orderTrack.setOnClickListener(v -> {
 
@@ -73,6 +85,10 @@ public class MenuFragment extends BottomSheetDialogFragment {
 
         orderChangeState.setOnClickListener(v -> {
             ChangeStatusFragment.newInstance(orderJson).show(getFragmentManager());
+        });
+
+        addDrivers.setOnClickListener(v -> {
+            OrderDriversActivity.start(getActivity(), order.getId());
         });
 
 

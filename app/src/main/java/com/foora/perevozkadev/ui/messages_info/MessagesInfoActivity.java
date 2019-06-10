@@ -3,6 +3,7 @@ package com.foora.perevozkadev.ui.messages_info;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.ui.rate.RateActivity;
+import com.foora.perevozkadev.ui.transport.TransportActivity;
 import com.foora.perevozkadev.utils.ViewUtils;
 import com.foora.perevozkadev.utils.custom.ItemSpacingDecoration;
 
@@ -40,6 +43,7 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
     private View btnBack;
     private TextView titleTxtv;
 
+    private Handler handler = new Handler();
     private MessagesInfoAdapter messagesInfoAdapter;
 
     private int requestId;
@@ -60,8 +64,12 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
         setUnBinder(ButterKnife.bind(this));
         title = getIntent().getStringExtra(KEY_TITLE);
         requestId = getIntent().getIntExtra(KEY_REQUEST_ID, -1);
-        getPresenter().getProfile();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setUp();
     }
 
@@ -80,6 +88,8 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
         messagesList.setLayoutManager(new LinearLayoutManager(this));
         messagesList.addItemDecoration(new ItemSpacingDecoration(0, ViewUtils.dpToPx(12), 0, 0));
         messagesList.setAdapter(messagesInfoAdapter);
+
+        handler.post(statusCheck);
 
     }
 
@@ -100,6 +110,7 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
 
     @Override
     public void onGetRequestInfo(OrderRequest orderRequest) {
+        Log.d(TAG, "onGetRequestInfo: " + orderRequest.getActions());
         messagesInfoAdapter.setOrderRequest(orderRequest);
     }
 
@@ -152,5 +163,35 @@ public class MessagesInfoActivity extends BasePresenterActivity<MessagesInfoMvpP
     @Override
     public void onRequestOrder(int orderId) {
         getPresenter().getOrderById(orderId);
+    }
+
+    @Override
+    public void onOpenOrder(int orderId) {
+        RateActivity.start(this, orderId);
+    }
+
+    @Override
+    public void onOpenTransport(int trasportId) {
+        TransportActivity.start(MessagesInfoActivity.this, trasportId);
+    }
+
+    private Runnable statusCheck = new Runnable() {
+        @Override
+        public void run() {
+            getPresenter().getProfile();
+            handler.postDelayed(statusCheck, 5000);
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(statusCheck);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(statusCheck);
     }
 }

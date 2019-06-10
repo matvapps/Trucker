@@ -11,5 +11,8 @@ import java.util.List;
 public interface MyTransportMvpView extends MvpView {
 
     void onGetTransports(List<Transport> transports);
+    void onGetTransportArchive(List<Transport> transports);
+    void onAddTransportToArchive(int transportId);
+    void onRemoveTransportFromArchive(int transportId);
 
 }

@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.ui.base.BaseActivity;
 import com.foora.perevozkadev.ui.map.calculate.CalcDistanceFragment;
+import com.foora.perevozkadev.ui.map.track.TrackFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MapActivity extends BaseActivity implements OnMapReadyCallback {
+
+    private static final String FRAGMENT_KEY = "fragment_key";
 
     @BindView(R.id.container)
     FrameLayout container;
@@ -31,8 +34,9 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
     GoogleMap googleMap;
 
-    public static void start(Activity activity) {
+    public static void start(Activity activity, String fragmentKey) {
         Intent intent = new Intent(activity, MapActivity.class);
+        intent.putExtra(FRAGMENT_KEY, fragmentKey);
         activity.startActivity(intent);
     }
 
@@ -62,12 +66,31 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
                     } else {
                         return false;
                     }
+                case R.id.action_track:
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag(TrackFragment.TAG);
+                    if (fragment == null) {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.container, TrackFragment.newInstance(), TrackFragment.TAG);
+                        fragmentTransaction.commit();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 default:
                     return false;
             }
 
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_calculate);
+
+        String fragmentKey = getIntent().getStringExtra(FRAGMENT_KEY);
+        int actionId = R.id.action_calculate;
+
+        if (fragmentKey.equals(CalcDistanceFragment.TAG))
+            actionId = R.id.action_calculate;
+        else if (fragmentKey.equals(TrackFragment.TAG))
+            actionId = R.id.action_track;
+
+        bottomNavigationView.setSelectedItemId(actionId);
 
     }
 
@@ -115,4 +138,5 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     public GoogleMap getGoogleMap() {
         return googleMap;
     }
+
 }

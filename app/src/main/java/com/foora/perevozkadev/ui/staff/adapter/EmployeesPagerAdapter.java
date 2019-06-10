@@ -23,6 +23,8 @@ public class EmployeesPagerAdapter extends FragmentPagerAdapter {
                 return EmployeesFragment.newInstance(EmployeesFragment.MANAGER);
             case 1:
                 return EmployeesFragment.newInstance(EmployeesFragment.DRIVER);
+            case 2:
+                return EmployeesFragment.newInstance(EmployeesFragment.ARCHIVE);
 
         }
         return EmployeesFragment.newInstance(EmployeesFragment.MANAGER);
@@ -30,7 +32,7 @@ public class EmployeesPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -41,6 +43,8 @@ public class EmployeesPagerAdapter extends FragmentPagerAdapter {
                 return "Менеджеры";
             case 1:
                 return "Водители";
+            case 2:
+                return "Архив";
             default:
                 return null;
         }

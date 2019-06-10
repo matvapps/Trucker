@@ -64,4 +64,82 @@ public class EmployeesPresenter<V extends EmployeesMvpView> extends BasePresente
                     }
                 });
     }
+
+    @Override
+    public void getEmployeesArchive() {
+        if (!isViewAttached()) {
+            Log.e(TAG, "getEmployeesArchive: view isn't attach");
+            return;
+        }
+
+        getMvpView().hideLoading();
+
+        getDataManager().getStaffArchive(getDataManager().getUserToken())
+                .enqueue(new Callback<List<Profile>>() {
+                    @Override
+                    public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+
+                            Log.d(TAG, "onResponse: " + response.body().toString());
+                            getMvpView().onGetEmployeesArchive(response.body());
+
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string() );
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            getMvpView().onError("Не удалось получить архив сотрудников");
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Profile>> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                        getMvpView().onError("Не удалось получить архив сотрудников");
+                    }
+                });
+    }
+
+
+    @Override
+    public void restoreFromArchive(int profileId) {
+        if (!isViewAttached()) {
+            Log.e(TAG, "restoreFromArchive: view isn't attach");
+            return;
+        }
+
+        getMvpView().showLoading();
+
+        getDataManager().restoreUserFromArchive(profileId, getDataManager().getUserToken())
+                .enqueue(new Callback<Profile>() {
+                    @Override
+                    public void onResponse(Call<Profile> call, Response<Profile> response) {
+                        getMvpView().hideLoading();
+
+                        if (response.isSuccessful()) {
+                            getMvpView().onRestoreFromArchive();
+                        } else {
+                            try {
+                                Log.e(TAG, "onResponse: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            getMvpView().onError("Ошибка восстановления пользователя");
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Profile> call, Throwable t) {
+                        getMvpView().hideLoading();
+                        Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                        getMvpView().onError("Ошибка восстановления пользователя");
+                    }
+                });
+    }
 }

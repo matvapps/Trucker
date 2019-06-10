@@ -5,23 +5,30 @@ import com.foora.perevozkadev.data.network.model.ActivateResponse;
 import com.foora.perevozkadev.data.network.model.AddFileResponse;
 import com.foora.perevozkadev.data.network.model.BaseResponse;
 import com.foora.perevozkadev.data.network.model.ConfirmLoginResponse;
+import com.foora.perevozkadev.data.network.model.DriverResponse;
 import com.foora.perevozkadev.data.network.model.FileResponse;
 import com.foora.perevozkadev.data.network.model.GetOrderResponse;
+import com.foora.perevozkadev.data.network.model.Location;
 import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
+import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.my_transport.model.Transport;
 import com.foora.perevozkadev.ui.profile.model.Profile;
+import com.foora.perevozkadev.utils.custom.tnvd.Cargo;
 
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Path;
 
 public interface RemoteRepo {
     Call<RegisterResponse> register(@NonNull String login,
@@ -66,6 +73,10 @@ public interface RemoteRepo {
 
     Call<Profile> getProfile(@NonNull String token);
 
+    Call<Profile> getProfile(@NonNull int userId,
+                             @NonNull String token);
+
+
     Call<Profile> changeProfile(@NonNull String token, Profile profile);
 
     Call<String> changePassword(@NonNull String login,
@@ -78,10 +89,15 @@ public interface RemoteRepo {
                              @NonNull String newPhone,
                              @NonNull String smsCode);
 
+    Call<BaseResponse> setUse2Fa(@NonNull String token,
+                                 @NonNull int use_2Fa);
+
     Call<BaseResponse> uploadPhoto(@NonNull String photoType,
                                    @NonNull String token,
                                    @NonNull MultipartBody.Part image);
 
+    Call<BaseResponse> verifyUser(@NonNull String token,
+                                  @NonNull MultipartBody.Part image);
 
     Call<GetOrderResponse> getUserOrders(@NonNull String token);
 
@@ -89,8 +105,20 @@ public interface RemoteRepo {
 
     Call<TransportResponse> getUserTransport(@NonNull String token);
 
+    Call<TransportResponse> getTransportArchive(@NonNull String token);
+
     Call<Transport> getUserTransport(@NonNull int transportId,
                                      @NonNull String token);
+
+    Call<Transport> changeTransport(@NonNull int transportId,
+                                    @NonNull String token,
+                                    @NonNull Transport transport);
+
+    Call<BaseResponse> addTransportToArchive(@NonNull int transportId,
+                                             @NonNull String token);
+
+    Call<BaseResponse> removeTransportFromArchive(@NonNull int transportId,
+                                                  @NonNull String token);
 
     Call<List<Profile>> getStaff(@NonNull String token);
 
@@ -104,9 +132,17 @@ public interface RemoteRepo {
                                  @NonNull String lastName,
                                  @NonNull String group);
 
-    Call<String> deleteUserFromStaff(@NonNull int userId,
+    Call<Profile> deleteUserFromStaff(@NonNull int userId,
                                      @NonNull String token);
 
+    Call<Profile> restoreUserFromArchive(@NonNull int userId,
+                                         @NonNull String token);
+
+    Call<List<Profile>> getStaffArchive(@NonNull String token);
+
+    Call<BaseResponse> changeStaffProfile(@Path(value = "user_id", encoded = true) int userId,
+                                          @Header("Authorization") String token,
+                                          @Body Profile profile);
 
     Call<OrderRequest> sendRequest(@NonNull String token,
                                    @NonNull int orderId,
@@ -120,10 +156,10 @@ public interface RemoteRepo {
                                       @NonNull int requestId);
 
     Call<OrderRequest> rejectRequest(@NonNull String token,
-                                           @NonNull int requestId);
+                                     @NonNull int requestId);
 
     Call<OrderRequest> confirmRequest(@NonNull String token,
-                                            @NonNull int requestId);
+                                      @NonNull int requestId);
 
     Call<AddFileResponse> addFileToOrder(@NonNull String token,
                                          @NonNull int orderId,
@@ -135,5 +171,40 @@ public interface RemoteRepo {
     Call<StatusResponse> changeOrderStatus(String token,
                                            int orderId,
                                            String status);
+
+    Call<List<Cargo>> searchCargoTypes(String query);
+
+    Call<DriverResponse> getOrderDrivers(@NonNull String token,
+                                         int orderId);
+
+    Call<BaseResponse> addDriversToOrder(@NonNull String token,
+                                         @NonNull int orderId,
+                                         @NonNull DriverResponse drivers);
+
+    Call<BaseResponse> removeDriversFromOrder(@NonNull String token,
+                                              @NonNull int orderId,
+                                              @NonNull DriverResponse drivers);
+
+    Call<BaseResponse> addUserLocation(@NonNull String token,
+                                       @NonNull Location location);
+
+    Call<List<TrackResponse>> trackOrder(@NonNull String token,
+                                         @NonNull int orderId);
+
+
+    Call<BaseResponse> callSos(@NonNull String token,
+                               @NonNull double latitude,
+                               @NonNull double longitude);
+
+
+    Call<BaseResponse> acceptSos(@NonNull String token,
+                                 @NonNull int sos_id);
+
+
+    Call<BaseResponse> rejectSos(@NonNull String token,
+                                 @NonNull int sos_id);
+
+    Call<List<TrackResponse>> getLastUserLoc(@NonNull String token,
+                                             @NonNull int userId);
 
 }

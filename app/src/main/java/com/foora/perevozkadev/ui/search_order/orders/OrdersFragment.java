@@ -25,6 +25,7 @@ import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenterFragment;
 import com.foora.perevozkadev.ui.order.OrderFragment;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.ui.search_order.SearchOrderMvpView;
 import com.foora.perevozkadev.ui.search_order.SearchOrderPresenter;
 import com.foora.perevozkadev.ui.search_order.filter.model.Filter;
@@ -112,17 +113,18 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
         ordersAdapter.setListener(order -> OrderFragment.newInstance(new Gson().toJson(order)).show(getFragmentManager(), OrderFragment.TAG));
-
-        Paginate.with(orderListView, this)
-                .setLoadingTriggerThreshold(2)
-                .addLoadingListItem(true)
-                .build();
+//
+//        Paginate.with(orderListView, this)
+//                .setLoadingTriggerThreshold(2)
+//                .addLoadingListItem(true)
+//                .build();
 
 
         Log.d(TAG, "setUp: " + filter);
 
         getPresenter().getOrders(filter.getWeightFrom(), filter.getWeightTo(), filter.getVolumeFrom(), filter.getVolumeTo());
 
+        hideLoading();
 
     }
 
@@ -135,6 +137,11 @@ public class OrdersFragment extends BasePresenterFragment<SearchOrderPresenter> 
 
     @Override
     public void onGetFilters(List<FilterJson> filters) {
+
+    }
+
+    @Override
+    public void onGetProfile(Profile profile) {
 
     }
 

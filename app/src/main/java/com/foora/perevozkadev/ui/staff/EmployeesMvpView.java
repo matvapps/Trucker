@@ -11,5 +11,7 @@ import java.util.List;
 public interface EmployeesMvpView extends MvpView {
 
     void onReceiveEmployees(List<Profile> profiles);
+    void onGetEmployeesArchive(List<Profile> profiles);
+    void onRestoreFromArchive();
 
 }

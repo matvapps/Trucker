@@ -8,5 +8,6 @@ import com.foora.perevozkadev.ui.base.MvpView;
 public interface AddEmployeeMvpView extends MvpView {
 
     void onAddEmployee();
+    void onChangeEmployee();
 
 }
