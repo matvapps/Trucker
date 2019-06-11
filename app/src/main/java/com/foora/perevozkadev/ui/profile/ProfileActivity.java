@@ -330,11 +330,11 @@ public class ProfileActivity extends BaseNavPresenterActivity<ProfileMvpPresente
         String userRole = profile.getGroups().get(0);
 
         if (userRole.equals("owner")) {
-            userType = "Владелец аккаунта";
+            userType = "Директор ТК";
         } else if (userRole.equals("manager_1")) {
-            userType = "Менеджер 1 ур.";
+            userType = "Менеджер";
         } else if (userRole.equals("manager_2")) {
-            userType = "Менеджер 2 ур.";
+            userType = "Диспетчер";
         } else if (userRole.equals("manager_3")) {
             userType = "Менеджер 3 ур.";
         } else if (userRole.equals("driver")) {

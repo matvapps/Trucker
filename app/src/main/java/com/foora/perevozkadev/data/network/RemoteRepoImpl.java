@@ -12,6 +12,7 @@ import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.SosResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
@@ -275,17 +276,17 @@ public class RemoteRepoImpl extends BaseRemote implements RemoteRepo {
     }
 
     @Override
-    public Call<BaseResponse> callSos(String token, double latitude, double longitude) {
+    public Call<SosResponse> callSos(String token, double latitude, double longitude) {
         return getApi().callSos(token, latitude, longitude);
     }
 
     @Override
-    public Call<BaseResponse> acceptSos(String token, int sos_id) {
+    public Call<SosResponse> acceptSos(String token, int sos_id) {
         return getApi().acceptSos(token, sos_id);
     }
 
     @Override
-    public Call<BaseResponse> rejectSos(String token, int sos_id) {
+    public Call<SosResponse> rejectSos(String token, int sos_id) {
         return getApi().rejectSos(token, sos_id);
     }
 

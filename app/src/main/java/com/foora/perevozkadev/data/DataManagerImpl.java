@@ -15,6 +15,7 @@ import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.SosResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
@@ -291,17 +292,17 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Call<BaseResponse> callSos(String token, double latitude, double longitude) {
+    public Call<SosResponse> callSos(String token, double latitude, double longitude) {
         return remoteRepo.callSos(token, latitude, longitude);
     }
 
     @Override
-    public Call<BaseResponse> acceptSos(String token, int sos_id) {
+    public Call<SosResponse> acceptSos(String token, int sos_id) {
         return remoteRepo.acceptSos(token, sos_id);
     }
 
     @Override
-    public Call<BaseResponse> rejectSos(String token, int sos_id) {
+    public Call<SosResponse> rejectSos(String token, int sos_id) {
         return remoteRepo.rejectSos(token, sos_id);
     }
 

@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.foora.foora.perevozkadev.R;
 import com.foora.perevozkadev.data.DataManager;
@@ -112,6 +113,7 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         setContentView(R.layout.activity_my_order);
         setUnBinder(ButterKnife.bind(this));
 
+
         places = new ArrayList<>();
 
         routeDisplayView = findViewById(R.id.routeDisplayView);
@@ -135,6 +137,8 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
         cargoTypeTxtv = findViewById(R.id.cargo_txtv);
         btnSos = findViewById(R.id.btn_sos);
 
+        btnMenu.setVisibility(View.GONE);
+
         LinearLayout llBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet);
 
 // init the bottom sheet behavior
@@ -152,7 +156,11 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
                 if (location != null) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
+
+                    Log.d(TAG, "onCreate: " + latitude + " " + longitude);
+
                     getPresenter().sendSOS(latitude, longitude);
+                    Toast.makeText(this, "SOS-запрос отправлен", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -243,6 +251,11 @@ public class MyOrderInfoActivity extends BasePresenterActivity<MyOrderInfoMvpPre
 
         cargoTypeTxtv.setText(order.getCargoTypeName());
 
+
+        if (!order.getStatus().equals("finished")
+                || !order.getStatus().equals("Груз доставлен")) {
+            btnMenu.setVisibility(View.VISIBLE);
+        }
 
         Log.d(TAG, "onGetOrder: " + order.toString());
 

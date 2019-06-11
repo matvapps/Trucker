@@ -13,6 +13,7 @@ import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.SosResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
@@ -192,16 +193,16 @@ public interface RemoteRepo {
                                          @NonNull int orderId);
 
 
-    Call<BaseResponse> callSos(@NonNull String token,
-                               @NonNull double latitude,
-                               @NonNull double longitude);
+    Call<SosResponse> callSos(@NonNull String token,
+                              @NonNull double latitude,
+                              @NonNull double longitude);
 
 
-    Call<BaseResponse> acceptSos(@NonNull String token,
+    Call<SosResponse> acceptSos(@NonNull String token,
                                  @NonNull int sos_id);
 
 
-    Call<BaseResponse> rejectSos(@NonNull String token,
+    Call<SosResponse> rejectSos(@NonNull String token,
                                  @NonNull int sos_id);
 
     Call<List<TrackResponse>> getLastUserLoc(@NonNull String token,

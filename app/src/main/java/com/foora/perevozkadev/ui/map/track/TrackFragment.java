@@ -46,7 +46,6 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
-import com.perevozka.foora.routedisplayview.RouteItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -181,24 +180,6 @@ public class TrackFragment extends BasePresenterFragment<TrackMvpPresenter>
         return line;
     }
 
-    private String getDistance(DirectionsResult result) {
-        long distance = 0;
-
-        for (int i = 0; i < result.routes[0].legs.length; i++) {
-            distance += result.routes[0].legs[i].distance.inMeters;
-        }
-        return String.format(Locale.getDefault(), "%d км", distance / 1000);
-    }
-
-    private String getTime(DirectionsResult result) {
-        long timeSec = 0;
-        for (int i = 0; i < result.routes[0].legs.length; i++) {
-            timeSec += result.routes[0].legs[i].duration.inSeconds;
-        }
-
-        return String.format(Locale.getDefault(), "%02d ч %02d м", timeSec / 3600, (timeSec % 3600) / 60);
-    }
-
     private LatLngBounds getLatLngBounds(DirectionsResult result) {
         List<LatLng> path = result.routes[0].overviewPolyline.decodePath();
 
@@ -271,50 +252,6 @@ public class TrackFragment extends BasePresenterFragment<TrackMvpPresenter>
         } catch (ApiException e) {
             e.printStackTrace();
         }
-    }
-
-
-    private List<RouteItem> getRouteItemsFromOrder(Order order) {
-        List<RouteItem> result = new ArrayList<>();
-        List<Place> loadingPlaces = order.getLoadingPlaces();
-        List<Place> unloadingPlaces = order.getUnloadingPlaces();
-
-        Log.d(TAG, "getRouteItemsFromOrder: ");
-
-        for (int i = 0; i < loadingPlaces.size(); i++) {
-            Place place = loadingPlaces.get(i);
-            int index = place.getName().split(",").length - 1;
-
-            Log.d(TAG, "getRouteItemsFromOrder: " + place.getName());
-
-            String city = place.getName().split(",")[0];
-            String country = place.getName().split(",")[index].replaceAll("\\s", "");
-
-            Log.d(TAG, "getRouteItemsFromOrder: " + country);
-
-            if (i == 0) {
-                result.add(new RouteItem(order.getLoadingDate(), city, country));
-            } else {
-                result.add(new RouteItem("", city, country));
-            }
-        }
-
-        for (int i = 0; i < unloadingPlaces.size(); i++) {
-            Place place = unloadingPlaces.get(i);
-            int index = place.getName().split(",").length - 1;
-
-            String city = place.getName().split(",")[0];
-            String country = place.getName().split(",")[index].replaceAll("\\s", "");
-
-            if (i == unloadingPlaces.size() - 1) {
-                result.add(new RouteItem("", city, country));
-            } else {
-                result.add(new RouteItem("", city, country));
-            }
-        }
-
-
-        return result;
     }
 
     private com.google.maps.model.LatLng getLatLngFromAddress(String address) {

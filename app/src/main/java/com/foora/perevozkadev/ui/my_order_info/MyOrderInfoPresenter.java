@@ -3,7 +3,7 @@ package com.foora.perevozkadev.ui.my_order_info;
 import android.util.Log;
 
 import com.foora.perevozkadev.data.DataManager;
-import com.foora.perevozkadev.data.network.model.BaseResponse;
+import com.foora.perevozkadev.data.network.model.SosResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.ui.add_order.model.Order;
 import com.foora.perevozkadev.ui.base.BasePresenter;
@@ -148,9 +148,9 @@ public class MyOrderInfoPresenter<V extends MyOrderInfoMvpView> extends BasePres
         getMvpView().showLoading();
 
         getDataManager().callSos(getDataManager().getUserToken(), latitude, longitude)
-                .enqueue(new Callback<BaseResponse>() {
+                .enqueue(new Callback<SosResponse>() {
                     @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                    public void onResponse(Call<SosResponse> call, Response<SosResponse> response) {
                         getMvpView().hideLoading();
 
                         if (response.isSuccessful()) {
@@ -167,7 +167,7 @@ public class MyOrderInfoPresenter<V extends MyOrderInfoMvpView> extends BasePres
                     }
 
                     @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                    public void onFailure(Call<SosResponse> call, Throwable t) {
                         getMvpView().hideLoading();
                         Log.e(TAG, "onFailure: " + t.getMessage(), t);
                     }

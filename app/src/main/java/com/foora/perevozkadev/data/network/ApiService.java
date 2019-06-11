@@ -13,6 +13,7 @@ import com.foora.perevozkadev.data.network.model.LoginResponse;
 import com.foora.perevozkadev.data.network.model.OrderRequest;
 import com.foora.perevozkadev.data.network.model.RegisterResponse;
 import com.foora.perevozkadev.data.network.model.RequestBody;
+import com.foora.perevozkadev.data.network.model.SosResponse;
 import com.foora.perevozkadev.data.network.model.StatusResponse;
 import com.foora.perevozkadev.data.network.model.TrackResponse;
 import com.foora.perevozkadev.data.network.model.TransportResponse;
@@ -312,19 +313,19 @@ public interface ApiService {
     // SOS
     @FormUrlEncoded
     @POST("sos/")
-    Call<BaseResponse> callSos(@Header("Authorization") String token,
-                               @Field("latitude") double latitude,
-                               @Field("longitude") double longitude);
+    Call<SosResponse> callSos(@Header("Authorization") String token,
+                              @Field("latitude") double latitude,
+                              @Field("longitude") double longitude);
 
     @FormUrlEncoded
     @POST("sos/{sos_id}/accept/")
-    Call<BaseResponse> acceptSos(@Header("Authorization") String token,
+    Call<SosResponse> acceptSos(@Header("Authorization") String token,
                                  @Path(value = "sos_id", encoded = true) int sos_id);
 
 
     @FormUrlEncoded
     @DELETE("sos/{sos_id}/reject/")
-    Call<BaseResponse> rejectSos(@Header("Authorization") String token,
+    Call<SosResponse> rejectSos(@Header("Authorization") String token,
                                  @Path(value = "sos_id", encoded = true) int sos_id);
 
     @GET("user/{user_id}/location/")

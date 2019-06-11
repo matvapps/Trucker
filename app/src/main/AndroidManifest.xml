@@ -27,6 +27,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE"/>
+
         <activity android:name="com.foora.perevozkadev.ui.rate.RateActivity"></activity>
 
         <uses-library
@@ -35,7 +38,14 @@
 
         <service android:name="com.foora.perevozkadev.service.SyncService" />
         <service android:name="com.foora.perevozkadev.service.location.DriverLocationService" />
-
+        <service
+            android:name="com.foora.perevozkadev.service.BackgroundNotification"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.onesignal.NotificationExtender" />
+            </intent-filter>
+        </service>
         <activity
             android:name="com.foora.perevozkadev.ui.entry.EntryActivity"
             android:screenOrientation="portrait"
@@ -152,6 +162,7 @@
         <activity android:name="com.foora.perevozkadev.ui.profile.profile_settings.use_2fa.EnableSmsActivity" />
         <activity android:name="com.foora.perevozkadev.ui.add_drivers_to_order.AddDriversToOrderActivity" />
         <activity android:name="com.foora.perevozkadev.ui.add_drivers_to_order.order_drivers.OrderDriversActivity" />
+        <activity android:name="com.foora.perevozkadev.ui.sos.SosActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
