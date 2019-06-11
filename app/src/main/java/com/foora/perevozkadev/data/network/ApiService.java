@@ -317,13 +317,11 @@ public interface ApiService {
                               @Field("latitude") double latitude,
                               @Field("longitude") double longitude);
 
-    @FormUrlEncoded
     @POST("sos/{sos_id}/accept/")
     Call<SosResponse> acceptSos(@Header("Authorization") String token,
                                  @Path(value = "sos_id", encoded = true) int sos_id);
 
 
-    @FormUrlEncoded
     @DELETE("sos/{sos_id}/reject/")
     Call<SosResponse> rejectSos(@Header("Authorization") String token,
                                  @Path(value = "sos_id", encoded = true) int sos_id);

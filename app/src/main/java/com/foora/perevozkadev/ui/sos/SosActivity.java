@@ -4,8 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,9 +20,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foora.foora.perevozkadev.R;
@@ -33,13 +37,17 @@ import com.foora.perevozkadev.data.network.RemoteRepoImpl;
 import com.foora.perevozkadev.data.prefs.PrefRepo;
 import com.foora.perevozkadev.data.prefs.PrefRepoImpl;
 import com.foora.perevozkadev.ui.base.BasePresenterActivity;
+import com.foora.perevozkadev.ui.profile.model.Profile;
 import com.foora.perevozkadev.utils.ViewUtils;
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -69,6 +77,9 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
     MapView mapView;
 
     private Button btnAccept;
+    private Button btnDecline;
+    private TextView text;
+    private View container;
 
     private List<LatLng> places = new ArrayList<>();
     private List<LatLng> readyRoutePlace = new ArrayList<>();
@@ -90,11 +101,17 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
         setUnBinder(ButterKnife.bind(this));
 
         btnAccept = findViewById(R.id.btn_accept);
+        btnDecline = findViewById(R.id.btn_decline);
+        container = findViewById(R.id.container);
+        text = findViewById(R.id.text);
+
+        btnDecline.setOnClickListener(v -> finish());
 
         int sos_request_id = getIntent().getIntExtra("sos_request_id", 0);
         double lng = getIntent().getDoubleExtra("longitude", 0);
         double lat = getIntent().getDoubleExtra("latitude", 0);
         int id = getIntent().getIntExtra("user_id", 0);
+
 
         sosLocation = new LatLng(lat, lng);
 
@@ -103,35 +120,31 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
 
         btnAccept.setOnClickListener(v -> {
             getPresenter().acceptSos(sos_request_id);
-            btnAccept.setVisibility(View.GONE);
+//            btnAccept.setVisibility(View.GONE);
             Toast.makeText(this, "Пользователь ожидает вас", Toast.LENGTH_SHORT).show();
+            ViewAnimator
+                    .animate(container)
+                    .translationY(0, ViewUtils.dpToPx(400))
+                    .onStop(new AnimationListener.Stop() {
+                        @Override
+                        public void onStop() {
+                            container.setVisibility(View.GONE);
+                        }
+                    })
+                    .duration(400)
+                    .interpolator(new AccelerateDecelerateInterpolator())
+                    .start();
         });
 
-//        showLoading();
-
+        getPresenter().getProfile(id);
         setUp();
     }
 
     @Override
     protected void setUp() {
 
-        LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, mLocationListener);
 
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-        } else {
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
-
-                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                initMapRoute(currentLocation, sosLocation);
-            }
-        }
 
     }
 
@@ -150,6 +163,7 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
                         false);
 
             } else {
+                if (googleMap != null)
                 initMapRoute(currentLocation, sosLocation);
             }
         }
@@ -188,7 +202,20 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
         this.googleMap = googleMap;
         Log.d("TAG", "onMapReady");
 
-        addMarkerToMap(sosLocation);
+        int height = ViewUtils.dpToPx(36);
+        int width = ViewUtils.dpToPx(36);
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_person_pin);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+        placeMarker = googleMap
+                .addMarker(
+                        new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                                .title("SOS")
+                                .position(new com.google.android.gms.maps.model.LatLng(sosLocation.lat, sosLocation.lng)));
+
+        placeMarker.showInfoWindow();
         googleMap.setMyLocationEnabled(true);
 
     }
@@ -323,14 +350,24 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
         userMarker = googleMap
                 .addMarker(
                         new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_local_shipping))
                                 .position(new com.google.android.gms.maps.model.LatLng(currentLocation.lat, currentLocation.lng)));
 
+
+        int height = ViewUtils.dpToPx(36);
+        int width = ViewUtils.dpToPx(36);
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_person_pin);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         placeMarker = googleMap
                 .addMarker(
                         new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                                .title("SOS")
                                 .position(new com.google.android.gms.maps.model.LatLng(sosLocation.lat, sosLocation.lng)));
 
+        placeMarker.showInfoWindow();
 
         DirectionsResult result = null;
         try {
@@ -411,4 +448,25 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
     }
 
 
+    @Override
+    public void onGetProfile(Profile profile) {
+        text.setText(String.format(Locale.getDefault(), "Пользователь %s %s\nпопал в Черезвычайную ситуацию", profile.getLastName(), profile.getFirstName()));
+
+        LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, mLocationListener);
+
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                initMapRoute(currentLocation, sosLocation);
+            }
+        }
+    }
 }
