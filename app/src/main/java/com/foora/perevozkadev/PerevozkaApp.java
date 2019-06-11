@@ -100,6 +100,8 @@ public class PerevozkaApp extends MultiDexApplication {
                 intent.putExtra("longitude", data.getDouble("longitude"));
                 intent.putExtra("latitude", data.getDouble("latitude"));
                 intent.putExtra("user_id", data.getInt("user_id"));
+                if (result.notification.payload.collapseId != null)
+                    intent.putExtra("notification_id", result.notification.payload.collapseId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

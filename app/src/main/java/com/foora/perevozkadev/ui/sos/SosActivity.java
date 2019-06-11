@@ -163,7 +163,6 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
                         false);
 
             } else {
-                if (googleMap != null)
                 initMapRoute(currentLocation, sosLocation);
             }
         }
