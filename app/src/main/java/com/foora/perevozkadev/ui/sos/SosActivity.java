@@ -112,6 +112,8 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
         double lat = getIntent().getDoubleExtra("latitude", 0);
         int id = getIntent().getIntExtra("user_id", 0);
 
+        Log.d(TAG, "onCreate: " + "sos_request_id = " + sos_request_id);
+
 
         sosLocation = new LatLng(lat, lng);
 
@@ -155,7 +157,6 @@ public class SosActivity extends BasePresenterActivity<SosMvpPresenter> implemen
             hideLoading();
 
             LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            Log.d(TAG, "onLocationChanged: " + location);
 
             if (userMarker != null) {
                 animateMarker(userMarker,

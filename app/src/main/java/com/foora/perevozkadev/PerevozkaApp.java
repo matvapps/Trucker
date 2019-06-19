@@ -42,6 +42,8 @@ public class PerevozkaApp extends MultiDexApplication {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+
+        OneSignal.setSubscription(true);
     }
 
     @Override

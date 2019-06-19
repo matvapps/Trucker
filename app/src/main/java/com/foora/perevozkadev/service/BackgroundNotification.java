@@ -25,8 +25,11 @@ public class BackgroundNotification extends NotificationExtenderService {
         OverrideSettings overrideSettings = new OverrideSettings();
         overrideSettings.extender = builder -> {
             try {
+
+                Log.d("OneSignal", "onNotificationProcessing: " + data.toString());
+
                 return builder
-                        .setContentTitle("SOS - Тревога")
+                        .setContentTitle("SOS")
                         .setContentText(String.format(Locale.getDefault(), "Координаты: %f,%f;\nID Водителя %d", data.getDouble("latitude"),
                                 data.getDouble("longitude"), data.getInt("user_id")))
                         .setAutoCancel(false)

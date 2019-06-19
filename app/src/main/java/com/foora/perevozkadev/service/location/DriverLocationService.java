@@ -67,9 +67,7 @@ public class DriverLocationService extends Service {
         @Override
         public void onLocationChanged(Location location) {
             mLastLocation = location;
-            Log.d(TAG, "LocationChanged: " + location);
 
-            // TODO: send user coordinates
             com.foora.perevozkadev.data.network.model.Location userLocation
                     = new com.foora.perevozkadev.data.network.model.Location();
 
@@ -80,9 +78,6 @@ public class DriverLocationService extends Service {
                     .enqueue(new Callback<BaseResponse>() {
                         @Override
                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                            if (response.isSuccessful()) {
-                                Log.e(TAG, "onResponse: Location" + userLocation );
-                            }
                         }
 
                         @Override
@@ -134,8 +129,6 @@ public class DriverLocationService extends Service {
                                         activeOrders.add(order);
                                     }
                                 }
-
-                                Log.e(TAG, "onResponse: " + activeOrders);
 
                                 if (activeOrders.size() > 0) {
                                     startTracking();
